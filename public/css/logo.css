@@ -1,0 +1,39 @@
+/** Logo */
+
+nav .brand-logo, .logo a {
+	text-decoration: none;
+}
+
+nav .brand-logo,
+.brand-logo {
+	font-size: 28px !important;
+	line-height: 3;
+	position: relative;
+	color: #000;
+
+	padding: 10px 0;
+}
+
+.brand-logo .logo {
+	width: 210px;
+	display: block;
+	float: none;
+}
+
+.brand-logo small {
+	display: block;
+	font-style: normal;
+	text-transform: uppercase;
+	font-family: 'open-sans';
+	font-size: 8px;
+	letter-spacing: 5px;
+	line-height: 1.5em;
+}
+
+.brand-logo.white-text i {
+	background-image: url('../img/site/logo/logo-ico-white.png');
+}
+
+.brand-logo.white-text {
+	color: #fff;
+}
