@@ -12,58 +12,79 @@
 				</div>
 			</div>
 
-			<div class="col l6 m4 s12 mb-3 flex flex-column center-align">
+			<div class="col l3 m4 s12 mb-3 flex flex-column">
 				<h5>Institucional</h5>
 				<ul class="menu">
 					@yield('menu-list')
 				</ul>
 			</div>
 
-			<div class="col l3 m4 s12">
+			<div class="col l6 m4 s12">
 
 				<div class="row">
-					<div class="col s12">
+					<div class="col s12 flex">
+						<h5>Endereços</h5>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 m6 l6">
 						<div class="address">
-							<h5>Endereço</h5>
+							<h6>Unidade João Pessoa</h6>
 							<p>
-								Rua Ex-Combatente Assis Luís, 100<br>
-								João Paulo II - João Pessoa - PB<br>
-								CEP: 58076-100<br>
-								Telefone: (83) 9 881 124 444
+								Av. Carneiro da Cunha, 64<br>
+								Torre - João Pessoa - PB<br>
+								<i class="material-icons hide-on-med-and-down" style="font-size: inherit; margin-top: 4px; position: relative; float: left; margin-right: 10px;">phone</i> (83) 3024·9880<br>
+								<i class="icon whatsapp hide-on-med-and-down" style="margin-top: 4px; position: relative; float: left; margin-right: 10px;"></i> (83) 986 786 130
+							</p>
+						</div>
+					</div>
+					<div class="col s12 m6 l6">
+						<div class="address">
+							<h6>Unidade Campina Grande</h6>
+							<p>
+								Rua Ascendino Toscano Brito, 114<br>
+								Santa Cruz - Campina Grande - PB<br>
+								<i class="material-icons hide-on-med-and-down" style="font-size: inherit; margin-top: 4px; position: relative; float: left; margin-right: 10px;">phone</i> (83) 3339·1592<br>
+								<i class="icon whatsapp hide-on-med-and-down" style="margin-top: 4px; position: relative; float: left; margin-right: 10px;"></i> (83) 988 699 434
+
 							</p>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col s12">
-						{{-- <h5 class="right-align">Institucional</h5> --}}
-						<ul class="social">
-							<li>
-								<a href="#">
-									<i class="icon whatsapp"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="icon instagram"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="icon facebook"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="icon youtube"></i>
-								</a>
-							</li>
-						</ul>
-					</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col s12">
+					{{-- <h5 class="right-align">Institucional</h5> --}}
+					<ul class="social">
+						{{-- <li>
+							<a href="#">
+								<i class="icon whatsapp"></i>
+							</a>
+						</li> --}}
+						<li>
+							<a href="#">
+								<i class="icon instagram"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="icon facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="icon youtube"></i>
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 
 		</div>
+
 
 	</div>
 

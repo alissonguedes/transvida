@@ -523,34 +523,40 @@ footer .menu a {
 	display: block;
 	position: relative;
 	border-radius: 24px;
-	width: 45px;
-	height: 45px;
+	width: 25px;
+	height: 25px;
 }
 
-.social li a i {
-	width: inherit;
-	height: inherit;
+i.icon {
+	width: 15px;
+	height: 15px;
 	position: absolute;
 	overflow: hidden;
 	display: block;
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: 40px;
+	background-size: 100%;
 }
 
-.social .whatsapp {
+.social li a i {
+	width: inherit;
+	height: inherit;
+}
+
+
+.icon.whatsapp {
 	background-image: url('../img/site/social/whatsapp.png');
 }
 
-.social .instagram {
+.icon.instagram {
 	background-image: url('../img/site/social/instagram.png');
 }
 
-.social .youtube {
+.icon.youtube {
 	background-image: url('../img/site/social/youtube.png');
 }
 
-.social .facebook {
+.icon.facebook {
 	background-image: url('../img/site/social/facebook.png');
 }
 
