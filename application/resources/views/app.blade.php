@@ -20,10 +20,10 @@
 
 	@section('menu-list')
 	<li><a href="{{ route('main.home') }}">Início</a></li>
-	<li><a href="{{ route('main.home') }}">Sobre Nós</a></li>
-	<li><a href="{{ route('main.home') }}">Serviços</a></li>
-	<li><a href="{{ route('main.home') }}">Saúde</a></li>
-	<li><a href="{{ route('main.home') }}">Atendimento</a></li>
+	<li><a href="{{ route('main.about') }}">Sobre Nós</a></li>
+	<li><a href="{{ route('main.services') }}">Serviços</a></li>
+	<li><a href="{{ route('main.contato') }}">Saúde</a></li>
+	<li><a href="{{ route('main.contato') }}">Atendimento</a></li>
 	@endsection
 
 	@include('main.header')

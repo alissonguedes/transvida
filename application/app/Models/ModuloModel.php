@@ -58,7 +58,7 @@ namespace App\Models{
 				->from('tb_acl_modulo_routes')
 				->where('id_controller', $id)
 				->where('id_parent', $id_parent)
-			// ->where('status', '1')
+				->where('status', '1')
 				->get();
 
 			if ($routes->count() > 0) {

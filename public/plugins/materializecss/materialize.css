@@ -760,6 +760,11 @@ html [type=button] {
 	text-transform: capitalize !important
 }
 
+ul.list-style-dotted li {
+	list-style: inside;
+	margin-left: 20px;
+}
+
 .background-round {
 	padding: 15px;
 	border-radius: 50%;
@@ -1109,9 +1114,8 @@ li.home:before {
 }
 
 .uppercase {
-	text-transform: uppercase
+	text-transform: uppercase !important;
 }
-
 
 .avatar-status {
 	line-height: 50px;
