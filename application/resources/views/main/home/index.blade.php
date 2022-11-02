@@ -512,7 +512,7 @@
 					</div>
 					<h4 class="mt-10 white-text bold text-uppercase"> + {{ rand(2000, 9999) }}</h4>
 					<p class="mt-5 white-text bold text-capitalize">
-						vacination
+						vacinações
 					</p>
 				</div>
 			</div>
