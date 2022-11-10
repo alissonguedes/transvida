@@ -18,7 +18,7 @@
 								<div class="col s12 m3">
 									<div class="input-field">
 										<label for="">CPF:</label>
-										<input type="phone" class="is_cpf">
+										<input type="text" inputmode="number" class="is_cpf">
 									</div>
 								</div>
 								<div class="col s12 m3">
