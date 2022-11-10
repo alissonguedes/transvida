@@ -1,23 +1,3 @@
-@font-face {
-	font-family: 'Amsterdam';
-	src: url('../fonts/amsterdam.ttf');
-}
-
-@font-face {
-	font-family: 'open-sans';
-	src: url('../fonts/open-sans.ttf');
-}
-
-@font-face {
-	font-family: 'Montserrat';
-	src: url('../fonts/Montserrat/Montserrat.ttf');
-}
-
-@font-face {
-	font-family: 'LibreBaskerville';
-	src: url('../fonts/LibreBaskerville/LibreBaskerville-Regular.ttf');
-}
-
 * {
 	margin: 0;
 	padding: 0;
@@ -308,6 +288,21 @@ nav a {
 
 .sidenav {
 	top: 90px;
+	font-family: 'Roboto', sans-serif;
+}
+
+.sidenav li a i {
+	font-size: 1.4rem;
+	line-height: inherit;
+	display: block;
+	float: left;
+	width: 2rem;
+	margin-right: 1rem;
+	margin-left: 1px;
+}
+
+.sidenav li .collapsible-body a i {
+	font-size: 1rem;
 }
 
 footer {
@@ -351,48 +346,6 @@ footer .dev {
 footer .menu a {
 	text-decoration: none;
 	color: #fff;
-}
-
-.flex {
-	display: flex;
-}
-
-.items-center,
-.flex-center {
-	align-items: center;
-}
-
-.flex-end {
-	place-content: flex-end;
-	justify-content: space-between;
-}
-
-.flex-column {
-	flex-direction: column;
-}
-
-.no-padding {
-	padding: 0 !important;
-}
-
-.mr-20 {
-	margin-right: 20px
-}
-
-.ml-20 {
-	margin-left: 20px;
-}
-
-.mt-10 {
-	margin-top: 10px;
-}
-
-.mb-10 {
-	margin-bottom: 10px;
-}
-
-.w-50 {
-	width: 50%;
 }
 
 #content-page {

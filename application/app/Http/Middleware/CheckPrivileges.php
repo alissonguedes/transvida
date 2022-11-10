@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Middleware {
+namespace App\Http\Middleware{
 
 	use App\Models\UserModel;
 	use Closure;
 	use Illuminate\Http\Request;
+	use Illuminate\Support\Facades\DB;
 	use Illuminate\Support\Facades\Route;
 	use Illuminate\Support\Facades\Session;
 
@@ -24,8 +25,17 @@ namespace App\Http\Middleware {
 
 				$permissoes = $this->user->select(
 					'Modulo.id AS modulo_id', 'Modulo.modulo', 'Modulo.path', 'Modulo.permissao AS modulo_permissao', 'Modulo.status AS modulo_status',
-					'Controller.id AS controller_id', 'Controller.namespace', 'Controller.permissao AS controller_permissao', 'Controller.restrict AS controller_restrict', 'Controller.status AS controller_status',
-					'Rota.id AS rota_id', 'Rota.type', 'Rota.route', 'Rota.controller', 'Rota.action', 'Rota.name', 'Rota.filter', 'Rota.permissao AS rota_permissao', 'Rota.restrict AS rota_restrict', 'Rota.status AS rota_status'
+					'Controller.id AS controller_id',
+					DB::raw(
+						'CONCAT(
+							(SELECT namespace FROM tb_acl_modulo WHERE id =
+								(SELECT id_modulo FROM tb_acl_modulo_controller WHERE id = id_controller)
+							),
+							(SELECT controller FROM tb_acl_modulo_controller WHERE id = id_controller)
+						) AS controller'
+					),
+					'Controller.permissao AS controller_permissao', 'Controller.restrict AS controller_restrict', 'Controller.status AS controller_status',
+					'Rota.id AS rota_id', 'Rota.type', 'Rota.route', 'Rota.action', 'Rota.name', 'Rota.filter', 'Rota.permissao AS rota_permissao', 'Rota.restrict AS rota_restrict', 'Rota.status AS rota_status'
 				)
 					->from('tb_acl_modulo AS Modulo')
 
@@ -59,7 +69,20 @@ namespace App\Http\Middleware {
 					$controller   = $route_action[0];
 					$action       = $route_action[1];
 
-					$permissoes->where('Rota.controller', $controller);
+					// $permissoes->where('controller', $controller);
+					$permissoes->where('id_controller', function ($query) use ($controller) {
+						$query->select('id')
+							->from('tb_acl_modulo_controller')
+							->where(
+								DB::raw('
+								CONCAT(
+									(SELECT namespace FROM tb_acl_modulo WHERE id = id_modulo),
+									tb_acl_modulo_controller.controller
+								)'
+								),
+								$controller
+							);
+					});
 					$permissoes->where('Rota.action', $action);
 
 				}

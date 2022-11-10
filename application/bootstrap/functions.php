@@ -229,33 +229,39 @@ if (!function_exists('base_url')) {
 if (!function_exists('getMenus')) {
 	function getMenus($local, $id, $attributes = [])
 	{
+
 		$menu_model = new MenuModel();
 
-		$ul = null;
+		$modulo = explode('/', request()->path())[0];
+		$idioma = !isset($_COOKIE['idioma']) ? get_config('language') : $_COOKIE['idioma'];
+		$ul     = null;
 
 		$menu = $menu_model->from('tb_acl_menu')
-			->where('id_modulo', function ($query) {
-				$modulo = explode('/', request()->path())[0];
-
-				return $query->select('id')
+			->where('id_modulo', function ($query) use ($modulo) {
+				$query->select('id')
 					->from('tb_acl_modulo')
-					->where('path', '/' . $modulo)
-					->first();
+					->where('path', '/' . $modulo);
 			})
 			->where('id', function ($query) use ($local) {
-				$query->select('id_menu')
+				$query->select('value')
 					->distinct(true)
-					->from('tb_acl_menu_descricao')
-					->where('descricao', $local)
-					->orWhere('id_menu', $local);
+					->from('tb_sys_config')
+					->where('config', $local)
+					->where('value', get_config($local))
+					->whereColumn('id_modulo', 'id_modulo');
 			})
 			->get()
 			->first();
+
+		if (!isset($menu)) {
+			$ul .= 'Nenhum menu neste módulo';
+		}
 
 		if (isset($menu)) {
 			$items = $menu_model->from('tb_acl_menu_item')
 				->where('id_menu', $menu->id)
 				->where('id_parent', $id)
+				->orderBy('ordem', 'asc')
 				->get();
 
 			if ($items->count() > 0) {
@@ -312,11 +318,10 @@ if (!function_exists('getMenus')) {
 					$route = $menu_model->select('name')
 						->from('tb_acl_modulo_routes')
 						->where('id_controller', $item->id_item)
-						->where('route', '/')
 						->first();
 
-					$ul .= '<a ' . (($submenus->count() > 0) ? 'class="collapsible-header waves-effect waves-cyan" href="javascript:void(0);" tabindex="0"' : 'href="' . route($route->name) . '"') . '>';
-					$ul .= $item->icon ? '<i class="material-icons">' . $item->icon . '</i>' : null;
+					$ul .= '<a ' . (($submenus->count() > 0) ? 'class="collapsible-header waves-effect waves-cyan" href="javascript:void(0);" tabindex="0"' : 'href="' . (route($route->name) ?? null) . '"') . '>';
+					$ul .= $item->icon ? (preg_match('[^fa\-]', $item->icon) ? '<i class="fa-icon fa-solid ' . $item->icon . '"></i>' : '<i class="material-icons">' . $item->icon . '</i>') : null;
 					$ul .= '<span class="menu-title" data-i18n="' . $label->titulo . '">' . $label->titulo . '</span>';
 					$ul .= '</a>';
 

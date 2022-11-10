@@ -1,5 +1,34 @@
-.btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
-    background-color: inherit;
+:root {
+	--webkit-transition: 130ms
+}
+
+.btn:focus,
+.btn-large:focus,
+.btn-small:focus,
+.btn-floating:focus {
+	background-color: inherit;
+}
+
+[type=checkbox]:checked+span:not(.lever):before {
+	border-right-color: var(--blue-lighten-1);
+	border-bottom-color: var(--blue-lighten-1);
+}
+
+[type=checkbox]+span:not(.lever):before,
+[type=checkbox]:not(.filled-in)+span:not(.lever):after {
+	width: 21px;
+	height: 21px;
+}
+
+table tr label>input[type=checkbox]~span:not(.lever) {
+	margin-top: 2px;
+}
+
+.input-field>label {
+	-webkit-transition: color var(--webkit-transition) ease-out, -webkit-transform var(--webkit-transition) ease-out;
+	transition: color var(--webkit-transition) ease-out, -webkit-transform var(--webkit-transition) ease-out;
+	transition: transform var(--webkit-transition) ease-out, color var(--webkit-transition) ease-out;
+	transition: transform var(--webkit-transition) ease-out, color var(--webkit-transition) ease-out, -webkit-transform var(--webkit-transition) ease-out;
 }
 
 input:not([type]),
@@ -13,6 +42,7 @@ input[type=datetime]:not(.browser-default),
 input[type=datetime-local]:not(.browser-default),
 input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
+input[type=phone]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea:not(.browser-default),
 textarea.materialize-textarea:not(.browser-default),
@@ -45,6 +75,7 @@ input[type=datetime]:not(.browser-default),
 input[type=datetime-local]:not(.browser-default),
 input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
+input[type=phone]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea:not(.browser-default),
 textarea.materialize-textarea:not(.browser-default),
@@ -81,6 +112,7 @@ input[type=datetime]:not(.browser-default):focus:not([readonly]),
 input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
 input[type=tel]:not(.browser-default):focus:not([readonly]),
 input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=phone]:not(.browser-default):focus:not([readonly]),
 input[type=search]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]),
 .select-wrapper:not(.browser-default) input.select-dropdown:focus,
@@ -91,7 +123,7 @@ textarea.materialize-textarea:focus:not([readonly]),
 	background-image: linear-gradient(var(--blue), var(--blue)), linear-gradient(#d9d9d9, #d9d9d9);
 	background-size: 100% 2px, 100% 1px;
 	outline: 0 none;
-	transition: background ease-in-out 200ms;
+	transition: background ease-in-out var(--webkit-transition);
 }
 
 
@@ -117,6 +149,8 @@ input[type=tel]:not(.browser-default):disabled,
 input[type=tel]:not(.browser-default)[readonly="readonly"],
 input[type=number]:not(.browser-default):disabled,
 input[type=number]:not(.browser-default)[readonly="readonly"],
+input[type=phone]:not(.browser-default):disabled,
+input[type=phone]:not(.browser-default)[readonly="readonly"],
 input[type=search]:not(.browser-default):disabled,
 input[type=search]:not(.browser-default)[readonly="readonly"],
 textarea.materialize-textarea:disabled,
@@ -144,6 +178,7 @@ input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
 input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
 input[type=tel]:not(.browser-default):focus:not([readonly])+label,
 input[type=number]:not(.browser-default):focus:not([readonly])+label,
+input[type=phone]:not(.browser-default):focus:not([readonly])+label,
 input[type=search]:not(.browser-default):focus:not([readonly])+label,
 textarea.materialize-textarea:not(.browser-default):focus:not([readonly])+label,
 .input-field:not(.browser-default):focus .ql-container:not([readonly])+label {
@@ -172,6 +207,8 @@ input[type=tel]:not(.browser-default):disabled+label,
 input[type=tel]:not(.browser-default)[readonly="readonly"]+label,
 input[type=number]:not(.browser-default):disabled+label,
 input[type=number]:not(.browser-default)[readonly="readonly"]+label,
+input[type=phone]:not(.browser-default):disabled+label,
+input[type=phone]:not(.browser-default)[readonly="readonly"]+label,
 input[type=search]:not(.browser-default):disabled+label,
 input[type=search]:not(.browser-default)[readonly="readonly"]+label,
 textarea.materialize-textarea:disabled+label,
@@ -191,6 +228,7 @@ textarea.materialize-textarea[readonly="readonly"]+label,
 .input-field.with-sufix-icon input[type=datetime-local]:not(.browser-default),
 .input-field.with-sufix-icon input[type=tel]:not(.browser-default),
 .input-field.with-sufix-icon input[type=number]:not(.browser-default),
+.input-field.with-sufix-icon input[type=phone]:not(.browser-default),
 .input-field.with-sufix-icon input[type=search]:not(.browser-default),
 .input-field.with-sufix-icon textarea:not(.browser-default),
 .input-field:not(.browser-default) .ql-container {
@@ -429,6 +467,7 @@ input.no-border,
 .bordered input[type=datetime-local]:not(.browser-default),
 .bordered input[type=tel]:not(.browser-default),
 .bordered input[type=number]:not(.browser-default),
+.bordered input[type=phone]:not(.browser-default),
 .bordered input[type=search]:not(.browser-default),
 .bordered textarea,
 .bordered textarea.materialize-textarea,
@@ -451,6 +490,7 @@ input.no-border,
 .bordered input[type=datetime-local]:focus:not(.browser-default),
 .bordered input[type=tel]:focus:not(.browser-default),
 .bordered input[type=number]:focus:not(.browser-default),
+.bordered input[type=phone]:focus:not(.browser-default),
 .bordered input[type=search]:focus:not(.browser-default),
 .bordered textarea:focus,
 .bordered textarea.materialize-textarea:focus,
@@ -510,4 +550,48 @@ button .preloader-wrapper.small {
 button .circle-clipper .circle {
 	border-color: inherit;
 	border-width: 2px;
+}
+
+
+
+.flex {
+	display: flex;
+}
+
+.items-center,
+.flex-center {
+	align-items: center;
+}
+
+.flex-end {
+	place-content: flex-end;
+	justify-content: space-between;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.no-padding {
+	padding: 0 !important;
+}
+
+.mr-20 {
+	margin-right: 20px
+}
+
+.ml-20 {
+	margin-left: 20px;
+}
+
+.mt-10 {
+	margin-top: 10px;
+}
+
+.mb-10 {
+	margin-bottom: 10px;
+}
+
+.w-50 {
+	width: 50%;
 }

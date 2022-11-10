@@ -1,0 +1,74 @@
+1. Qual é o tipo de projeto?
+
+	O projeto tem o objetivo de realizar o cadastro de clientes que contratam os planos da Medicus24h para o atendimento e a prestação de serviços de saúde.
+
+2. Qual é o esquema/funcionalidades, ou seja, o que deve existir no projeto?
+
+	- Cadastro de clientes
+	- Cadastro de operador
+	- Cadastro de médicos
+	- Cadastro de unidades
+	- Cadastro de convênio
+	- Cadastro de departamentos
+	- Cadastro de atendimentos
+	- Cadastro de especialidades
+
+3. Quais a áreas envolvidas?
+
+4. Ferramenta para integração no processo de desenvolvimento?
+
+5. Qual é o prazo estipulado?
+
+	- 20 dias
+
+6. Quais são os custos?
+
+7. Qual é o escopo idealizado?
+
+8. Quais são as premissas?
+
+9. Quais são as restrições?
+
+
+
+================================
+
+
+
+
+Primeiro módulo que precisa 
+
+Área Administrativa
+Especialidades
+	-
+Médicos
+	-
+
+- Módulo de clinica
+	- Agendamento
+		- Agendar de consultas
+		- Agendar exames
+		- Agendar procedimentos
+		- Agendar cirurgias
+		- Lembretes de (consultas, etc)
+	- Exames
+		- Laboratoriais
+		- Imagens
+		- Outros
+	- Recursos médicos
+		- Antendimento
+		- Pronturário
+		- Atestados
+		- Pedidos de exames
+		- Telemedicina
+		- Laudos
+	- Recursos Administrativos
+		- Faturamento
+		- Autorização de procedimentos
+		- Controle financeiro
+		- Estoque
+		- Impressão de notas
+		- Relatórios
+
+- Módulo de atendimento
+	- Criação de chamados

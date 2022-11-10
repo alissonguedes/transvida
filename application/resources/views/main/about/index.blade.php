@@ -1,4 +1,4 @@
-@extends('app')
+@extends('main.body')
 
 @section('page-title', 'Sobre nós')
 
@@ -11,7 +11,7 @@
 </div>
 @endsection
 
-@section('content')
+@section('main')
 
 <div class="row">
 	<div class="col s12">

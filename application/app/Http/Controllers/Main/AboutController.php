@@ -19,6 +19,13 @@ namespace App\Http\Controllers\Main{
 
 		}
 
+		public function health()
+		{
+
+			return view('main.about.health');
+
+		}
+
 	}
 
 }

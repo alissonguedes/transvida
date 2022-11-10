@@ -1,0 +1,156 @@
+#frm-login *:not(.material-icons) {
+	font-family: 'Montserrat' !important;
+}
+
+#boas-vindas h5 {
+	text-overflow: initial;
+	width: auto;
+	white-space: initial;
+	line-height: normal;
+}
+
+#frm-login .form {
+	overflow: initial;
+}
+
+.brand-sidebar .text-logo {
+	margin-left: 0;
+}
+
+.text-logo {
+	margin-left: 50px;
+}
+
+.text-logo h5,
+.text-logo h2 {
+	font-family: 'Montserrat' !important;
+	margin: 0;
+	line-height: 1;
+	color: inherit;
+}
+
+.text-logo h2 {
+	font-size: 72px;
+}
+
+.text-logo h5 {
+	position: relative;
+	top: 25px;
+	left: 75px;
+	font-size: 31px;
+}
+
+#client-logo {
+	place-content: center;
+	align-items: center;
+	display: flex;
+	margin-bottom: 60px;
+}
+
+#client-logo img {
+	max-width: 270px;
+}
+
+#boas-vindas h5 {
+	font-size: 14px;
+}
+
+#boas-vindas button:disabled {
+	display: none !important;
+}
+
+#boas-vindas button:not(:disabled)~h5 {
+	margin-left: 2px;
+}
+
+#login-page .card-panel {
+	position: relative;
+	overflow: hidden;
+}
+
+#login-page #input-pass {
+	display: none;
+}
+
+.inputs {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	height: 60px;
+}
+
+#input-login,
+#input-pass {
+	position: absolute;
+	width: 100%;
+}
+
+.sidenav li a.active {
+	background: var(--blue-lighten-1);
+}
+
+/*
+.brand-sidebar {
+	position: relative;
+	height: 64px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+} */
+/*
+.brand-sidebar {
+	z-index: 9999;
+	box-shadow: none;
+} */
+
+.navbar-toggler {
+	margin-left: 13px;
+	position: relative;
+	z-index: 9999999;
+	margin-top: 10px;
+}
+
+.navbar-toggler i {
+	color: inherit !important;
+}
+
+.brand-sidebar .logo-wrapper {
+	font-size: 3rem;
+	line-height: 50px !important;
+	white-space: nowrap;
+	margin-left: 10px;
+	top: 5px;
+}
+
+.navbar .header-search-wrapper input {
+	height: inherit;
+	padding: 3px 8px 8px 52px;
+}
+
+.logo-wrapper .text-logo h5 {
+	font-size: 34%;
+	position: relative;
+	top: -20px;
+	left: 91px;
+	display: inline;
+}
+
+.logo-wrapper .text-logo h2 {
+	font-size: 80%;
+	display: inline;
+	top: 0px;
+	position: relative;
+}
+
+.card-content{
+	height: calc(100vh - 115px);
+}
+
+.card-body {
+	height: calc(100vh - 270px);
+}
+
+.card-footer {
+	/* position: absolute; */
+	padding-top: 15px;
+}

@@ -1,6 +1,5 @@
 <header>
 
-
 	<nav class="nav-extended nav-fixed white">
 
 		<div class="nav-wrapper container">

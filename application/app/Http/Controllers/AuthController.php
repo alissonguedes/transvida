@@ -43,7 +43,7 @@ namespace App\Http\Controllers{
 		public function index(Request $request)
 		{
 
-			return view('admin.login');
+			return view('authentication.login');
 
 		}
 

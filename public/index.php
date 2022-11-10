@@ -3,8 +3,6 @@
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
-define('LARAVEL_START', microtime(true));
-
 $dir_path = explode('index.php', $_SERVER['SCRIPT_FILENAME']);
 
 array_pop($dir_path);
@@ -25,8 +23,9 @@ define('LARAVEL_START', microtime(true));
 |
  */
 
-if (file_exists($maintenance = __DIR__ . '/../storage/framework/maintenance.php')) {
-	require $maintenance;
+$dir = BASEDIR . 'storage/framework/maintenance.php';
+if (file_exists($dir)) {
+	require $dir;
 }
 
 /*
@@ -57,8 +56,8 @@ $app = require_once BASEDIR . 'bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
-$response = $kernel->handle(
+$response = tap($kernel->handle(
 	$request = Request::capture()
-)->send();
+))->send();
 
 $kernel->terminate($request, $response);

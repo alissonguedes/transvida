@@ -140,6 +140,17 @@ html [type=button] {
 	-webkit-appearance: none
 }
 
+button {
+	display: flex !important;
+	align-items: center;
+	place-content: center;
+}
+
+button span~i.material-icons,
+button i.material-icons~span {
+	margin-left: 10px;
+}
+
 .width-10 {
 	width: 10% !important
 }
@@ -178,6 +189,13 @@ html [type=button] {
 
 .width-100 {
 	width: 100% !important
+}
+
+.h-100vh {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	place-content: center;
 }
 
 .border-radius-1 {

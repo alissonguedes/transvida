@@ -1,6 +1,6 @@
-@extends('app')
+@extends('main.body')
 
-@section('content')
+@section('main')
 
 <section id="slider">
 	<div class="slider fullscreen">

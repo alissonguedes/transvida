@@ -75,17 +75,19 @@ namespace App\Models{
 
 						if (!empty($route->name)) {
 							Route::$type_route($route->route, [$route->controller, $route->action])->name($route->name);
+							// echo 'Route::' . $type_route . '("' . $route->route . '", ["' . $route->controller . '", "' . $route->action . '"])->name("' . $route->name . '"); <br>';
 						} else {
 							Route::$type_route($route->route, [$route->controller, $route->action]);
+							// echo 'Route::' . $type_route . '("' . $route->route . '", ["' . $route->controller . '", "' . $route->action . '"]);<br>';
 						}
 
 					} else {
 
+						// echo 'Route::prefix("' . $route->route . '")->group(function ($router) use ($route) {<br>';
 						Route::prefix($route->route)->group(function ($router) use ($route) {
-
-							$this->getRoutes($route->id_controller, $route->id_route);
-
+							$this->getRoutes($route->id_controller, $route->id);
 						});
+						// echo '});<br>';
 
 					}
 

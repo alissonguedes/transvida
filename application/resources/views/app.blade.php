@@ -12,29 +12,30 @@
 
 	<title>@yield('site-title')</title>
 
-	@include('main.styles')
+	@section('styles')
+	@include('styles')
+	@show
 
 </head>
 
 <body>
 
-	@section('menu-list')
-	<li><a href="{{ route('main.home') }}">Início</a></li>
-	<li><a href="{{ route('main.about') }}">Sobre Nós</a></li>
-	<li><a href="{{ route('main.services') }}">Serviços</a></li>
-	<li><a href="{{ route('main.contato') }}">Saúde</a></li>
-	<li><a href="{{ route('main.contato') }}">Atendimento</a></li>
-	@endsection
+	<div id="page">
 
-	@include('main.header')
-	@yield('capa')
+		@yield('body')
 
-	@include('main.sidebar')
+		<script>
+			var BASE_URL = "{{ base_url() }}";
+			var BASE_PATH = "{{ implode('/', explode('/index.php', $_SERVER['SCRIPT_FILENAME'])) }}";
+		</script>
 
-	@yield('content')
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	@include('main.footer')
+	</div>
+
+	@section('scripts')
 	@include('scripts')
+	@show
 
 </body>
 

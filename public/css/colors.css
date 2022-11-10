@@ -94,11 +94,11 @@
 	/** Blue **/
 	--blue: #2196f3 !important;
 
-	--blue-ligenten-1: #1e88e5 !important;
-	--blue-ligenten-2: #42a5f5 !important;
-	--blue-ligenten-3: #64b5f6 !important;
-	--blue-ligenten-4: #90caf9 !important;
-	--blue-ligenten-5: #bbdefb !important;
+	--blue-lighten-1: #1e88e5 !important;
+	--blue-lighten-2: #42a5f5 !important;
+	--blue-lighten-3: #64b5f6 !important;
+	--blue-lighten-4: #90caf9 !important;
+	--blue-lighten-5: #bbdefb !important;
 
 	--blue-accent-1: #82b1ff !important;
 	--blue-accent-2: #448aff !important;

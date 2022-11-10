@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin {
+namespace App\Http\Controllers\Admin{
 
 	class HomeController extends Controller
 	{
@@ -8,7 +8,7 @@ namespace App\Http\Controllers\Admin {
 		public function index()
 		{
 
-			echo 'Página inicial';
+			return view('admin.index');
 
 		}
 

@@ -20,7 +20,7 @@ if ($this->modulos->getModulos()->count() > 0) {
 			$this->permissao_modulo = $modulo->permissao;
 			$this->restrict_modulo  = $modulo->restrict;
 
-			// echo 'Route::prefix(' . $this->path_modulo . ')->group(function() {<br>
+			// echo 'Route::prefix("' . $this->path_modulo . '")->group(function() {<br>
 			// 	&nbsp;&nbsp;&nbsp;&nbsp;<br>';
 
 			Route::prefix($this->path_modulo)->group(function () {
