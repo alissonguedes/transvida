@@ -15,24 +15,22 @@
 						</div>
 						<div class="card-body scroller" data-scroll-x="true">
 							<div class="row">
-								<div class="col s12 m3">
+								<div class="col s12 m3 l3">
 									<div class="input-field">
 										<label for="">CPF:</label>
-										<input type="tel" class="is_cpf">
+										<input type="tel" name="cpf" class="is_cpf">
 									</div>
 								</div>
 								<div class="col s12 m3">
 									<div class="input-field">
 										<label for="">RG:</label>
-										<input type="number" class="is_cpf">
+										<input type="tel" name="rg">
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col s12">
+								<div class="col s12 l6">
 									<div class="input-field">
 										<label for="">Nome</label>
-										<input type="text">
+										<input type="text" name="nome" autocapitalize="on">
 									</div>
 								</div>
 							</div>
