@@ -18,20 +18,20 @@
 								<div class="col s12 m3">
 									<div class="input-field">
 										<label for="">CPF:</label>
-										<input type="phone" class="is_cpf">
+										<input type="tel" class="is_cpf">
 									</div>
 								</div>
 								<div class="col s12 m3">
 									<div class="input-field">
 										<label for="">RG:</label>
-										<input type="number">
+										<input type="tel">
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col s12">
 									<div class="input-field">
-										<label for=""></label>
+										<label for="">Nome</label>
 										<input type="text">
 									</div>
 								</div>
