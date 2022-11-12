@@ -219,6 +219,7 @@ if (!function_exists('base_url')) {
 		$currentUrl = request()->getRequestUri();
 
 		echo $baseUrl . ' <<<< ';
+		exit;
 		$dir = explode($baseUrl, $currentUrl);
 		array_shift($dir);
 
