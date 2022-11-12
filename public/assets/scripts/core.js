@@ -123,7 +123,7 @@ function core() {
 	// });
 	// botão voltar para esconder o formulário da página de e-mail
 	$('.modal').modal();
-	checkAll();
+
 	$(".btn-back").each(function() {
 		$(this).bind("click", function() {
 			var trigger = $(this).data("trigger-off");
@@ -167,6 +167,7 @@ function core() {
 
 	if (0 < $(".scroller").length) new PerfectScrollbar(".scroller", {
 		theme: "dark",
+		'wheelPropagation': false,
 		'suppressScrollY': typeof $('.scroller').data('scroll-y') !== 'undefined' && $('.scroller').data('scroll-y') != '' ? $('.scroller').data('scroll-y') : false,
 		'suppressScrollX': typeof $('.scroller').data('scroll-x') !== 'undefined' && $('.scroller').data('scroll-x') != '' ? $('.scroller').data('scroll-x') : false
 	});

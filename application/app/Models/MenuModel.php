@@ -34,10 +34,8 @@ class MenuModel extends Model
 			'tb_acl_menu.status'
 		);
 
-		$get->distinct();
-
-		$get->join('tb_acl_menu_descricao AS D', 'D.id_menu', '=', 'tb_acl_menu.id');
-		$get->join('tb_sys_idioma AS I', 'I.id', '=', 'D.id_idioma');
+		// $get->join('tb_acl_menu_descricao AS D', 'D.id_menu', '=', 'tb_acl_menu.id');
+		// $get->join('tb_sys_idioma AS I', 'I.id', '=', 'D.id_idioma');
 
 		// $get->where('status', '1');
 

@@ -142,15 +142,29 @@
 	position: relative;
 }
 
-.card-content{
+.card-content {
 	height: calc(100vh - 115px);
 }
 
 .card-body {
-	height: calc(100vh - 270px);
+	height: calc(100vh - 330px);
 }
 
 .card-footer {
 	/* position: absolute; */
 	padding-top: 15px;
+}
+
+.datepicker-date-display {
+	background-color: var(--blue-lighten-2);
+}
+
+.datepicker-table td.is-today {
+	color: var(--blue);
+}
+
+.datepicker-day-button:focus,
+.datepicker-table td.is-selected {
+	color: #000;
+	background-color: rgba(77, 182, 172, 0.25);
 }

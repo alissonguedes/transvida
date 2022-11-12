@@ -201,6 +201,10 @@ textarea {
     top: -8px !important;
 } */
 
+.dropdown-content {
+	max-height: 200px;
+}
+
 .nav-collapsed .brand-sidebar .logo-wrapper {
 	width: 0;
 	transition: width 200ms;
@@ -899,10 +903,7 @@ nav ul a {
 	opacity: 0.5 !important;
 }
 
-.modal {
-	/* background-color: transparent; */
-}
-
+/*
 .modal>form {
 	margin: 0;
 }
@@ -945,7 +946,7 @@ nav ul a {
 	transform: scale(1) !important;
 	opacity: 1 !important;
 	animation: none !important;
-}
+} */
 
 
 /** input-field **/
@@ -2208,8 +2209,8 @@ table.dataTable tbody td {
 	border-radius: 0;
 }
 
-table thead th,
-table tbody td {
+table:not(.datepicker-table) thead th,
+table:not(.datepicker-table) tbody td {
 	padding: 10px !important;
 }
 
@@ -2576,7 +2577,8 @@ color: #fff;
 	.nav-expanded .brand-sidebar {
 		background: 0 0 !important
 	}
-/*
+
+	/*
 	.brand-sidebar .logo-wrapper {
 		padding: 17px 18px !important;
 		text-align: center;

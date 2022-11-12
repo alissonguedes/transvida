@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 10/11/2022 às 20:20
+-- Tempo de geração: 11/11/2022 às 10:16
 -- Versão do servidor: 10.6.7-MariaDB-2ubuntu1.1
 -- Versão do PHP: 8.1.2-1ubuntu2.6
 
@@ -384,7 +384,8 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (38, 16, 0, 'get', '/api/token', 'token', 'clinica.api.token', NULL, 1111, 'inherit', '1'),
 (39, 18, 0, 'patch', '/config', 'patch', 'clinica.config.patch', NULL, 1111, 'inherit', '1'),
 (40, 19, 0, 'any', '/pacientes', 'index', 'clinica.pacientes.index', NULL, 1111, 'inherit', '1'),
-(41, 19, 0, 'any', '/pacientes/cadastro', 'cadastrar', 'clinica.pacientes.add', NULL, 1111, 'inherit', '1');
+(41, 19, 0, 'any', '/pacientes/cadastro', 'register', 'clinica.pacientes.add', NULL, 1111, 'inherit', '1'),
+(42, 19, 0, 'post', '/pacientes/cadastro', 'create', 'clinica.pacientes.post', NULL, 1111, 'inherit', '1');
 
 -- --------------------------------------------------------
 
@@ -554,7 +555,42 @@ INSERT INTO `tb_acl_usuario_session` (`id`, `id_usuario`, `id_modulo`, `token`, 
 (73, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:38:05', '2022-11-10 00:39:00'),
 (74, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:39:06', '2022-11-10 00:40:21'),
 (75, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:40:28', '2022-11-10 00:42:36'),
-(76, 1, 6, 'a3b080df32a07926349ccd2c0eb9ec79636d06f63f8f1', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-10 17:13:10', NULL);
+(76, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-10 17:13:10', '2022-11-11 03:59:10'),
+(77, 1, 6, '441715576acd2fb6495dba4762251cd8636dfa2413140', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-11 10:30:44', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tb_atendimento`
+--
+
+CREATE TABLE `tb_atendimento` (
+  `id` int(11) UNSIGNED ZEROFILL NOT NULL,
+  `id_medico` int(11) UNSIGNED NOT NULL,
+  `id_paciente` int(11) UNSIGNED NOT NULL,
+  `id_parent` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `data_agendamento` datetime NOT NULL DEFAULT current_timestamp(),
+  `hora_inicial` time NOT NULL DEFAULT '00:00:00',
+  `hora_final` time NOT NULL DEFAULT '00:00:00',
+  `tipo` enum('consulta','retorno','exame','procedimento','cirurgia','outros') DEFAULT 'consulta',
+  `status` enum('agendado','adiado','remarcado','ausente','cancelado') DEFAULT 'agendado'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de atendimentos realizados.';
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tb_atendimento_notas`
+--
+
+CREATE TABLE `tb_atendimento_notas` (
+  `id` int(11) UNSIGNED ZEROFILL NOT NULL,
+  `id_severidade` int(11) UNSIGNED NOT NULL,
+  `id_atendimento` int(11) UNSIGNED NOT NULL,
+  `id_usuario` int(11) UNSIGNED NOT NULL,
+  `descricao` varchar(1000) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de notas em atendimentos realizados.';
 
 -- --------------------------------------------------------
 
@@ -833,6 +869,18 @@ CREATE TABLE `tb_empresa` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `tb_especialidade`
+--
+
+CREATE TABLE `tb_especialidade` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `especialidade` varchar(255) NOT NULL,
+  `descricao` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de especialidades médicas';
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `tb_galeria`
 --
 
@@ -935,6 +983,24 @@ CREATE TABLE `tb_link_descricao` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `tb_medico`
+--
+
+CREATE TABLE `tb_medico` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `id_especialidade` int(11) UNSIGNED NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `crm` varchar(14) NOT NULL,
+  `rg` varchar(14) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` enum('0','1') NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de atendimentos realizados.';
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `tb_midia`
 --
 
@@ -973,6 +1039,56 @@ CREATE TABLE `tb_midia_descricao` (
   `meta_title` varchar(255) NOT NULL,
   `meta_keywords` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tb_paciente`
+--
+
+CREATE TABLE `tb_paciente` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `codigo` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `sexo` enum('M','F') NOT NULL,
+  `data_nascimento` date NOT NULL,
+  `cpf` varchar(11) NOT NULL,
+  `rg` varchar(11) NOT NULL,
+  `sus` varchar(20) NOT NULL,
+  `mae` varchar(255) NOT NULL,
+  `pai` varchar(255) NOT NULL,
+  `logradouro` varchar(100) NOT NULL,
+  `numero` varchar(10) NOT NULL,
+  `complemento` varchar(100) NOT NULL,
+  `cep` varchar(9) NOT NULL,
+  `cidade` varchar(100) NOT NULL,
+  `bairro` varchar(100) NOT NULL,
+  `uf` varchar(100) NOT NULL,
+  `pais` varchar(100) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `telefone` varchar(16) DEFAULT NULL,
+  `celular` varchar(16) DEFAULT NULL,
+  `receber_notificacoes` enum('0','1') NOT NULL DEFAULT '1',
+  `receber_email` enum('0','1') NOT NULL DEFAULT '1',
+  `receber_sms` enum('0','1') NOT NULL DEFAULT '1',
+  `obito` enum('0','1') NOT NULL DEFAULT '1',
+  `status` enum('0','1') NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tb_paciente_nota`
+--
+
+CREATE TABLE `tb_paciente_nota` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `id_paciente` int(11) UNSIGNED NOT NULL,
+  `id_severidade` int(11) UNSIGNED NOT NULL,
+  `descricao` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -1098,6 +1214,20 @@ CREATE TABLE `tb_produto_imagem` (
   `id_midia` int(10) UNSIGNED NOT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tb_severidade_nota`
+--
+
+CREATE TABLE `tb_severidade_nota` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `descricao` text NOT NULL,
+  `color` varchar(7) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -1296,6 +1426,23 @@ ALTER TABLE `tb_acl_usuario_session`
   ADD KEY `fk_tb_acl_usuario_session_id_modulo` (`id_modulo`);
 
 --
+-- Índices de tabela `tb_atendimento`
+--
+ALTER TABLE `tb_atendimento`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tb_atendimento_id_medico` (`id_medico`),
+  ADD KEY `fk_tb_atendimento_id_paciente` (`id_paciente`);
+
+--
+-- Índices de tabela `tb_atendimento_notas`
+--
+ALTER TABLE `tb_atendimento_notas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tb_atendimento_id_severidade` (`id_severidade`),
+  ADD KEY `fk_tb_atendimento_id_atendimento` (`id_atendimento`),
+  ADD KEY `fk_tb_atendimento_id_usuario` (`id_usuario`);
+
+--
 -- Índices de tabela `tb_banner`
 --
 ALTER TABLE `tb_banner`
@@ -1402,6 +1549,12 @@ ALTER TABLE `tb_empresa`
   ADD UNIQUE KEY `cnpj` (`cnpj`);
 
 --
+-- Índices de tabela `tb_especialidade`
+--
+ALTER TABLE `tb_especialidade`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `tb_galeria`
 --
 ALTER TABLE `tb_galeria`
@@ -1446,6 +1599,16 @@ ALTER TABLE `tb_link_descricao`
   ADD KEY `fk_tb_link_descricao_tb_sys_idioma1_idx` (`id_idioma`);
 
 --
+-- Índices de tabela `tb_medico`
+--
+ALTER TABLE `tb_medico`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `cpf` (`cpf`),
+  ADD UNIQUE KEY `crm` (`crm`),
+  ADD UNIQUE KEY `rg` (`rg`),
+  ADD KEY `fk_tb_medico_id_especialidade` (`id_especialidade`);
+
+--
 -- Índices de tabela `tb_midia`
 --
 ALTER TABLE `tb_midia`
@@ -1458,6 +1621,21 @@ ALTER TABLE `tb_midia_descricao`
   ADD PRIMARY KEY (`id_midia`,`id_idioma`),
   ADD KEY `fk_tb_midia_descricao_tb_midia1_idx` (`id_midia`),
   ADD KEY `fk_tb_midia_descricao_tb_sys_idioma1_idx` (`id_idioma`);
+
+--
+-- Índices de tabela `tb_paciente`
+--
+ALTER TABLE `tb_paciente`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id_UNIQUE` (`id`);
+
+--
+-- Índices de tabela `tb_paciente_nota`
+--
+ALTER TABLE `tb_paciente_nota`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tb_paciente_nota` (`id_paciente`),
+  ADD KEY `fk_tb_paciente_nota_id_severidade` (`id_severidade`);
 
 --
 -- Índices de tabela `tb_post`
@@ -1524,6 +1702,12 @@ ALTER TABLE `tb_produto_imagem`
   ADD UNIQUE KEY `id_produto_UNIQUE` (`id_produto`),
   ADD UNIQUE KEY `id_midia_UNIQUE` (`id_midia`),
   ADD KEY `fk_tb_produto_imagem_tb_produto1_idx` (`id_produto`,`id_midia`);
+
+--
+-- Índices de tabela `tb_severidade_nota`
+--
+ALTER TABLE `tb_severidade_nota`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `tb_sys_config`
@@ -1598,7 +1782,7 @@ ALTER TABLE `tb_acl_modulo_controller`
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_routes`
 --
 ALTER TABLE `tb_acl_modulo_routes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_usuario`
@@ -1616,7 +1800,19 @@ ALTER TABLE `tb_acl_usuario_imagem`
 -- AUTO_INCREMENT de tabela `tb_acl_usuario_session`
 --
 ALTER TABLE `tb_acl_usuario_session`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT de tabela `tb_atendimento`
+--
+ALTER TABLE `tb_atendimento`
+  MODIFY `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_atendimento_notas`
+--
+ALTER TABLE `tb_atendimento_notas`
+  MODIFY `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tb_banner`
@@ -1661,6 +1857,12 @@ ALTER TABLE `tb_empresa`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela.';
 
 --
+-- AUTO_INCREMENT de tabela `tb_especialidade`
+--
+ALTER TABLE `tb_especialidade`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `tb_galeria`
 --
 ALTER TABLE `tb_galeria`
@@ -1679,10 +1881,28 @@ ALTER TABLE `tb_link`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de tabela `tb_medico`
+--
+ALTER TABLE `tb_medico`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `tb_midia`
 --
 ALTER TABLE `tb_midia`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_paciente`
+--
+ALTER TABLE `tb_paciente`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_paciente_nota`
+--
+ALTER TABLE `tb_paciente_nota`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tb_post`
@@ -1695,6 +1915,12 @@ ALTER TABLE `tb_post`
 --
 ALTER TABLE `tb_produto`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_severidade_nota`
+--
+ALTER TABLE `tb_severidade_nota`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tb_sys_config`
@@ -1799,6 +2025,21 @@ ALTER TABLE `tb_acl_usuario_session`
   ADD CONSTRAINT `fk_tb_acl_usuario_session_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `tb_acl_usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Restrições para tabelas `tb_atendimento`
+--
+ALTER TABLE `tb_atendimento`
+  ADD CONSTRAINT `fk_tb_atendimento_id_medico` FOREIGN KEY (`id_medico`) REFERENCES `tb_medico` (`id`),
+  ADD CONSTRAINT `fk_tb_atendimento_id_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tb_paciente` (`id`);
+
+--
+-- Restrições para tabelas `tb_atendimento_notas`
+--
+ALTER TABLE `tb_atendimento_notas`
+  ADD CONSTRAINT `fk_tb_atendimento_id_atendimento` FOREIGN KEY (`id_atendimento`) REFERENCES `tb_atendimento` (`id`),
+  ADD CONSTRAINT `fk_tb_atendimento_id_severidade` FOREIGN KEY (`id_severidade`) REFERENCES `tb_severidade_nota` (`id`),
+  ADD CONSTRAINT `fk_tb_atendimento_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `tb_acl_usuario` (`id`);
+
+--
 -- Restrições para tabelas `tb_banner_descricao`
 --
 ALTER TABLE `tb_banner_descricao`
@@ -1879,11 +2120,24 @@ ALTER TABLE `tb_link_descricao`
   ADD CONSTRAINT `fk_tb_link_descricao_tb_sys_idioma1` FOREIGN KEY (`id_idioma`) REFERENCES `tb_sys_idioma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Restrições para tabelas `tb_medico`
+--
+ALTER TABLE `tb_medico`
+  ADD CONSTRAINT `fk_tb_medico_id_especialidade` FOREIGN KEY (`id_especialidade`) REFERENCES `tb_especialidade` (`id`);
+
+--
 -- Restrições para tabelas `tb_midia_descricao`
 --
 ALTER TABLE `tb_midia_descricao`
   ADD CONSTRAINT `fk_tb_midia_descricao_tb_midia1` FOREIGN KEY (`id_midia`) REFERENCES `tb_midia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tb_midia_descricao_tb_sys_idioma1` FOREIGN KEY (`id_idioma`) REFERENCES `tb_sys_idioma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Restrições para tabelas `tb_paciente_nota`
+--
+ALTER TABLE `tb_paciente_nota`
+  ADD CONSTRAINT `fk_tb_paciente_nota` FOREIGN KEY (`id_paciente`) REFERENCES `tb_paciente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_paciente_nota_id_severidade` FOREIGN KEY (`id_severidade`) REFERENCES `tb_severidade_nota` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Restrições para tabelas `tb_post`

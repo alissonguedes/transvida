@@ -141,7 +141,7 @@ html [type=button] {
 }
 
 button {
-	display: flex !important;
+	/* display: flex !important; */
 	align-items: center;
 	place-content: center;
 }

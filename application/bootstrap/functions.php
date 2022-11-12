@@ -14,6 +14,13 @@ if (!function_exists('data')) {
 	}
 }
 
+if (!function_exists('convert_to_date')) {
+	function convert_to_date($data, $format = 'd/m/Y H:i:s', $to_format = 'Y-m-d H:i:s')
+	{
+		return \Carbon\Carbon::createFromFormat($format, $data)->format($to_format);
+	}
+}
+
 if (!function_exists('get_config')) {
 	function get_config($config)
 	{

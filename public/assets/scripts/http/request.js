@@ -54,9 +54,10 @@ var Request = {
 	isLink: (href) => {
 
 		var URL = typeof href.split(BASE_URL)[1] === 'undefined' ? href : href.split(BASE_URL)[1];
-		var isAnchor = /^[jJ]ava[sS]cript(\:[a-z]+)?|#([a-z]?)+$/i.test(URL);
+		var isAnchor = /^[jJ]ava[sS]cript(\:[a-z]+)?$/i.test(URL);
+		var isNotLink = /#[a-z0-9]+/i.test(URL);
 
-		return href !== '' && !isAnchor && typeof URL !== 'undefined';
+		return href !== '' && !isAnchor && !isNotLink && typeof URL !== 'undefined';
 
 	},
 

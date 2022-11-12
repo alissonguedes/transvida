@@ -9,19 +9,111 @@
 	background-color: inherit;
 }
 
+[type=radio]:checked+span:not(.leaver):before {
+	border-color: var(--blue-lighten-1);
+}
+
+[type=radio].with-gap:checked+span:after,
+[type=radio]:checked+span:after {
+	background-color: var(--blue-lighten-1);
+}
+
+[type=radio].with-gap:checked+span:after,
+[type=radio].with-gap:checked+span:before,
+[type=radio]:checked+span:after {
+	border-color: var(--blue-lighten-1);
+}
+
+[type=checkbox].filled-in:checked+span:not(.lever):after {
+	background-color: var(--blue-lighten-1);
+	border-color: var(--blue-lighten-1);
+}
+
 [type=checkbox]:checked+span:not(.lever):before {
 	border-right-color: var(--blue-lighten-1);
 	border-bottom-color: var(--blue-lighten-1);
 }
 
-[type=checkbox]+span:not(.lever):before,
+[type="radio"]+span:before,
+[type="radio"]+span:after,
+[type=checkbox]:not(.filled-in)+span:not(.lever):before,
 [type=checkbox]:not(.filled-in)+span:not(.lever):after {
 	width: 21px;
 	height: 21px;
 }
 
+[type=checkbox]:not(.filled-in):checked+span:not(.lever):before,
+[type=checkbox]:not(.filled-in):checked+span:not(.lever):after {
+	width: 10px;
+}
+
+[type=checkbox].filled-in:checked+span:not(.lever):before {
+	top: -1px;
+	left: 1px;
+	width: 5px;
+	height: 13px;
+}
+
+[type=radio]+span:after,
+[type=radio]+span:before {
+	margin-top: 2px;
+	margin-left: 6px;
+}
+
+[type=radio].with-gap:checked+span:after {
+	-webkit-transform: scale(.6);
+	-ms-transform: scale(.6);
+	transform: scale(.6);
+}
+
+.switch label .lever {
+	width: 45px;
+	height: 26px;
+	top: -1px;
+	margin: 0 10px 0 10px;
+}
+
+.switch label .lever:after,
+.switch label .lever:before {
+	left: 3px;
+	top: 3px;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after,
+.switch label input[type=checkbox]:checked+.lever:before {
+	left: 22px;
+}
+
+.switch label input[type=checkbox]+.lever {
+	background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+	background-color: var(--blue-lighten-1) !important;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+	background-color: #fff;
+}
+
 table tr label>input[type=checkbox]~span:not(.lever) {
 	margin-top: 2px;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+	top: 110px;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+	right: 50px;
+}
+
+.dataTables_wrapper .dataTables_info {
+	right: 140px;
 }
 
 .input-field>label {
@@ -42,7 +134,6 @@ input[type=datetime]:not(.browser-default),
 input[type=datetime-local]:not(.browser-default),
 input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
-input[type=phone]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea:not(.browser-default),
 textarea.materialize-textarea:not(.browser-default),
@@ -75,7 +166,6 @@ input[type=datetime]:not(.browser-default),
 input[type=datetime-local]:not(.browser-default),
 input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
-input[type=phone]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea:not(.browser-default),
 textarea.materialize-textarea:not(.browser-default),
@@ -112,7 +202,6 @@ input[type=datetime]:not(.browser-default):focus:not([readonly]),
 input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
 input[type=tel]:not(.browser-default):focus:not([readonly]),
 input[type=number]:not(.browser-default):focus:not([readonly]),
-input[type=phone]:not(.browser-default):focus:not([readonly]),
 input[type=search]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]),
 .select-wrapper:not(.browser-default) input.select-dropdown:focus,
@@ -149,8 +238,6 @@ input[type=tel]:not(.browser-default):disabled,
 input[type=tel]:not(.browser-default)[readonly="readonly"],
 input[type=number]:not(.browser-default):disabled,
 input[type=number]:not(.browser-default)[readonly="readonly"],
-input[type=phone]:not(.browser-default):disabled,
-input[type=phone]:not(.browser-default)[readonly="readonly"],
 input[type=search]:not(.browser-default):disabled,
 input[type=search]:not(.browser-default)[readonly="readonly"],
 textarea.materialize-textarea:disabled,
@@ -178,7 +265,6 @@ input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
 input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
 input[type=tel]:not(.browser-default):focus:not([readonly])+label,
 input[type=number]:not(.browser-default):focus:not([readonly])+label,
-input[type=phone]:not(.browser-default):focus:not([readonly])+label,
 input[type=search]:not(.browser-default):focus:not([readonly])+label,
 textarea.materialize-textarea:not(.browser-default):focus:not([readonly])+label,
 .input-field:not(.browser-default):focus .ql-container:not([readonly])+label {
@@ -207,8 +293,6 @@ input[type=tel]:not(.browser-default):disabled+label,
 input[type=tel]:not(.browser-default)[readonly="readonly"]+label,
 input[type=number]:not(.browser-default):disabled+label,
 input[type=number]:not(.browser-default)[readonly="readonly"]+label,
-input[type=phone]:not(.browser-default):disabled+label,
-input[type=phone]:not(.browser-default)[readonly="readonly"]+label,
 input[type=search]:not(.browser-default):disabled+label,
 input[type=search]:not(.browser-default)[readonly="readonly"]+label,
 textarea.materialize-textarea:disabled+label,
@@ -228,7 +312,6 @@ textarea.materialize-textarea[readonly="readonly"]+label,
 .input-field.with-sufix-icon input[type=datetime-local]:not(.browser-default),
 .input-field.with-sufix-icon input[type=tel]:not(.browser-default),
 .input-field.with-sufix-icon input[type=number]:not(.browser-default),
-.input-field.with-sufix-icon input[type=phone]:not(.browser-default),
 .input-field.with-sufix-icon input[type=search]:not(.browser-default),
 .input-field.with-sufix-icon textarea:not(.browser-default),
 .input-field:not(.browser-default) .ql-container {
@@ -467,7 +550,6 @@ input.no-border,
 .bordered input[type=datetime-local]:not(.browser-default),
 .bordered input[type=tel]:not(.browser-default),
 .bordered input[type=number]:not(.browser-default),
-.bordered input[type=phone]:not(.browser-default),
 .bordered input[type=search]:not(.browser-default),
 .bordered textarea,
 .bordered textarea.materialize-textarea,
@@ -490,7 +572,6 @@ input.no-border,
 .bordered input[type=datetime-local]:focus:not(.browser-default),
 .bordered input[type=tel]:focus:not(.browser-default),
 .bordered input[type=number]:focus:not(.browser-default),
-.bordered input[type=phone]:focus:not(.browser-default),
 .bordered input[type=search]:focus:not(.browser-default),
 .bordered textarea:focus,
 .bordered textarea.materialize-textarea:focus,

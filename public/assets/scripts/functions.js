@@ -627,17 +627,12 @@ var App = {
 
 			MascaraUtils.mascara(input, MascaraUtils.TELEFONE);
 
-			var len = 13;
+			var len = 14;
 			$(this).keyup(function() {
 				MascaraUtils.mascara(this, MascaraUtils.TELEFONE);
 			}).on('keypress', function() {
-
 				MascaraUtils.mascara(this, MascaraUtils.TELEFONE);
-
-				$(this).val($(this).val().replace('(', '').replace(')', ''));
-
 			}).attr('maxlength', len);
-
 
 			if (typeof $(this).attr('placeholder') !== 'undefined' && $(this).attr('placeholder') != '')
 				$(this).attr('placeholder', $(this).attr('placeholder'));
@@ -654,11 +649,12 @@ var App = {
 
 			MascaraUtils.mascara(input, MascaraUtils.CELULAR);
 
+			var len = 16;
 			$(this).keyup(function() {
 				MascaraUtils.mascara(this, MascaraUtils.CELULAR);
 			}).on('keypress', function() {
 				MascaraUtils.mascara(this, MascaraUtils.CELULAR);
-			}).attr('maxlength', 16);
+			}).attr('maxlength', len);
 
 			if (typeof $(this).attr('placeholder') !== 'undefined' && $(this).attr('placeholder') != '')
 				$(this).attr('placeholder', $(this).attr('placeholder'));
@@ -777,7 +773,7 @@ var App = {
 			}).attr('maxlength', 10).datepicker({
 				format: 'dd/mm/yyyy',
 				startView: 2,
-				autoClose: true,
+				autoClose: false,
 				// todayHightlight : true,
 				// endYear      : 'today',
 				// language        : 'pt-BR',
