@@ -215,7 +215,7 @@ function exibir_endereco(array $config = [
 if (!function_exists('base_url')) {
 	function base_url()
 	{
-		$baseUrl    = request()->getBaseUrl();
+		$baseUrl    = request()->getBaseUrl() ?? '/';
 		$currentUrl = request()->getRequestUri();
 
 		echo $baseUrl . ' <<<< ';
