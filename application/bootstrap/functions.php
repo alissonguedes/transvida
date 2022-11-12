@@ -359,3 +359,27 @@ if (!function_exists('getMenus')) {
 		return $ul;
 	}
 }
+
+if (!function_exists('RecursiveRemove')) {
+	function RecursiveRemove($path)
+	{
+
+		die('Para utilizar esta função, comente esta linha dentro do arquivo.');
+
+		$rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+
+		$files = null;
+
+		foreach ($rii as $file) {
+
+			if ($file->isDir()) {
+				continue;
+			}
+
+			$files = $file->getPathname();
+			unlink($files);
+
+		}
+
+	}
+}
