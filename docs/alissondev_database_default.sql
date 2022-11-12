@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 11/11/2022 às 10:16
+-- Tempo de geração: 12/11/2022 às 16:03
 -- Versão do servidor: 10.6.7-MariaDB-2ubuntu1.1
--- Versão do PHP: 8.1.2-1ubuntu2.6
+-- Versão do PHP: 8.1.2-1ubuntu2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,7 +66,7 @@ CREATE TABLE `tb_acl_menu` (
 
 INSERT INTO `tb_acl_menu` (`id`, `id_modulo`, `created_at`, `updated_at`, `editavel`, `status`) VALUES
 (1, 2, '2022-08-21 02:09:34', '2022-08-21 02:57:31', '1', '1'),
-(2, 6, '2022-08-21 02:56:50', '2022-11-08 22:38:46', '1', '1'),
+(2, 6, '2022-08-21 02:56:50', '2022-11-11 20:16:17', '1', '1'),
 (3, 6, '2022-08-21 02:56:50', '2022-08-21 02:57:29', '1', '1'),
 (4, 6, '2022-11-08 19:38:24', NULL, '1', '1');
 
@@ -94,6 +94,7 @@ INSERT INTO `tb_acl_menu_descricao` (`id_menu`, `id_idioma`, `titulo`, `descrica
 (1, 1, 'Menu Principal', 'menu-principal', NULL, NULL, NULL),
 (2, 1, 'Clínica', 'clinica', NULL, NULL, NULL),
 (3, 1, 'Clinica 2', 'clinica-2', NULL, NULL, NULL),
+(4, 1, 'Clinica 4', 'clinica-4', NULL, NULL, NULL),
 (1, 2, 'Main menu', 'main-menu', NULL, NULL, NULL),
 (2, 2, 'Clinic', 'clinic', NULL, NULL, NULL),
 (3, 2, '5', '5', NULL, NULL, NULL);
@@ -167,11 +168,11 @@ CREATE TABLE `tb_acl_menu_item_descricao` (
 --
 
 INSERT INTO `tb_acl_menu_item_descricao` (`id_item`, `id_idioma`, `titulo`, `descricao`, `meta_description`, `meta_title`, `meta_keywords`) VALUES
-(1, 1, 'Painel de controle', 'Painel de controle', 'Painel de controle', 'Painel de controle', 'Painel de controle'),
+(1, 1, 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard'),
 (2, 1, 'Menus', 'Menus', 'Menus', 'Menus', 'Menus'),
 (3, 1, 'Menus', 'Menus', 'Menus', 'Menus', 'Menus'),
 (4, 1, 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários'),
-(5, 1, 'Painel de controle', 'Painel de controle', 'Painel de controle', 'Painel de controle', 'Painel de controle'),
+(5, 1, 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard'),
 (6, 1, 'Agendamentos', 'Agendamentos', 'Agendamentos', 'Agendamentos', 'Agendamentos'),
 (7, 1, 'Consultas', 'Consultas', 'Consultas', 'Consultas', 'Outro menu'),
 (8, 1, 'Exames', 'Exames', 'Exames', 'Exames', 'Exames'),
@@ -384,8 +385,13 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (38, 16, 0, 'get', '/api/token', 'token', 'clinica.api.token', NULL, 1111, 'inherit', '1'),
 (39, 18, 0, 'patch', '/config', 'patch', 'clinica.config.patch', NULL, 1111, 'inherit', '1'),
 (40, 19, 0, 'any', '/pacientes', 'index', 'clinica.pacientes.index', NULL, 1111, 'inherit', '1'),
-(41, 19, 0, 'any', '/pacientes/cadastro', 'register', 'clinica.pacientes.add', NULL, 1111, 'inherit', '1'),
-(42, 19, 0, 'post', '/pacientes/cadastro', 'create', 'clinica.pacientes.post', NULL, 1111, 'inherit', '1');
+(41, 19, 40, 'any', '/', 'index', 'clinica.pacientes.index', NULL, 1111, 'inherit', '1'),
+(42, 19, 40, 'post', '/', 'create', 'clinica.pacientes.post', NULL, 1111, 'inherit', '1'),
+(43, 19, 40, 'get', '/{id}', 'form', 'clinica.pacientes.edit', NULL, 1111, 'inherit', '1'),
+(44, 19, 40, 'any', '/cadastro', 'form', 'clinica.pacientes.add', NULL, 1111, 'inherit', '1'),
+(45, 19, 40, 'patch', '/{id}', 'patch', 'clinica.pacientes.patch', NULL, 1111, 'inherit', '1'),
+(46, 19, 40, 'delete', '/', 'delete', 'clinica.pacientes.delete', NULL, 1111, 'inherit', '1'),
+(47, 19, 40, 'put', '/', 'edit', 'clinica.pacientes.edit', NULL, 1111, 'inherit', '1');
 
 -- --------------------------------------------------------
 
@@ -436,7 +442,7 @@ CREATE TABLE `tb_acl_usuario_config` (
 --
 
 INSERT INTO `tb_acl_usuario_config` (`id_usuario`, `id_modulo`, `id_config`, `value`, `created_at`, `updated_at`) VALUES
-(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-11-11 01:15:24');
+(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-11-12 20:03:27');
 
 -- --------------------------------------------------------
 
@@ -480,83 +486,8 @@ CREATE TABLE `tb_acl_usuario_session` (
 --
 
 INSERT INTO `tb_acl_usuario_session` (`id`, `id_usuario`, `id_modulo`, `token`, `ip`, `user_agent`, `started_at`, `expired_at`) VALUES
-(1, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36', '2022-08-21 01:56:30', '2022-08-21 02:12:45'),
-(2, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36', '2022-08-22 22:42:34', '2022-08-22 23:40:21'),
-(3, 1, 2, 'cef2b72f919def4cfc646558babffb7263063c060e609', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36', '2022-08-24 14:56:06', NULL),
-(4, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 10:18:20', '2022-11-07 13:23:51'),
-(5, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 10:24:16', '2022-11-07 13:24:38'),
-(6, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 13:28:33', '2022-11-07 13:28:41'),
-(7, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 22:28:19', '2022-11-07 22:28:28'),
-(8, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 19:28:31', '2022-11-07 22:29:24'),
-(9, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 19:32:12', '2022-11-07 22:32:36'),
-(10, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 19:32:39', '2022-11-07 22:33:10'),
-(11, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 02:06:13', '2022-11-08 02:08:02'),
-(12, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 23:09:34', '2022-11-08 02:11:12'),
-(13, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 23:11:16', '2022-11-08 02:51:12'),
-(14, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-07 23:52:05', '2022-11-08 02:52:16'),
-(15, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 00:23:36', '2022-11-08 03:25:25'),
-(16, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 00:25:30', '2022-11-08 03:26:43'),
-(17, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 00:29:55', '2022-11-08 03:30:37'),
-(18, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 00:30:47', '2022-11-08 03:31:17'),
-(19, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 00:31:20', '2022-11-08 03:31:54'),
-(20, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 00:32:07', '2022-11-08 03:34:42'),
-(21, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 00:34:45', '2022-11-08 03:55:47'),
-(22, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 00:55:52', '2022-11-08 06:11:41'),
-(23, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 03:14:51', '2022-11-08 06:15:01'),
-(24, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 03:17:21', '2022-11-08 06:18:45'),
-(25, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 03:19:44', '2022-11-08 09:46:03'),
-(26, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 17:27:17', '2022-11-08 20:00:43'),
-(27, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 17:00:46', '2022-11-08 20:00:58'),
-(28, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-08 17:01:05', '2022-11-08 23:54:43'),
-(29, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:05:00', '2022-11-09 22:05:20'),
-(30, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 22:07:22', '2022-11-09 22:08:15'),
-(31, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 22:12:21', '2022-11-09 22:12:27'),
-(32, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 22:39:01', '2022-11-09 23:03:20'),
-(33, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 23:09:47', '2022-11-09 23:10:06'),
-(34, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:10:17', '2022-11-09 23:19:17'),
-(35, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:20:17', '2022-11-09 23:21:30'),
-(36, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:22:13', '2022-11-09 23:26:02'),
-(37, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:26:57', '2022-11-09 23:27:38'),
-(38, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:30:09', '2022-11-09 23:30:20'),
-(39, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:40:24', '2022-11-09 23:40:31'),
-(40, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:41:02', '2022-11-09 23:41:12'),
-(41, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:41:18', '2022-11-09 23:41:37'),
-(42, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:42:19', '2022-11-09 23:42:39'),
-(43, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:46:38', '2022-11-09 23:48:18'),
-(44, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:49:26', '2022-11-09 23:51:31'),
-(45, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:54:48', '2022-11-09 23:55:04'),
-(46, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:56:07', '2022-11-09 23:56:14'),
-(47, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:57:37', '2022-11-09 23:57:46'),
-(48, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 20:59:00', '2022-11-09 23:59:09'),
-(49, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:01:38', '2022-11-10 00:02:06'),
-(50, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:02:16', '2022-11-10 00:03:16'),
-(51, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:05:50', '2022-11-10 00:06:03'),
-(52, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:07:53', '2022-11-10 00:09:21'),
-(53, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:10:19', '2022-11-10 00:10:33'),
-(54, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:12:02', '2022-11-10 00:16:17'),
-(55, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:16:57', '2022-11-10 00:17:06'),
-(56, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:17:30', '2022-11-10 00:17:40'),
-(57, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:20:11', '2022-11-10 00:20:18'),
-(58, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:20:29', '2022-11-10 00:20:43'),
-(59, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:21:31', '2022-11-10 00:21:40'),
-(60, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:21:54', '2022-11-10 00:22:03'),
-(61, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:22:15', '2022-11-10 00:22:24'),
-(62, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:22:30', '2022-11-10 00:23:02'),
-(63, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:23:13', '2022-11-10 00:23:30'),
-(64, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:23:38', '2022-11-10 00:25:18'),
-(65, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:25:39', '2022-11-10 00:25:50'),
-(66, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:26:06', '2022-11-10 00:26:13'),
-(67, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:26:45', '2022-11-10 00:26:54'),
-(68, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:27:14', '2022-11-10 00:27:23'),
-(69, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:27:33', '2022-11-10 00:27:45'),
-(70, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:27:53', '2022-11-10 00:28:11'),
-(71, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:28:13', '2022-11-10 00:28:25'),
-(72, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:29:41', '2022-11-10 00:37:59'),
-(73, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:38:05', '2022-11-10 00:39:00'),
-(74, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:39:06', '2022-11-10 00:40:21'),
-(75, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-09 21:40:28', '2022-11-10 00:42:36'),
-(76, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-10 17:13:10', '2022-11-11 03:59:10'),
-(77, 1, 6, '441715576acd2fb6495dba4762251cd8636dfa2413140', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-11 10:30:44', NULL);
+(1, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-12 17:52:24', '2022-11-12 20:21:10'),
+(2, 1, 6, '409dcd98b01f7fe7809aa14946b6dade636fd60b8415b', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-12 17:21:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -753,6 +684,28 @@ CREATE TABLE `tb_comentario` (
   `updated_at` timestamp NULL DEFAULT NULL COMMENT 'Data a última modificação do comentário',
   `status` enum('0','1') NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tb_convenio`
+--
+
+CREATE TABLE `tb_convenio` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `codigo` varchar(20) NOT NULL,
+  `descricao` varchar(100) NOT NULL,
+  `status` enum('0','1') DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de convênios de pacientes.';
+
+--
+-- Despejando dados para a tabela `tb_convenio`
+--
+
+INSERT INTO `tb_convenio` (`id`, `codigo`, `descricao`, `status`) VALUES
+(1, '0', 'Particular', '1'),
+(2, '1', 'Bradesco Saúde', '1'),
+(3, '2', 'HapVida', '1');
 
 -- --------------------------------------------------------
 
@@ -1048,32 +1001,46 @@ CREATE TABLE `tb_midia_descricao` (
 
 CREATE TABLE `tb_paciente` (
   `id` int(11) UNSIGNED NOT NULL,
-  `codigo` int(11) NOT NULL,
+  `id_convenio` int(11) UNSIGNED NOT NULL,
+  `codigo` varchar(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `sexo` enum('M','F') NOT NULL,
-  `data_nascimento` date NOT NULL,
-  `cpf` varchar(11) NOT NULL,
-  `rg` varchar(11) NOT NULL,
-  `sus` varchar(20) NOT NULL,
-  `mae` varchar(255) NOT NULL,
-  `pai` varchar(255) NOT NULL,
-  `logradouro` varchar(100) NOT NULL,
-  `numero` varchar(10) NOT NULL,
-  `complemento` varchar(100) NOT NULL,
-  `cep` varchar(9) NOT NULL,
-  `cidade` varchar(100) NOT NULL,
-  `bairro` varchar(100) NOT NULL,
-  `uf` varchar(100) NOT NULL,
-  `pais` varchar(100) NOT NULL,
+  `sexo` enum('M','F') DEFAULT NULL,
+  `data_nascimento` date DEFAULT NULL,
+  `cpf` varchar(14) DEFAULT NULL,
+  `rg` varchar(11) DEFAULT NULL,
+  `sus` varchar(20) DEFAULT NULL,
+  `mae` varchar(255) DEFAULT NULL,
+  `pai` varchar(255) DEFAULT NULL,
+  `notas` varchar(1000) DEFAULT NULL,
+  `logradouro` varchar(100) DEFAULT NULL,
+  `numero` varchar(10) DEFAULT NULL,
+  `complemento` varchar(100) DEFAULT NULL,
+  `cep` varchar(9) DEFAULT NULL,
+  `cidade` varchar(100) DEFAULT NULL,
+  `bairro` varchar(100) DEFAULT NULL,
+  `uf` varchar(100) DEFAULT NULL,
+  `pais` varchar(100) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `telefone` varchar(16) DEFAULT NULL,
   `celular` varchar(16) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
   `receber_notificacoes` enum('0','1') NOT NULL DEFAULT '1',
   `receber_email` enum('0','1') NOT NULL DEFAULT '1',
   `receber_sms` enum('0','1') NOT NULL DEFAULT '1',
-  `obito` enum('0','1') NOT NULL DEFAULT '1',
+  `obito` enum('0','1') NOT NULL DEFAULT '0',
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Despejando dados para a tabela `tb_paciente`
+--
+
+INSERT INTO `tb_paciente` (`id`, `id_convenio`, `codigo`, `nome`, `sexo`, `data_nascimento`, `cpf`, `rg`, `sus`, `mae`, `pai`, `notas`, `logradouro`, `numero`, `complemento`, `cep`, `cidade`, `bairro`, `uf`, `pais`, `email`, `telefone`, `celular`, `created_at`, `updated_at`, `receber_notificacoes`, `receber_email`, `receber_sms`, `obito`, `status`) VALUES
+(18, 1, 'P-240633', 'Alisson', NULL, '1987-01-18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-12 18:08:25', '2022-11-12 21:09:02', '0', '0', '0', '0', '0'),
+(19, 1, 'P-639492', 'Alisson Guedes Pereira', NULL, '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4800', '(83) 9 8811.2444', '2022-11-12 18:22:00', NULL, '1', '1', '0', '0', '1'),
+(20, 1, 'P-690352', 'Alisson Guedes Pereira', NULL, '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4800', '(83) 9 8811.2444', '2022-11-12 18:23:18', NULL, '1', '1', '0', '0', '1'),
+(21, 1, 'P-433831', 'Alisson Guedes Pereira', NULL, '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4800', '(83) 9 8811.2444', '2022-11-12 18:24:23', NULL, '1', '1', '1', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -1516,6 +1483,12 @@ ALTER TABLE `tb_comentario`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `tb_convenio`
+--
+ALTER TABLE `tb_convenio`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `tb_distribuidor`
 --
 ALTER TABLE `tb_distribuidor`
@@ -1627,7 +1600,8 @@ ALTER TABLE `tb_midia_descricao`
 --
 ALTER TABLE `tb_paciente`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_UNIQUE` (`id`);
+  ADD UNIQUE KEY `id_UNIQUE` (`id`),
+  ADD KEY `fk_tb_paciente_id_convenio` (`id_convenio`);
 
 --
 -- Índices de tabela `tb_paciente_nota`
@@ -1782,7 +1756,7 @@ ALTER TABLE `tb_acl_modulo_controller`
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_routes`
 --
 ALTER TABLE `tb_acl_modulo_routes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_usuario`
@@ -1800,7 +1774,7 @@ ALTER TABLE `tb_acl_usuario_imagem`
 -- AUTO_INCREMENT de tabela `tb_acl_usuario_session`
 --
 ALTER TABLE `tb_acl_usuario_session`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `tb_atendimento`
@@ -1837,6 +1811,12 @@ ALTER TABLE `tb_cliente`
 --
 ALTER TABLE `tb_comentario`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_convenio`
+--
+ALTER TABLE `tb_convenio`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `tb_distribuidor`
@@ -1896,7 +1876,7 @@ ALTER TABLE `tb_midia`
 -- AUTO_INCREMENT de tabela `tb_paciente`
 --
 ALTER TABLE `tb_paciente`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `tb_paciente_nota`
@@ -2131,6 +2111,12 @@ ALTER TABLE `tb_medico`
 ALTER TABLE `tb_midia_descricao`
   ADD CONSTRAINT `fk_tb_midia_descricao_tb_midia1` FOREIGN KEY (`id_midia`) REFERENCES `tb_midia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tb_midia_descricao_tb_sys_idioma1` FOREIGN KEY (`id_idioma`) REFERENCES `tb_sys_idioma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Restrições para tabelas `tb_paciente`
+--
+ALTER TABLE `tb_paciente`
+  ADD CONSTRAINT `fk_tb_paciente_id_convenio` FOREIGN KEY (`id_convenio`) REFERENCES `tb_convenio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Restrições para tabelas `tb_paciente_nota`
