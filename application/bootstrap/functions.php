@@ -215,20 +215,26 @@ function exibir_endereco(array $config = [
 if (!function_exists('base_url')) {
 	function base_url()
 	{
-		$baseUrl    = request()->getBaseUrl() ?? '/';
-		$currentUrl = request()->getRequestUri();
 
-		echo $baseUrl . ' <<<< ';
+		$path     = '/';
+		$base_url = explode('/', request()->getRequestUri());
 
-		// $dir = explode($baseUrl, $currentUrl);
-		// array_shift($dir);
+		foreach ($base_url as $ind => $base) {
 
-		// $path = explode('/', implode('/', $dir));
-		// array_shift($path);
+			if ($base_url[$ind] == '') {
+				$base_url[$ind] = '/';
+			}
 
-		// $baseUrl = is_dir(BASEDIR . 'app/Http/Controllers/' . ucfirst($path[0])) ? $path[0] : '/';
+			$dir = app_path() . '/Http/Controllers/' . ucfirst(str_replace('/', '', $base_url[$ind]));
+			if ($base_url[$ind] != '/' && is_dir($dir)) {
+				$path = $base;
+				break;
+			}
 
-		// return url($baseUrl) . '/';
+		}
+
+		return url($path) . '/';
+
 	}
 }
 
