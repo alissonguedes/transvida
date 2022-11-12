@@ -150,6 +150,10 @@
 	height: calc(100vh - 330px);
 }
 
+.card-body.responsive-table {
+	margin: 0;
+	height: calc(100vh - 240px);
+}
 .card-footer {
 	/* position: absolute; */
 	padding-top: 15px;

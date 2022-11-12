@@ -40,10 +40,10 @@
 						</li>
 					</ul>
 					<div class="card-body scroller responsive-table" data-scroll-x="true">
-						<table class="table dataTable no-footer dataTable-fixed" data-link="{{ route('clinica.pacientes.index') }}" >
+						<table class="table dataTable no-footer dataTable-fixed" data-link="{{ route('clinica.pacientes.index') }}">
 							<thead>
 								<tr>
-									<th>
+									<th data-disabled="true">
 										<label class="grey-text text-darken-2 font-14 left">
 											<input type="checkbox" name="check-all" id="check-all" class="filled-in">
 											<span></span>
@@ -55,6 +55,7 @@
 									<th class="table-col">Data de Nascimento</th>
 									<th class="table-col">Convênio</th>
 									<th class="table-col">Última Consulta</th>
+									<th class="table-col" class="center-align" data-disabled="true">Ações</th>
 								</tr>
 							</thead>
 						</table>

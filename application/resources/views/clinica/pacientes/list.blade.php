@@ -26,19 +26,19 @@
 			<td width="15%">
 				{{ $row->telefone ?? $row->celular }}
 			</td>
-			<td>
+			<td width="15%">
 				{{ $row->codigo }}
 			</td>
 			<td>
 				{{ $row->data_nascimento }}
 			</td>
-			<td width="20%">
+			<td width="1px">
 				{{ $row->convenio }}
 			</td>
 			<td>
 				{{ $row->status === '0' ? 'Inativo' : 'Ativo' }}
 			</td>
-			<td data-disabled="true">
+			<td data-disabled="true" width="15%" class="center-align">
 				@if(!$disabled)
 					<button data-href="{{ route('clinica.pacientes.edit', $row->id) }}" class="btn-small btn-flat btn-edit btn-floating float-none waves-effect" data-tooltip="Editar">
 						<i class="material-icons grey-text">edit</i>

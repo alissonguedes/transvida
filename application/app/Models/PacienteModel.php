@@ -21,6 +21,7 @@ class PacienteModel extends Model
 		'data_nascimento',
 		'convenio',
 		'status',
+		'status',
 	];
 
 	public function getPacientes($menu = null)
