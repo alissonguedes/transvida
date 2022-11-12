@@ -218,15 +218,17 @@ if (!function_exists('base_url')) {
 		$baseUrl    = request()->getBaseUrl();
 		$currentUrl = request()->getRequestUri();
 
-		$dir = explode($baseUrl, $currentUrl);
-		array_shift($dir);
+		echo $baseUrl . ' <<<< ';
 
-		$path = explode('/', implode('/', $dir));
-		array_shift($path);
+		// $dir = explode($baseUrl, $currentUrl);
+		// array_shift($dir);
 
-		$baseUrl = is_dir(BASEDIR . 'app/Http/Controllers/' . ucfirst($path[0])) ? $path[0] : '/';
+		// $path = explode('/', implode('/', $dir));
+		// array_shift($path);
 
-		return url($baseUrl) . '/';
+		// $baseUrl = is_dir(BASEDIR . 'app/Http/Controllers/' . ucfirst($path[0])) ? $path[0] : '/';
+
+		// return url($baseUrl) . '/';
 	}
 }
 

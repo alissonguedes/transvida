@@ -5,7 +5,6 @@
 @section('main')
 
 <div class="container pt-1">
-
 	<div class="row">
 		<div class="col s12">
 			<form action="{{ route('clinica.pacientes.post') }}" method="post" enctype="multipart/form-data" autocomplete="off">
@@ -16,7 +15,7 @@
 						</div>
 						<div id="tabs">
 							<ul class="tabs">
-								<li class="tab col s4"><a href="#informacoes_pessoais" class="no-request">Informações Pessoais</a></li>
+								<li class="tab col s4"><a href="#informacoes_pessoais">Informações Pessoais</a></li>
 								<li class="tab col s4"><a href="#informacoes_contato">Informações de contato</a></li>
 								<li class="tab col s4"><a href="#informacoes_endereco">Informações de endereço</a></li>
 							</ul>
