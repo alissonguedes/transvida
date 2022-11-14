@@ -281,3 +281,27 @@
 	height: 100px;
 	width: 100px;
 }
+
+@media only screen and (max-width: 992px) {
+
+	.topbar .topbar-fixed {
+		padding-left: inherit;
+	}
+
+	.topbar .input-field.search {
+		width: calc(100% - 200px);
+	}
+
+	.action-buttons {
+		position: relative;
+		left: -60px;
+	}
+
+	.nav-wrapper .page-title {
+		display: none;
+	}
+
+	.search-input-wrapper {
+		display: none;
+	}
+}
