@@ -23,6 +23,8 @@ var Request = {
 
 			if (Request.isLink(link) && !target) {
 
+				$('.progress').show();
+
 				if (window.location.origin + link !== window.location.href) {
 					console.log('verificar sessão antes de redirecionar');
 					Http.goTo(link);
