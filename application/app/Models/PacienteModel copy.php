@@ -88,9 +88,9 @@ class PacienteModel extends Model
 		$email                = $post->email;
 		$telefone             = $post->telefone;
 		$celular              = $post->celular;
-		$receber_notificacoes = $post->receber_notificacoes ?? '0';
-		$receber_email        = $post->receber_email ?? '0';
-		$receber_sms          = $post->receber_sms ?? '0';
+		$receber_notificacoes = $post->receber_notificacoes ?? 'off';
+		$receber_email        = $post->receber_email ?? 'off';
+		$receber_sms          = $post->receber_sms ?? 'off';
 		$obito                = $post->obito ?? '0';
 		$status               = $post->status ?? '1';
 

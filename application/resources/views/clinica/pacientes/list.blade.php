@@ -4,96 +4,72 @@
 	use App\Models\PermissaoModel;
 @endphp
 
-@if($paginate->total() > 0)
+@if($pacientes->total() > 0)
 
-	@php
-		$permissao = new PermissaoModel();
-		$permissao = $permissao->getPermissao('clinica.pacientes.edit');
-		$disabled = !$permissao ? true : false;
-	@endphp
-
-	@foreach($paginate as $ind => $row)
-		<tr class="{{ $row->status === '0' ? 'blocked' : null }}" style="position: relative;" id="{{ $row->id }}" data-disabled="{{ $disabled ? 'true' : 'false' }}">
-			<td width="1%" data-disabled="true">
-				<label>
-					<input type="checkbox" name="id[]" class="filled-in" value="{{ $row->id }}" data-status="{{ $row->status }}">
-					<span></span>
-				</label>
-			</td>
-			<td width="25%">
-				{{ $row->nome }}
-			</td>
-			<td width="15%">
-				{{ $row->telefone ?? $row->celular }}
-			</td>
-			<td width="15%">
-				{{ $row->codigo }}
-			</td>
-			<td>
-				{{ $row->data_nascimento }}
-			</td>
-			<td width="1px">
-				{{ $row->convenio }}
-			</td>
-			<td>
-				{{ $row->status === '0' ? 'Inativo' : 'Ativo' }}
-			</td>
-			<td data-disabled="true" width="15%" class="center-align">
-				@if(!$disabled)
-					<button data-href="{{ route('clinica.pacientes.edit', $row->id) }}" class="btn-small btn-flat btn-edit btn-floating float-none waves-effect" data-tooltip="Editar">
-						<i class="material-icons grey-text">edit</i>
-					</button>
-				@endif
-				@if(!$disabled)
-					{? $status = ($row->status === '0' ? '1' : '0'); ?}
-					<button class="btn-small btn-flat btn-edit btn-floating waves-effect" name="status" value="{{ $status }}" data-tooltip="{{ $status === '0' ? 'Bloquear' : 'Desbloquear' }}" data-link="{{ route('clinica.pacientes.patch', 'status', $row->id) }}" data-method="patch">
-						<i class="material-icons grey-text">{{ $row->status === '1' ? 'lock' : 'lock_open' }}</i>
-					</button>
-				@endif
-				@if(!$disabled)
-					<button class="btn-small btn-flat btn-floating excluir waves-effect" data-link="{{ route('clinica.pacientes.delete', $row->id) }}" data-method="delete" data-tooltip="Excluir">
-						<i class="material-icons grey-text">delete</i>
-					</button>
-				@endif
-			</td>
-		</tr>
-	@endforeach
-
-	<div id="pagination">
-
-		<ul>
-
-			<li>
-				<button class="btn btn-flat btn-floating waves-effect" data-tooltip="Anterior" data-href="{{ !$paginate->onFirstPage() ? $paginate->previousPageUrl() : '#' }}" {{ $paginate->onFirstPage() ? 'disabled' : null }}>
-					<i class="material-icons">keyboard_arrow_left</i>
-				</button>
-			</li>
-
-			<li>
-				<button class="btn btn-flat btn-floating waves-effect" data-tooltip="Próxima" data-href="{{ $paginate->currentPage() < $paginate->lastPage() ? $paginate->nextPageUrl() : '#' }}" {{ $paginate->currentPage() === $paginate->lastPage() ? 'disabled' : null }}>
-					<i class="material-icons">keyboard_arrow_right</i>
-				</button>
-			</li>
-
-		</ul>
-
+	<div class="row">
+		<div class="col s12">
+			<h6>{{ $pacientes->total() }} resultados encontrados.</h6>
+		</div>
 	</div>
 
-	<div id="info">
-		<button data-href="#" class="btn btn-flat waves-effect">
-			{{ $paginate->firstItem() }} - {{ $paginate->lastItem() }} de {{ $paginate->total() }}
-			{{-- {{ $paginate -> perPage() }} --}}
-		</button>
+	<div class="row">
+
+		@foreach($pacientes as $paciente)
+			<div class="col s12 m6 l4 grid-view">
+				<div class="card card-border gradient-45deg-indigo-light-blue">
+					<div class="card-content white-text">
+						<div class="flex center-align flex-center">
+							<img class="responsive-img circle z-depth-4 mr-6" src="{{ asset($paciente->imagem ?? (is_null($paciente->sexo) ? 'img/avatar/icon.png' : ($paciente->sexo == 'M' ? 'img/avatar/homem.png' : 'img/avatar/mulher.png') ) ) }}" alt="" style="width: 80px; height: 80px; {{ isset($paciente) && $paciente->status == '0' ? 'opacity: 0.3;filter: grayscale(1);' : null }}">
+							@if($paciente->status == '0')
+								<i class="material-icons" style="position: absolute; left: 55px;">lock</i>
+							@endif
+							<h5 class="white-text mb-1 left-align">{{ $paciente -> nome }}</h5>
+						</div>
+						<br>
+						<div class="info mt-3">
+							<div style="display: flex; place-content: start; align-items: center;">
+								<i class="material-icons mr-2">cake</i> {{ $paciente->data_nascimento ?? 'Não informado' }}
+							</div>
+							<div class="mt-10" style="display: flex; place-content: start; align-items: center;">
+								<i class="material-icons mr-2">credit_card</i> {{ $paciente->cpf  ?? 'Não informado' }} <br>
+							</div>
+							<div style="display: flex; place-content: start; align-items: center;">
+								<i class="material-icons mr-2">phone</i> {{ $paciente->telefone ?? 'Não informado' }}
+							</div>
+							<div style="display: flex; place-content: start; align-items: center;">
+								<i class="material-icons mr-2">message</i> {{ $paciente->celular ?? 'Não informado' }}
+							</div>
+							<div style="display: flex; place-content: start; align-items: center;">
+								<i class="material-icons mr-2">mail</i> {{ $paciente->email ?? 'Não informado' }}
+							</div>
+						</div>
+						{{-- <p class="center-align">
+							<a href="{{ route('clinica.pacientes.edit', $paciente->id) }}" class="waves-effect waves-light btn gradient-45deg-deep-orange-orange border-round mt-7 z-depth-4">Alterar</a>
+						</p> --}}
+						<div class="acoes flex flex-center mt-5" style="font-size: 22px; line-height: 22px;">
+							<a class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Prontuário">
+								<i class="material-icons">content_paste</i>
+							</a>
+							<a href="#" class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Agendar">
+								<i class="material-icons">event</i>
+							</a>
+							<a href="{{ route('clinica.pacientes.edit', $paciente->id) }}" class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Editar">
+								<i class="material-icons">edit</i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		@endforeach
+
 	</div>
 
 @else
 
-	<div class="no-results white-text center-align">
-		Nenhum registro encontrado.
+	<div class="row">
+		<div class="col s12">
+			<h6>Nenhum resultado encontrado.</h6>
+		</div>
 	</div>
-
-	<div id="pagination"></div>
-
-	<div id="info"></div>
 
 @endif

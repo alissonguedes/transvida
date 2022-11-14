@@ -17,7 +17,7 @@ function toogleMenuCollapse() {
 	sidenavMain.hasClass("nav-expanded") &&
 		!sidenavMain.hasClass("nav-lock") &&
 		sidenavMain.toggleClass("nav-expanded"),
-		$("#main").toggleClass("main-full");
+		$(".horizontal-layout, #main").toggleClass("main-full");
 
 	// Alterar no banco de dados a exibição de menu para o usuário
 	// $.ajax({

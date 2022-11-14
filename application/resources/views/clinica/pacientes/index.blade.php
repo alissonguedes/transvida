@@ -1,71 +1,65 @@
-@extends('clinica.body')
+@extends('clinica.layouts.index')
 
-@section('title', 'Prontuários')
+@section('title', 'Pacientes')
 
-@section('main')
+@section('search-label', 'Pesquisar pacientes')
+@section('data-search', 'pacientes')
 
-<div class="container pt-1">
-	<div class="row">
-		<div class="col s12">
-			<div class="card">
-				<div class="card-content">
-					<div class="card-title mb-3">
-						<div class="flex flex-center flex-auto">
-							<button class="dropdown-trigger btn pl-1 pr-1 white black-text mr-1 z-depth-1" data-target="dropdown-actions">
-								<i class="material-icons checkbox">check_box</i>
-								<i class="material-icons">keyboard_arrow_down</i>
-							</button>
-							<span class="grey-text selecteds-label"> </span>
-							<button data-href="{{ route('clinica.pacientes.add') }}" class="btn blue lighten-1 waves-effect waves-light">
-								<i class="material-icons">person_add_alt_1</i>
-							</button>
+@section('btn-add-title','Adicionar paciente')
+@section('btn-add-route', route('clinica.pacientes.add'))
+
+@section('container')
+
+<div id="index" class="row">
+
+	@foreach($pacientes as $paciente)
+		<div class="col s12 m6 l4 grid-view">
+			<div class="card card-border gradient-45deg-indigo-light-blue">
+				<div class="card-content white-text">
+					<div class="flex center-align flex-center">
+						<img class="responsive-img circle z-depth-4 mr-6" src="{{ asset($paciente->imagem ?? (is_null($paciente->sexo) ? 'img/avatar/icon.png' : ($paciente->sexo == 'M' ? 'img/avatar/homem.png' : 'img/avatar/mulher.png') ) ) }}" alt="" style="width: 80px; height: 80px; {{ isset($paciente) && $paciente->status == '0' ? 'opacity: 0.3;filter: grayscale(1);' : null }}">
+						@if($paciente->status == '0')
+							<i class="material-icons" style="position: absolute; left: 55px;">lock</i>
+						@endif
+						<h5 class="white-text mb-1 left-align">{{ $paciente -> nome }}</h5>
+					</div>
+					<br>
+					<div class="info mt-3">
+						<div style="display: flex; place-content: start; align-items: center;">
+							<i class="material-icons mr-2">cake</i> {{ $paciente->data_nascimento ?? 'Não informado' }}
+						</div>
+						<div class="mt-10" style="display: flex; place-content: start; align-items: center;">
+							<i class="material-icons mr-2">credit_card</i> {{ $paciente->cpf  ?? 'Não informado' }} <br>
+						</div>
+						<div style="display: flex; place-content: start; align-items: center;">
+							<i class="material-icons mr-2">phone</i> {{ $paciente->telefone ?? 'Não informado' }}
+						</div>
+						<div style="display: flex; place-content: start; align-items: center;">
+							<i class="material-icons mr-2">message</i> {{ $paciente->celular ?? 'Não informado' }}
+						</div>
+						<div style="display: flex; place-content: start; align-items: center;">
+							<i class="material-icons mr-2">mail</i> {{ $paciente->email ?? 'Não informado' }}
 						</div>
 					</div>
-					<ul id="dropdown-actions" class="dropdown-content">
-						<li>
-							<a>
-								<i class="material-icons">file_download</i>PDF
-							</a>
-						</li>
-						<li>
-							<a>
-								<i class="material-icons">file_download</i>XLS
-							</a>
-						</li>
-						<li class="divider" tabindex="-1"></li>
-						<li class="disabled red-text">
-							<button disabled>
-								<i class="material-icons">delete</i>Excluir
-							</button>
-						</li>
-					</ul>
-					<div class="card-body scroller responsive-table" data-scroll-x="true">
-						<table class="table dataTable no-footer dataTable-fixed" data-link="{{ route('clinica.pacientes.index') }}">
-							<thead>
-								<tr>
-									<th data-disabled="true">
-										<label class="grey-text text-darken-2 font-14 left">
-											<input type="checkbox" name="check-all" id="check-all" class="filled-in">
-											<span></span>
-										</label>
-									</th>
-									<th class="table-col">Nome</th>
-									<th class="table-col">Telefone</th>
-									<th class="table-col">Código</th>
-									<th class="table-col">Data de Nascimento</th>
-									<th class="table-col">Convênio</th>
-									<th class="table-col">Última Consulta</th>
-									<th class="table-col" class="center-align" data-disabled="true">Ações</th>
-								</tr>
-							</thead>
-						</table>
+					{{-- <p class="center-align">
+							<a href="{{ route('clinica.pacientes.edit', $paciente->id) }}" class="waves-effect waves-light btn gradient-45deg-deep-orange-orange border-round mt-7 z-depth-4">Alterar</a>
+					</p> --}}
+					<div class="acoes flex flex-center mt-5" style="font-size: 22px; line-height: 22px;">
+						<a class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Prontuário">
+							<i class="material-icons">content_paste</i>
+						</a>
+						<a href="#" class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Agendar">
+							<i class="material-icons">event</i>
+						</a>
+						<a href="{{ route('clinica.pacientes.edit', $paciente->id) }}" class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Editar">
+							<i class="material-icons">edit</i>
+						</a>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	@endforeach
+
 </div>
-
-
 
 @endsection

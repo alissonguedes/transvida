@@ -29,7 +29,7 @@ var Http = {
 
 	},
 
-	get: (url, params, callback) => {
+	get: (url, params, ...callback) => {
 
 		if (params && typeof params !== 'function') {
 
@@ -45,14 +45,22 @@ var Http = {
 				},
 				'dataType': (params.datatype || 'json'),
 				'data': (params.data || null),
+
 				'success': (response) => {
 
-					if (typeof callback === 'function')
-						return callback(response);
-					else
-						return callback = response;
+					for (var i in callback) {
+						if (typeof callback[i] === 'function') {
+							callback[i](response);
+						}
+					}
 
+				},
+
+				'error': (error, status) => {
+					console.log(error);
+					// Form.showMessage((typeof error.responseJSON.message !== 'undefined' && error.responseJSON.message != '' ? error.responseJSON.message : 'Algum erro ocorreu ao tentar realizar esta ação.'), status);
 				}
+
 
 			});
 
@@ -93,7 +101,7 @@ var Http = {
 					}
 
 				},
-				'error': (error, status, a, b) => {
+				'error': (error, status) => {
 					console.log(error);
 					Form.showMessage((typeof error.responseJSON.message !== 'undefined' && error.responseJSON.message != '' ? error.responseJSON.message : 'Algum erro ocorreu ao tentar realizar esta ação.'), status);
 				}

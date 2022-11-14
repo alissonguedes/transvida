@@ -285,4 +285,108 @@ function core() {
 		});
 
 	});
+
+	$.fn.extend({
+		toggleText: function(a, b) {
+			return this.text(this.text() == b ? a : b);
+		}
+	});
+
+	$('#change-mode').on('click', function() {
+
+		var mode = $(this).hasClass('grid') ? 'list' : 'grid';
+
+		$(this).toggleClass(mode);
+
+		$('.grid-view').each(function() {
+			if (mode == 'list') {
+				$(this).toggleClass('grid-view');
+				$(this).toggleClass('l4');
+				$(this).toggleClass('l12');
+			} else if (mode == 'grid') {
+				$(this).toggleClass('l4');
+				$(this).toggleClass('l12');
+				$(this).toggleClass('list-view');
+			}
+		});
+
+		if (mode == 'list') {
+			$(this).removeClass('list').addClass('grid');
+			$(this).find('i').toggleText('list', 'grid_view')
+		} else {
+			$(this).removeClass('grid').addClass('list');
+			$(this).find('i').toggleText('grid_view', 'list')
+		}
+
+	});
+
+	$('#change-photo').on('click', function() {
+
+		$(this).find('[type="file"]').on('change', function() {
+
+			console.log($(this).val());
+			var self = $(this);
+			var $len = (self.parent().find('[type="file"]').length);
+
+			if (typeof id === 'undefined')
+				var id = $(this).attr('id');
+			else
+				var id = 'file' + id;
+
+			if ($('#' + id).is(':visible')) {
+
+				for (var i = 0; i < document.getElementById(id).files.length; i++) {
+
+					src = window.URL.createObjectURL(document.querySelector('#' + id).files[i]);
+
+					var div = $('<div/>', {
+						'class': 'miniaturas',
+					});
+
+					var img = $('<img/>', {
+						'src': src,
+						'class': '',
+					});
+
+					$(this).parents('#foto-paciente').find('img').remove();
+					$(this).parents('#foto-paciente').prepend($(img).addClass('circle'));
+
+				}
+
+			}
+
+		})
+
+	});
+
+	var search = $('[data-search]');
+
+	search.bind('keyup paste', function() {
+		$('.progress').show();
+	});
+
+	search.bind('keyup paste', delay(function() {
+
+		var query = $(this).val();
+		var url = BASE_URL + $(this).data('search');
+
+		if (query.length > 0) {
+			Http.get(url, {
+				'datatype': 'html',
+				data: {
+					'query': query
+				}
+			}, (response) => {
+				$('#index').hide();
+				$('#results-search').show().html(response);
+				$('.progress').hide();
+			});
+		} else {
+			$('#index').show();
+			$('#results-search').empty().hide();
+			$('.progress').hide();
+		}
+
+	}, 500));
+
 }

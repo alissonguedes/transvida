@@ -763,8 +763,19 @@ var App = {
 
 			});
 
-			if ($(this).val() !== '')
-				Mas
+			$date = new Date();
+			// var curDate = $date.getDate();
+			// var curMonth = ($date.getMonth() < 10 ? '0' : null) + ($date.getMonth() + 1);
+			var curYear = $date.getFullYear();
+
+			var $fieldValue = $(this).val() != '' ? $(this).val().split('/') : null;
+			var $minDate = typeof $(this).data('min-date') !== 'undefined' ? $(this).data('min-date').split('/') : null;
+			var $maxDate = typeof $(this).data('max-date') !== 'undefined' ? $(this).data('max-date').split('/') : null;
+			var $yearRange = $minDate != null ? [$minDate[2], curYear + 100] : $maxDate != null ? [1900, curYear - 0] : [curYear - 100, curYear + 100];
+
+			$minDate = $minDate != null ? new Date($minDate[2], $minDate[1], $minDate[0] - 30) : null;
+			$maxDate = $maxDate != null ? new Date($maxDate[2], $maxDate[1], $maxDate[0] - 31) : null;
+			$fieldValue = $fieldValue != null ? (new Date($fieldValue[2], $fieldValue[1], $fieldValue[0] - 31)) : null;
 
 			$(this).on('keyup', function() {
 				MascaraUtils.mascara(this, MascaraUtils.DATA);
@@ -772,21 +783,22 @@ var App = {
 				MascaraUtils.mascara(this, MascaraUtils.DATA);
 			}).attr('maxlength', 10).datepicker({
 				format: 'dd/mm/yyyy',
-				startView: 2,
+				startView: 1,
 				autoClose: false,
-				// todayHightlight : true,
-				// endYear      : 'today',
-				// language        : 'pt-BR',
-				// assumeNearbyYear: true,
-				// changeYear      : true,
-				minDate: ($(this).data('start') !== 'undefined' ? $(this).data('start') : null),
-				maxDate: ($(this).data('end') !== 'undefined' ? $(this).data('end') : null),
-				// yearRange       : ($(this).attr('data-range') !== 'undefined' ? $(this).attr('data-range') : 'c-50:c+50' ),
-				months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], // Names of months for drop-down and formatting
-				monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], // For formatting
-				weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], // For formatting
-				weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], // For formatting
-				weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], // Column headings for days starting at Sunday
+				setDefaultDate: true,
+				defaultDate: $fieldValue,
+				minDate: $minDate, // (new Date(curYear, curMonth)),
+				maxDate: $maxDate, // (new Date(curYear, curMonth, curDate - 30)),
+				yearRange: $yearRange,
+				i18n: {
+					months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], // Names of months for drop-down and formatting
+					monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], // For formatting
+					weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], // For formatting
+					weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], // For formatting
+					weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], // Column headings for days starting at Sunday
+					cancel: 'Cancelar',
+				},
+				showClearBtn: true
 			});
 
 			if ($(this).val() !== '')

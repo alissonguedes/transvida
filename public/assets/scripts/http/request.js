@@ -54,7 +54,7 @@ var Request = {
 	isLink: (href) => {
 
 		var URL = typeof href.split(BASE_URL)[1] === 'undefined' ? href : href.split(BASE_URL)[1];
-		var isAnchor = /^[jJ]ava[sS]cript(\:[a-z]+)?$/i.test(URL);
+		var isAnchor = /^[jJ]ava[sS]cript(\:[a-z]+)?/i.test(URL);
 		var isNotLink = /#[a-z0-9]+/i.test(URL);
 
 		return href !== '' && !isAnchor && !isNotLink && typeof URL !== 'undefined';
@@ -70,7 +70,11 @@ var Request = {
 
 			var url = [];
 
-			var local = (window.location.href.split(BASE_URL).splice(1));
+			var local = window.location.href.split(BASE_URL).splice(1);
+
+			if (local.length > 0 && typeof local[0].split(/\W+/) !== 'undefined' && local[0].split(/\W+/).length > 1) {
+				local = local[0].split(/\W+/).splice(0, 1);
+			}
 
 			if (typeof local[0] !== 'undefined') {
 

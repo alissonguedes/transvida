@@ -713,12 +713,13 @@ font-size: inherit;
 
 nav .nav-wrapper .btn,
 .navbar .header-search-wrapper {
-	position: absolute;
-	left: 258px;
-	right: 0;
 	margin: 0;
 	background-color: transparent !important;
 	z-index: 99999;
+	float: left;
+	position: relative;
+	left: 70px;
+	line-height: 17px;
 }
 
 nav .nav-wrapper .btn {
@@ -811,14 +812,30 @@ nav .nav-wrapper .btn:hover i {
 	display: flex;
 }
 
-.nav-wrapper .page-title .title {
+.nav-wrapper .page-title {
 	text-transform: inherit;
 	padding-right: 0;
 	font-size: 22px;
-	left: 270px;
-	position: absolute;
+	position: relative;
 	line-height: 35px;
 	color: inherit;
+	padding-left: 270px;
+	transition: 200ms;
+	display: inline-block;
+}
+
+.nav-wrapper label.btn~.page-title {
+	padding-left: 118px;
+}
+
+.nav-wrapper .page-title .title {
+	color: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.main-full .page-title {
+	padding-left: 80px;
 }
 
 .nav-wrapper .header-search-wrapper~.page-title .title,
@@ -1376,7 +1393,7 @@ input.no-border,
 	background-color: #fff;
 	box-shadow: none;
 }
-
+/*
 .bordered {
 	border: 1px solid #c9c9c9;
 	border-radius: 5px !important;
@@ -1385,7 +1402,7 @@ input.no-border,
 .bordered {
 	padding: 0;
 	border-radius: 24px;
-}
+} */
 
 .bordered .prefix {
 	left: 15px !important;
@@ -2667,8 +2684,9 @@ color: #fff;
 		background-color: transparent
 	}
 
-	.main-full #main {
-		padding-left: 80px
+	.main-full #main,
+	#main.main-full {
+		padding-left: 70px;
 	}
 
 	.nav-lock~footer {

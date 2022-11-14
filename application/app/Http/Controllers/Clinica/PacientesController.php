@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clinica{
 
 	use App\Models\ConvenioModel;
+	use App\Models\EstadoCivilModel;
 	use App\Models\PacienteModel;
 	use Illuminate\Http\Request;
 
@@ -12,8 +13,9 @@ namespace App\Http\Controllers\Clinica{
 		public function __construct()
 		{
 
-			$this->convenio_model = new ConvenioModel();
-			$this->paciente_model = new PacienteModel();
+			$this->convenio_model    = new ConvenioModel();
+			$this->paciente_model    = new PacienteModel();
+			$this->estadoCivil_model = new EstadoCivilModel();
 
 		}
 
@@ -21,18 +23,23 @@ namespace App\Http\Controllers\Clinica{
 		{
 
 			if ($request->ajax()) {
-				$dados['paginate'] = $this->paciente_model->getPacientes();
-				return view('clinica.pacientes.list', $dados);
+				$dados['pacientes'] = $this->paciente_model->searchPacientes($request);
+				return response(view('clinica.pacientes.list', $dados), 200);
 			}
 
-			return view('clinica.pacientes.index');
+			$dados['pacientes'] = $this->paciente_model->getPacientes();
+			return view('clinica.pacientes.index', $dados);
 
 		}
 
-		public function form()
+		public function form(Request $request, $id = null)
 		{
 
-			$dados['convenios'] = $this->convenio_model->getConvenio();
+			$dados['row']          = $this->paciente_model->getPacienteById($id);
+			$dados['acomodacoes']  = $this->paciente_model->getAcomodacao();
+			$dados['etnias']       = $this->paciente_model->getEtnia();
+			$dados['convenios']    = $this->convenio_model->getConvenio();
+			$dados['estado_civil'] = $this->estadoCivil_model->getEstadoCivil();
 			return view('clinica.pacientes.form', $dados);
 
 		}
@@ -40,13 +47,37 @@ namespace App\Http\Controllers\Clinica{
 		public function create(Request $request)
 		{
 
+			$request->validate([
+				'nome'  => 'required',
+				'email' => 'nullable|email|required_if:receber_notificacoes,on',
+			]);
+
 			$id = $this->paciente_model->cadastraPaciente($request);
 
 			$status = 'success';
 			$url    = url()->route('clinica.pacientes.index');
 			$type   = 'send';
 
-			return response()->json(['message' => 'Dados cadastrados com sucesso!', 'url' => $url, 'type' => $type]);
+			return response()->json([
+				'status'  => $status,
+				'message' => 'Paciente cadastrado realizado com sucesso!',
+				'type'    => $type,
+				'url'     => $url,
+			]);
+		}
+
+		public function edit(Request $request)
+		{
+
+			$request->validate([
+				'nome'  => 'required',
+				'email' => 'nullable|email|required_if:receber_notificacoes,on',
+			]);
+
+			$id = $request->id;
+			$this->paciente_model->editaPaciente($request, $id);
+
+			return response()->json(['message' => 'Dados atualizados com sucesso!']);
 
 		}
 
@@ -57,13 +88,9 @@ namespace App\Http\Controllers\Clinica{
 				->whereIn('id', $request->id)
 				->update([$request->field => $request->value]);
 
-			$status  = 'success';
-			$message = ucfirst($request->field) . ' atualizado com sucesso!';
-			$url     = url()->route('clinica.pacientes.index');
-			$type    = 'send';
-
-			return response()->json(['message' => 'Paciente atualizado com sucesso!']);
-			// return json_encode(['status' => $status, 'message' => $message, 'type' => $type, 'url' => $url], 200);
+			return response()->json([
+				'message' => 'Paciente atualizado com sucesso!',
+			]);
 
 		}
 
