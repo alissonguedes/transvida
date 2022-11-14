@@ -5,10 +5,7 @@
 
 	<aside class="<?php echo e($menu_type); ?> <?php echo e($nav_lock); ?> sidenav-main nav-collapsible sidenav-light sidenav-active-rounded scrollbar">
 
-		<a href="#" data-target="slide-out" class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only">
-			<div class="bt_mob" id="menu_mob" data-element=".menu_dashboard">
-				<img src="img/bt_mob.png" class="img_cem">
-			</div>
+		<a href="#" data-target="slide-out" class="sidenav-trigger btn-sidenav-toggle btn-floating blue lighten-1 btn-medium waves-effect waves-light hide-on-large-only">
 			<i class="material-icons">menu</i>
 		</a>
 
@@ -25,7 +22,6 @@
 					<h2>Cloud</h2>
 				</div>
 
-				
 			</h1>
 
 		</div>
