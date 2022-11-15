@@ -181,7 +181,7 @@ class PacienteModel extends Model
 		$receber_email        = $post->receber_email ?? 'off';
 		$receber_sms          = $post->receber_sms ?? 'off';
 		$obito                = $post->obito ?? '0';
-		$status               = $post->status ?? '1';
+		$status               = $post->status ?? '0';
 
 		$data = [
 			'id_convenio'          => $id_convenio,
@@ -260,7 +260,7 @@ class PacienteModel extends Model
 		$receber_email        = $post->receber_email ?? 'off';
 		$receber_sms          = $post->receber_sms ?? 'off';
 		$obito                = $post->obito ?? '0';
-		$status               = $post->status ?? '1';
+		$status               = $post->status ?? '0';
 
 		$data = [
 			'id_convenio'          => $id_convenio,

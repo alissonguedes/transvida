@@ -35,10 +35,10 @@
 				</div>
 			</div>
 			<div class="action-buttons">
-				<button class="btn btn-floating blue lighten-1 list hide" id="change-mode" disabled="disabled">
+				<button class="btn btn-floating blue lighten-1 list gradient-45deg-indigo-light-blue waves-effect waves-light" id="change-mode" >
 					<i class="material-icons">list</i>
 				</button>
-				<button class="btn btn-floating blue lighten-1 waves-effect waves-light" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')">
+				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')">
 					<i class="material-icons">person_add_alt_1</i>
 				</button>
 			</div>

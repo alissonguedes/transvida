@@ -348,8 +348,8 @@ function core() {
 						'class': '',
 					});
 
-					$(this).parents('#foto-paciente').find('img').remove();
-					$(this).parents('#foto-paciente').prepend($(img).addClass('circle'));
+					// $(this).parents('#foto-paciente').find('#foto').find('img').remove();
+					$(this).parents('#foto-paciente').find('#foto').html(img);
 
 				}
 

@@ -336,7 +336,17 @@ if (!function_exists('getMenus')) {
 						->first();
 
 					$ul .= '<a ' . (($submenus->count() > 0) ? 'class="collapsible-header waves-effect waves-cyan" href="javascript:void(0);" tabindex="0"' : 'href="' . (route($route->name) ?? null) . '"') . '>';
-					$ul .= $item->icon ? (preg_match('[^fa\-]', $item->icon) ? '<i class="fa-icon fa-solid ' . $item->icon . '"></i>' : '<i class="material-icons">' . $item->icon . '</i>') : null;
+					$ul .= $item->icon
+					?
+					(
+						preg_match('[^fa\-]', $item->icon)
+						?
+						'<i class="fa-icon fa-solid ' . $item->icon . '"></i>'
+						:
+						'<i class="material-icons">' . $item->icon . '</i>'
+					)
+					:
+					'<i class="material-icons">radio_button_unchecked</i>';
 					$ul .= '<span class="menu-title" data-i18n="' . $label->titulo . '">' . $label->titulo . '</span>';
 					$ul .= '</a>';
 

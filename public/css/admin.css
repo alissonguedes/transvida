@@ -147,7 +147,7 @@
 }
 
 .card-body.fixed-height {
-	height: calc(100vh - 330px);
+	height: calc(100vh - 296px);
 }
 
 .card-body.responsive-table {
@@ -277,9 +277,24 @@
 	margin-left: 10px;
 }
 
-#foto-paciente img {
-	height: 100px;
+#foto-paciente #foto {
 	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	display: flex;
+	position: relative;
+	align-items: center;
+	place-content: center;
+	border-radius: 50%;
+	margin-bottom: 10px;
+}
+
+#foto-paciente img {
+	/* height: 100px; */
+	/* width: 100px; */
+	/* position: absolute; */
+	/* top: 0; */
+	height: 100%;
 }
 
 @media only screen and (max-width: 992px) {
@@ -304,4 +319,27 @@
 	.search-input-wrapper {
 		display: none;
 	}
+}
+
+.pacientes.card .card-content p,
+.pacientes.card .card-content h6 {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+	overflow: hidden;
+	max-width: inherit;
+}
+
+.pacientes.card .card-content .info p {
+	font-size: 14px;
+	line-height: 24px;
+}
+
+.pacientes.card .card-content .info p i {
+	line-height: inherit;
+	height: inherit;
+	display: inline-block;
+	float: left;
+	margin-right: 10px;
+	font-size: inherit;
 }
