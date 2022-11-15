@@ -7,7 +7,6 @@
 
 <?php $__env->startSection('body'); ?>
 
-
 <div class="horizontal-layout <?php echo $__env->yieldContent('main-menu-type'); ?>">
 
 	<?php echo $__env->make('clinica.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

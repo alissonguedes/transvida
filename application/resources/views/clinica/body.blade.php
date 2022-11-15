@@ -9,7 +9,6 @@
 
 @section('body')
 
-
 <div class="horizontal-layout @yield('main-menu-type')">
 
 	@include('clinica.header')

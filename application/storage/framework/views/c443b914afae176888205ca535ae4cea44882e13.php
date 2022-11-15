@@ -2,7 +2,7 @@
 
 <div id="login-page" class="row">
 
-	<div class="col m8 l8 hide-on-med-and-down blue lighten-1 h-100vh">
+	<div class="col m8 l8 hide-on-med-and-down gradient-45deg-light-blue-cyan h-100vh">
 		<div class="logo">
 			
 		</div>
@@ -63,7 +63,7 @@
 
 					<br>
 
-					<button type="submit" id="entrar" name="entrar" class="btn btn-small blue lighten-1 waves-effect waves-light col s12 mb-10 next">
+					<button type="submit" id="entrar" name="entrar" class="btn btn-small blue darken-2 waves-effect waves-light col s12 mb-10 next">
 						<span>Próximo</span>
 						<i class="material-icons margin-right">input</i>
 					</button>
