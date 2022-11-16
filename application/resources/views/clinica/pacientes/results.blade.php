@@ -14,8 +14,9 @@
 
 	<div class="row">
 
-		@foreach($pacientes as $paciente)
-			<div class="col s12 m6 l3 grid-view">
+		@foreach($pacientes as $i => $paciente)
+
+			<div class="col s12 m6 l3 grid-view animated fadeIn slow delay-{{ $i }}">
 				<div class="pacientes card card-border border-radius-6 z-depth-3 gradient-45deg-indigo-light-blue">
 					<div class="card-content white-text">
 						<div class="foto-paciente">

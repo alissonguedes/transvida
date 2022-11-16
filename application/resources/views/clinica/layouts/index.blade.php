@@ -2,7 +2,7 @@
 
 @section('main')
 
-<div class="topbar flex flex-center animated fadeIn slower delay-15">
+<div class="topbar flex flex-center">
 	<div class="topbar-fixed topbar-color flex flex-auto z-depth-1">
 		<div class="flex flex-auto flex-center">
 			<div class="flex flex-auto flex-start flex-center" style="">
@@ -52,7 +52,7 @@
 	<div class="progress" style="position: absolute; top: -9px; left: 0; right: 0; display: none;">
 		<div class="indeterminate blue lighten-1"></div>
 	</div>
-	<div id="results" class="animated fadeIn slower delay-15">
+	<div id="results">
 		@yield('container')
 	</div>
 </div>

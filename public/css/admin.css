@@ -402,3 +402,7 @@
 	align-items: start;
 	width: 100%;
 } */
+
+.main-full .modal.offset-l2 {
+	left: 20%;
+}

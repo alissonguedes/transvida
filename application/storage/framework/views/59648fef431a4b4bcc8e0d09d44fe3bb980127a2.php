@@ -14,8 +14,9 @@
 
 	<div class="row">
 
-		<?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-			<div class="col s12 m6 l3 grid-view">
+		<?php $__currentLoopData = $pacientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $paciente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+			<div class="col s12 m6 l3 grid-view animated fadeIn slow delay-<?php echo e($i); ?>">
 				<div class="pacientes card card-border border-radius-6 z-depth-3 gradient-45deg-indigo-light-blue">
 					<div class="card-content white-text">
 						<div class="foto-paciente">

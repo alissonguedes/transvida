@@ -33,7 +33,7 @@ function core() {
 	resizeble();
 	DataTable();
 	buttonActions($('.responsive-table').find(':button[data-link]'));
-	btnModalForms($('body').find('[data-target]'));
+	btnModalForms($('body').find('button[data-link][data-target]'));
 	Materializecss();
 	editor();
 	App.aplicarMascaras();

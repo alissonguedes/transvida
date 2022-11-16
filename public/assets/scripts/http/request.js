@@ -27,12 +27,12 @@ var Request = {
 				// if (window.location.origin + link !== window.location.href) {
 				if (link !== window.location.href) {
 					$('.progress').show();
-					animate($('#main>.container'), 'fadeOut slower', function() {
-						$(this).hide();
-					});
-					setTimeout(function() {
+					// animate($('#main>.container'), 'fadeOut slower', function() {
+					// 	$(this).hide();
+					// });
+					// setTimeout(function() {
 						Http.goTo(link);
-					}, 500);
+					// }, 500);
 
 
 					console.log('verificar sessão antes de redirecionar');
