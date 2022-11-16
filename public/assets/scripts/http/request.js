@@ -23,11 +23,19 @@ var Request = {
 
 			if (Request.isLink(link) && !target) {
 
-				$('.progress').show();
 
-				if (window.location.origin + link !== window.location.href) {
+				// if (window.location.origin + link !== window.location.href) {
+				if (link !== window.location.href) {
+					$('.progress').show();
+					animate($('#main>.container'), 'fadeOut slower', function() {
+						$(this).hide();
+					});
+					setTimeout(function() {
+						Http.goTo(link);
+					}, 500);
+
+
 					console.log('verificar sessão antes de redirecionar');
-					Http.goTo(link);
 				}
 
 			} else {
@@ -80,6 +88,8 @@ var Request = {
 				local = local[0].split(/\W+/).splice(0, 1);
 			}
 
+			var $default = link === window.location.href ? 'default' : 'pointer';
+
 			if (typeof local[0] !== 'undefined') {
 
 				var link = local[0].split('/');
@@ -90,7 +100,7 @@ var Request = {
 
 					if ($('#slide-out li').find('a[href="' + BASE_URL + url.join('/') + '"').length == 1) {
 
-						$('#slide-out li').find('a[href="' + BASE_URL + url.join('/') + '"').addClass('active').parents().addClass('active').show();
+						$('#slide-out li').find('a[href="' + BASE_URL + url.join('/') + '"').addClass('active').css('cursor', $default).parents().addClass('active').show();
 						break;
 
 					} else {

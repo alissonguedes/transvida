@@ -208,12 +208,7 @@ var Http = {
 
 			if ($(responseHtml).find('#page').length) {
 
-				// animate($('#main .content'), 'fadeOutLeft', function() {});
-				// setTimeout(function() {
 				$('#page').html($(responseHtml).find('#page').html());
-				//     animate($('#main .content'), 'fadeInRight');
-				//     core();
-				// }, 100);
 
 			} else {
 				$('#main').html($(responseHtml).find('html').html());
