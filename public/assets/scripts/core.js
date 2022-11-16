@@ -370,22 +370,22 @@ function core() {
 		var query = $(this).val();
 		var url = BASE_URL + $(this).data('search');
 
-		if (query.length > 0) {
-			Http.get(url, {
-				'datatype': 'html',
-				data: {
-					'query': query
-				}
-			}, (response) => {
-				$('#index').hide();
-				$('#results-search').show().html(response);
-				$('.progress').hide();
-			});
-		} else {
-			$('#index').show();
-			$('#results-search').empty().hide();
+		// if (query.length > 0) {
+		Http.get(url, {
+			'datatype': 'html',
+			data: {
+				'query': query
+			}
+		}, (response) => {
+			$('#index').hide();
+			$('#results').show().html(response);
 			$('.progress').hide();
-		}
+		});
+		// } else {
+		// $('#index').show();
+		// // $('#results-search').empty().hide();
+		// $('.progress').hide();
+		// }
 
 	}, 500));
 

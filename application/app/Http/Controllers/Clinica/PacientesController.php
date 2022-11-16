@@ -22,20 +22,21 @@ namespace App\Http\Controllers\Clinica{
 		public function index(Request $request)
 		{
 
+			// Pesquisar pacientes
 			if ($request->ajax()) {
-				$dados['pacientes'] = $this->paciente_model->searchPacientes($request);
-				return response(view('clinica.pacientes.list', $dados), 200);
+				$dados['pacientes'] = $this->paciente_model->getPacientes($request);
+				return response(view('clinica.pacientes.results', $dados), 200);
 			}
 
 			$dados['pacientes'] = $this->paciente_model->getPacientes();
-			return view('clinica.pacientes.index', $dados);
+			return response(view('clinica.pacientes.index', $dados), 200);
 
 		}
 
 		public function form(Request $request, $id = null)
 		{
 
-			$dados['row']          = $this->paciente_model->getPacienteById($id);
+			$dados['row']          = $this->paciente_model->getPacienteById($request->id);
 			$dados['acomodacoes']  = $this->paciente_model->getAcomodacao();
 			$dados['etnias']       = $this->paciente_model->getEtnia();
 			$dados['convenios']    = $this->convenio_model->getConvenio();

@@ -35,7 +35,7 @@
 				</div>
 			</div>
 			<div class="action-buttons">
-				<button class="btn btn-floating blue lighten-1 list gradient-45deg-indigo-light-blue waves-effect waves-light" id="change-mode">
+				<button class="btn btn-floating blue lighten-1 list gradient-45deg-indigo-light-blue waves-effect waves-light hide" id="change-mode" disabled="disabled">
 					<i class="material-icons">list</i>
 				</button>
 				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')">
@@ -50,8 +50,9 @@
 	<div class="progress" style="position: absolute; top: -9px; left: 0; right: 0; display: none;">
 		<div class="indeterminate blue lighten-1"></div>
 	</div>
-	@yield('container')
-	<div id="results-search"></div>
+	<div id="results">
+		@yield('container')
+	</div>
 </div>
 
 @endsection

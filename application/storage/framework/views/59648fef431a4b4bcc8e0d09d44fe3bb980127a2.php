@@ -1,0 +1,1 @@
+<?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/pacientes/results.blade.php ENDPATH**/ ?>

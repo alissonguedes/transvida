@@ -26,7 +26,7 @@ class PacienteModel extends Model
 
 	private $path = 'assets/clinica/img/pacientes/';
 
-	public function getPacientes($menu = null)
+	public function getPacientes($data = null)
 	{
 
 		$get = $this->select(
@@ -69,19 +69,21 @@ class PacienteModel extends Model
 			DB::raw('DATE_FORMAT(data_nascimento, "%d/%m/%Y") AS data_nascimento'),
 		);
 
-		if (isset($_GET['search']['value']) && !empty($_GET['search']['value'])) {
-			$get->where(function ($query) {
+		if (isset($data) && $search = $data['query']) {
+			$get->where(function ($query) use ($search) {
 				$query
-					->orWhere('D.titulo', 'like', $_GET['search']['value'] . '%')
-					->orWhere('D.descricao', 'like', $_GET['search']['value'] . '%')
-					->orWhere('D.meta_description', 'like', $_GET['search']['value'] . '%')
-					->orWhere('D.meta_title', 'like', $_GET['search']['value'] . '%')
-					->orWhere('D.meta_keywords', 'like', $_GET['search']['value'] . '%');
+					->orWhere('codigo', 'like', $search . '%')
+					->orWhere('nome', 'like', $search . '%')
+					->orWhere('matricula_convenio', 'like', $search . '%')
+					->orWhere('rg', 'like', $search . '%')
+					->orWhere('email', 'like', $search . '%')
+					->orWhere('cpf', 'like', $search . '%')
+					->orWhere('cns', 'like', $search . '%')
+					->orWhere('telefone', 'like', $search . '%')
+					->orWhere('celular', 'like', $search . '%');
 			});
-
 		}
 
-		// $this->orderBy($request->post('order')[0]['column']);
 		// Order By
 		if (isset($_GET['order']) && $_GET['order'][0]['column'] != 0) {
 			$get->orderBy($this->order[$_GET['order'][0]['column']], $_GET['order'][0]['dir']);
@@ -93,23 +95,25 @@ class PacienteModel extends Model
 
 	}
 
-	public function getPacienteById($id = null)
+	public function getPacienteById($id)
 	{
 
 		return $this->getPacientes()
 			->where('id', $id)
 			->first();
-	}
-
-	public function searchPacientes(Request $request)
-	{
-
-		$query = $request->get('query');
-		return $this->select('*')
-			->where('nome', 'like', '%' . $query . '%')
-			->paginate();
 
 	}
+
+	// public function searchPacientes(Request $request)
+	// {
+	//
+	// $query = $request->get('query');
+	//
+	// return $this->getPacientes()
+	// 	->where('nome', 'like', '%' . $query . '%')
+	// 	->paginate(isset($_GET['length']) ? $_GET['length'] : 50);
+	//
+	// }
 
 	public function getEtnia()
 	{
