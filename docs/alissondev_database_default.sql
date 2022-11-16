@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 14/11/2022 às 06:12
+-- Tempo de geração: 16/11/2022 às 04:55
 -- Versão do servidor: 10.6.7-MariaDB-2ubuntu1.1
 -- Versão do PHP: 8.1.2-1ubuntu2.8
 
@@ -67,8 +67,8 @@ CREATE TABLE `tb_acl_menu` (
 INSERT INTO `tb_acl_menu` (`id`, `id_modulo`, `created_at`, `updated_at`, `editavel`, `status`) VALUES
 (1, 2, '2022-08-21 02:09:34', '2022-08-21 02:57:31', '1', '1'),
 (2, 6, '2022-08-21 02:56:50', '2022-11-11 20:16:17', '1', '1'),
-(3, 6, '2022-08-21 02:56:50', '2022-08-21 02:57:29', '1', '1'),
-(4, 6, '2022-11-08 19:38:24', NULL, '1', '1');
+(3, 3, '2022-08-21 02:56:50', '2022-08-21 02:57:29', '1', '1'),
+(4, 3, '2022-11-08 19:38:24', NULL, '1', '1');
 
 -- --------------------------------------------------------
 
@@ -144,8 +144,10 @@ INSERT INTO `tb_acl_menu_item` (`id`, `id_menu`, `id_item`, `id_parent`, `descri
 (14, 2, 12, 12, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'monitor_heart', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
 (15, 2, 12, 12, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
 (16, 2, 12, 0, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'medical_services', NULL, 6, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(17, 2, 12, 16, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', 'Atendimentos', 'fa-solid fa-clipboard-user', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(18, 2, 19, 0, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'group', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, '1', '1');
+(17, 2, 12, 16, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', 'Atendimentos', 'fa-clipboard-user', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
+(18, 2, 19, 0, 'Página de pacientes', 'acl_modulo_controller', NULL, 'group', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
+(19, 2, 21, 0, 'Página de médicos', 'acl_modulo_controller', NULL, NULL, NULL, 3, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
+(20, 2, 22, 0, 'Página de especialidades', 'acl_modulo_controller', NULL, 'favorite_border', NULL, 3, 0001, '2022-11-08 17:07:03', NULL, '1', '1');
 
 -- --------------------------------------------------------
 
@@ -186,6 +188,8 @@ INSERT INTO `tb_acl_menu_item_descricao` (`id_item`, `id_idioma`, `titulo`, `des
 (16, 1, 'Recursos médicos', 'Recursos médicos', 'Recursos médicos', 'Recursos médicos', 'Recursos médicos'),
 (17, 1, 'Atendimentos', 'Atendimentos', 'Atendimentos', 'Atendimentos', 'Atendimentos'),
 (18, 1, 'Pacientes', 'Pacientes', 'Pacientes', 'Pacientes', 'Pacientes'),
+(19, 1, 'Médicos', 'Médicos', 'Médicos', 'Médicos', 'Médicos'),
+(20, 1, 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades'),
 (1, 2, 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard'),
 (2, 2, 'Menus', 'Menus', 'Menus', 'Menus', 'Menus'),
 (4, 2, 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários'),
@@ -271,8 +275,10 @@ INSERT INTO `tb_acl_modulo_controller` (`id`, `id_modulo`, `descricao`, `control
 (12, 6, 'ClinicCloud - Home', 'HomeController', 'Cl_Dashboard', 1111, 'yes', '1'),
 (16, 6, 'API Clinica', 'ApiController', 'API_Clinica', 0001, 'no', '1'),
 (18, 6, 'Clinica Config', 'ConfigController', 'C_Config', 1111, 'yes', '1'),
-(19, 6, 'Prontuários de pacientes', 'PacientesController', 'C_Pacientes', 1111, 'yes', '1'),
-(20, 6, 'Prontuários de pacientes', 'ProntuariosController', 'C_Prontuarios', 1111, 'yes', '1');
+(19, 6, 'Pacientes', 'PacientesController', 'C_Pacientes', 1111, 'yes', '1'),
+(20, 6, 'Prontuários de pacientes', 'ProntuariosController', 'C_Prontuarios', 1111, 'yes', '1'),
+(21, 6, 'Médicos', 'MedicosController', 'C_Medicos', 1111, 'yes', '1'),
+(22, 6, 'Especialidades', 'EspecialidadesController', 'C_Especialidades', 1111, 'yes', '1');
 
 -- --------------------------------------------------------
 
@@ -297,6 +303,8 @@ CREATE TABLE `tb_acl_modulo_controller_descricao` (
 INSERT INTO `tb_acl_modulo_controller_descricao` (`id_controller`, `id_idioma`, `titulo`, `descricao`, `meta_description`, `meta_title`, `meta_keywords`) VALUES
 (3, 1, 'Dashboard - pt', 'Dashboard - pt', '', '', ''),
 (4, 1, 'Menu - pt', 'Menu - pt', '', '', ''),
+(21, 1, 'Médicos', 'Médicos', '', '', ''),
+(22, 1, 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades', ''),
 (3, 2, 'Dashboard - en', 'Dashboard - en', '', '', ''),
 (4, 2, 'Menu - en', 'Menu - en', '', '', ''),
 (11, 2, 'Usuários', 'Usuários', '', '', ''),
@@ -400,7 +408,23 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (52, 20, 48, 'any', '/cadastro', 'form', 'clinica.prontuarios.add', NULL, 1111, 'inherit', '1'),
 (53, 20, 48, 'patch', '/{id}', 'patch', 'clinica.prontuarios.patch', NULL, 1111, 'inherit', '1'),
 (54, 20, 48, 'delete', '/', 'delete', 'clinica.prontuarios.delete', NULL, 1111, 'inherit', '1'),
-(55, 20, 48, 'put', '/', 'edit', 'clinica.prontuarios.put', NULL, 1111, 'inherit', '1');
+(55, 20, 48, 'put', '/', 'edit', 'clinica.prontuarios.put', NULL, 1111, 'inherit', '1'),
+(56, 21, 0, 'any', '/medicos', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
+(57, 21, 59, 'any', '/', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
+(58, 21, 59, 'get', '/{id}', 'form', 'clinica.medicos.edit', NULL, 1111, 'inherit', '1'),
+(59, 21, 59, 'post', '/', 'create', 'clinica.medicos.post', NULL, 1111, 'inherit', '1'),
+(60, 21, 59, 'any', '/cadastro', 'form', 'clinica.medicos.add', NULL, 1111, 'inherit', '1'),
+(61, 21, 59, 'patch', '/{id}', 'patch', 'clinica.medicos.patch', NULL, 1111, 'inherit', '1'),
+(62, 21, 59, 'delete', '/', 'delete', 'clinica.medicos.delete', NULL, 1111, 'inherit', '1'),
+(63, 21, 59, 'put', '/', 'edit', 'clinica.medicos.put', NULL, 1111, 'inherit', '1'),
+(64, 22, 0, 'any', '/especialidades', 'index', 'clinica.especialidades.index', NULL, 1111, 'inherit', '1'),
+(65, 22, 64, 'any', '/', 'index', 'clinica.especialidades.index', NULL, 1111, 'inherit', '1'),
+(66, 22, 64, 'get', '/cadastro', 'form', 'clinica.especialidades.add', NULL, 1111, 'inherit', '1'),
+(67, 22, 64, 'post', '/', 'create', 'clinica.especialidades.post', NULL, 1111, 'inherit', '1'),
+(68, 22, 64, 'get', '/{id}', 'form', 'clinica.especialidades.edit', NULL, 1111, 'inherit', '1'),
+(69, 22, 64, 'patch', '/{id}', 'patch', 'clinica.especialidades.patch', NULL, 1111, 'inherit', '1'),
+(70, 22, 64, 'delete', '/', 'delete', 'clinica.especialidades.delete', NULL, 1111, 'inherit', '1'),
+(71, 22, 64, 'put', '/', 'edit', 'clinica.especialidades.put', NULL, 1111, 'inherit', '1');
 
 -- --------------------------------------------------------
 
@@ -451,7 +475,7 @@ CREATE TABLE `tb_acl_usuario_config` (
 --
 
 INSERT INTO `tb_acl_usuario_config` (`id_usuario`, `id_modulo`, `id_config`, `value`, `created_at`, `updated_at`) VALUES
-(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-11-14 01:16:50');
+(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-11-16 03:04:59');
 
 -- --------------------------------------------------------
 
@@ -496,7 +520,9 @@ CREATE TABLE `tb_acl_usuario_session` (
 
 INSERT INTO `tb_acl_usuario_session` (`id`, `id_usuario`, `id_modulo`, `token`, `ip`, `user_agent`, `started_at`, `expired_at`) VALUES
 (1, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-12 17:52:24', '2022-11-12 20:21:10'),
-(2, 1, 6, 'e3fc99dbf21870f05f46d631ca780bc36371d75211294', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-14 08:51:14', NULL);
+(2, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-15 04:59:13', '2022-11-15 05:13:22'),
+(3, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-15 02:20:18', '2022-11-15 05:24:30'),
+(4, 1, 6, 'b37a94e59b2537f7d912793b61c259d36374017ad4457', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-16 00:15:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -859,8 +885,38 @@ CREATE TABLE `tb_empresa` (
 CREATE TABLE `tb_especialidade` (
   `id` int(11) UNSIGNED NOT NULL,
   `especialidade` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL
+  `descricao` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de especialidades médicas';
+
+--
+-- Despejando dados para a tabela `tb_especialidade`
+--
+
+INSERT INTO `tb_especialidade` (`id`, `especialidade`, `descricao`, `created_at`, `updated_at`) VALUES
+(1, 'Otorrino', 'Médico especializado em tratamento de saúde de nariz, ouvido e garganta.', '2022-11-16 03:29:01', NULL),
+(2, 'Cardiologista', 'Cardiologista', '2022-11-16 03:29:01', NULL),
+(3, 'Neurologista', 'Médico especializado em tratamento de saúde da cabeça e do sistema nervoso.', '2022-11-16 03:29:01', NULL),
+(4, 'Pneumulogista', 'Médico especializado em tratamento de saúde do sistema respiratório.', '2022-11-16 03:29:01', NULL),
+(5, 'Ortopedista', 'Médico especializado em problemas de ossos.', '2022-11-16 04:06:05', NULL),
+(7, 'Psicólogo', NULL, '2022-11-16 05:50:24', NULL),
+(8, 'Endocrinologista', 'Médico que cuida da saúde dos rins.', '2022-11-16 05:50:58', NULL),
+(9, 'Dentista', 'Médico que cuida da saúde dos dentes.', '2022-11-16 06:02:33', NULL),
+(10, 'Clínica médica', NULL, '2022-11-16 06:55:12', NULL),
+(11, 'Geriatria', NULL, '2022-11-16 06:55:53', NULL),
+(12, 'Oftalmologia', NULL, '2022-11-16 06:57:57', NULL),
+(13, 'Medicina do exercício e do esporte', NULL, '2022-11-16 06:58:52', NULL),
+(14, 'Oncologia', NULL, '2022-11-16 07:00:11', NULL),
+(15, 'Dermatologia', NULL, '2022-11-16 07:01:35', NULL),
+(16, 'Urgência e emergência', NULL, '2022-11-16 07:02:19', NULL),
+(17, 'Infectologia', NULL, '2022-11-16 07:02:36', NULL),
+(18, 'Cirurgia', NULL, '2022-11-16 07:03:11', NULL),
+(19, 'Neurocirurgia', NULL, '2022-11-16 07:03:20', NULL),
+(20, 'Cirurgia geral', NULL, '2022-11-16 07:03:34', NULL),
+(21, 'Cirurgia plástica', NULL, '2022-11-16 07:03:41', NULL),
+(22, 'Ortopedia', NULL, '2022-11-16 07:03:55', NULL),
+(23, 'Anestesiologia', NULL, '2022-11-16 07:04:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -1020,8 +1076,8 @@ CREATE TABLE `tb_medico` (
   `id_especialidade` int(11) UNSIGNED NOT NULL,
   `nome` varchar(100) NOT NULL,
   `cpf` varchar(14) NOT NULL,
-  `crm` varchar(14) NOT NULL,
   `rg` varchar(14) NOT NULL,
+  `crm` varchar(14) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
@@ -1120,8 +1176,8 @@ CREATE TABLE `tb_paciente` (
 --
 
 INSERT INTO `tb_paciente` (`id`, `nome`, `imagem`, `codigo`, `id_convenio`, `matricula_convenio`, `validade_convenio`, `id_acomodacao`, `id_estado_civil`, `id_etnia`, `sexo`, `data_nascimento`, `cpf`, `rg`, `cns`, `mae`, `pai`, `profissao`, `notas`, `logradouro`, `numero`, `complemento`, `cep`, `cidade`, `bairro`, `uf`, `pais`, `email`, `telefone`, `celular`, `created_at`, `updated_at`, `receber_sms`, `receber_email`, `receber_notificacoes`, `obito`, `status`) VALUES
-(18, 'Benjamin', NULL, 'P-165885', 2, '1234', '2022-11-24', 2, 2, 2, 'M', '2022-05-06', '123', '1234', '1234', 'teste', 'teste', NULL, 'teste', '1234', '100', 'asdf', '58076-100', 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', '(12) 3412.3412', '(12) 3 4123.4123', '2022-11-12 18:08:25', '2022-11-13 09:12:54', 'off', 'off', 'off', '0', '1'),
-(19, 'Alisson Guedes Pereira', NULL, 'P-598909', 3, NULL, NULL, 3, 1, 2, 'M', '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4800', '(83) 9 8811.2444', '2022-11-12 18:22:00', '2022-11-14 00:22:19', 'off', 'off', 'off', '0', '1'),
+(18, 'Benjamin', NULL, 'P-165885', 2, '1234', '2022-11-14', 2, 2, 2, 'M', '2022-05-06', '123', '1234', '1234', 'teste', 'teste', NULL, 'teste', '1234', '100', 'asdf', '58076-100', 'asdf', 'asdf', 'asdf', 'asdf', NULL, '(12) 3412.3412', '(12) 3 4123.4123', '2022-11-12 18:08:25', '2022-11-14 22:20:05', 'off', 'off', 'off', '0', '0'),
+(19, 'Alisson Guedes Pereira', NULL, 'P-598909', 4, NULL, NULL, 2, 2, 2, 'M', '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4800', '(83) 9 8811.2444', '2022-11-12 18:22:00', '2022-11-16 03:42:36', 'off', 'off', 'off', '0', '1'),
 (20, 'Alisson Guedes Pereira', NULL, 'P-233594', 2, NULL, NULL, 3, 1, 2, 'M', '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4801', '(83) 9 8811.2444', '2022-11-12 18:23:18', '2022-11-13 06:24:16', 'off', 'off', 'off', '0', '1'),
 (21, 'Alisson Guedes Pereira', NULL, 'P-921710', 1, NULL, NULL, 3, 1, 2, NULL, '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4802', '(83) 9 8811.2444', '2022-11-12 18:24:23', '2022-11-13 06:15:19', 'off', 'off', 'off', '0', '1'),
 (26, 'alisson', NULL, 'P-924140', 1, '1234', '2022-11-30', 3, 2, 3, 'M', '2022-11-11', '123.412.341-23', '1234123', '1234123421', 'teste', 'teste', NULL, 'teste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'alissonguedes87@gmail.com', '(83) 9881.1124', '(12) 3 4123.4123', '2022-11-13 05:52:45', NULL, 'off', 'off', 'off', '0', '1'),
@@ -1131,11 +1187,12 @@ INSERT INTO `tb_paciente` (`id`, `nome`, `imagem`, `codigo`, `id_convenio`, `mat
 (30, 'Teste 1', NULL, 'P-733972', 1, NULL, NULL, 1, 1, 1, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:04:34', '2022-11-14 10:02:46', 'off', 'off', 'off', '0', '1'),
 (31, 'Alane', 'assets/clinica/img/pacientes/0f21269a0d97473fc20baca1b1611859297e94e1.png', 'P-225483', 1, NULL, NULL, 1, 1, 1, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:05:47', '2022-11-14 09:21:54', 'off', 'off', 'off', '0', '1'),
 (32, 'teste', 'assets/clinica/img/pacientes/0f21269a0d97473fc20baca1b1611859297e94e1.png', 'P-937843', 1, NULL, NULL, 1, 1, 1, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:20:54', '2022-11-14 09:37:16', 'off', 'off', 'off', '0', '1'),
-(33, '56546', 'assets/clinica/img/pacientes/accf102caaa970ce65d217b9ae9a8e9a57caa67c.jpg', 'P-991190', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:23:40', '2022-11-14 09:16:09', 'off', 'off', 'off', '0', '1'),
+(33, 'Benjamin', 'assets/clinica/img/pacientes/53f80ff7e7f9cec85406d4605912c3f94367be9b.jpg', 'P-991190', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:23:40', '2022-11-14 22:16:34', 'off', 'off', 'off', '0', '1'),
 (34, 'teste', NULL, 'P-779749', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 21:22:28', NULL, 'off', 'off', 'off', '0', '1'),
 (35, 'Novo cliente', NULL, 'P-421395', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 22:41:52', NULL, 'off', 'off', 'off', '0', '1'),
 (36, 'Teste 2', NULL, 'P-910774', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 03:58:55', '2022-11-14 09:04:03', 'off', 'off', 'off', '0', '1'),
-(37, 'Aline', NULL, 'P-946492', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 05:54:37', '2022-11-14 11:45:21', 'off', 'off', 'off', '0', '1');
+(37, 'Aline', NULL, 'P-946492', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 05:54:37', '2022-11-14 22:28:57', 'off', 'off', 'off', '0', '0'),
+(38, 'Maria da Penha', NULL, 'P-733005', 1, NULL, NULL, 1, 2, 1, 'F', '1969-11-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 23:29:07', '2022-11-15 02:29:25', 'off', 'off', 'off', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -1848,7 +1905,7 @@ ALTER TABLE `tb_acl_menu`
 -- AUTO_INCREMENT de tabela `tb_acl_menu_item`
 --
 ALTER TABLE `tb_acl_menu_item`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_menu_secao`
@@ -1866,13 +1923,13 @@ ALTER TABLE `tb_acl_modulo`
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_controller`
 --
 ALTER TABLE `tb_acl_modulo_controller`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_routes`
 --
 ALTER TABLE `tb_acl_modulo_routes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_usuario`
@@ -1890,7 +1947,7 @@ ALTER TABLE `tb_acl_usuario_imagem`
 -- AUTO_INCREMENT de tabela `tb_acl_usuario_session`
 --
 ALTER TABLE `tb_acl_usuario_session`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acomodacao`
@@ -1962,7 +2019,7 @@ ALTER TABLE `tb_empresa`
 -- AUTO_INCREMENT de tabela `tb_especialidade`
 --
 ALTER TABLE `tb_especialidade`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de tabela `tb_estado_civil`
@@ -2010,7 +2067,7 @@ ALTER TABLE `tb_midia`
 -- AUTO_INCREMENT de tabela `tb_paciente`
 --
 ALTER TABLE `tb_paciente`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de tabela `tb_paciente_nota`
