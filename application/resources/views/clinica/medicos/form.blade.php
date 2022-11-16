@@ -380,7 +380,7 @@
 						</div>
 
 						<div class="card-footer right-align">
-							<button type="reset" class="btn white black-text waves-effect mr-2" data-tooltip="Voltar" data-href="{{ route('clinica.pacientes.index') }}">
+							<button type="reset" class="btn white black-text waves-effect" data-tooltip="Cancelar" data-href="{{ route('clinica.pacientes.index') }}">
 								<i class="material-icons">arrow_back</i>
 							</button>
 

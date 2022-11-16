@@ -33,6 +33,7 @@ function core() {
 	resizeble();
 	DataTable();
 	buttonActions($('.responsive-table').find(':button[data-link]'));
+	btnModalForms($('body').find('[data-target]'));
 	Materializecss();
 	editor();
 	App.aplicarMascaras();
@@ -122,7 +123,14 @@ function core() {
 	//     });
 	// });
 	// botão voltar para esconder o formulário da página de e-mail
-	$('.modal').modal();
+	$('.modal').modal({
+		dismissible: typeof $(this).data('dismissible') !== 'undefined' && $(this).data('dismissible') != '' ? $(this).data('dismissible') : false,
+		inDuration: 150,
+		outDuration: 200,
+		outDuration: 200,
+		startingTop: "33%",
+		endingTop: "33%",
+	});
 
 	$(".btn-back").each(function() {
 		$(this).bind("click", function() {

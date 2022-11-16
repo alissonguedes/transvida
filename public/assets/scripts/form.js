@@ -122,12 +122,6 @@ var Form = {
 								Form.showMessage($response.message, null, 'Ok');
 							}
 
-							if (_element.find('[name=_method]').val() === 'post') {
-								Form.reset();
-							}
-
-							Form.refreshPage($response);
-
 						} else {
 
 							if (typeof $response.fields !== 'undefined')
@@ -138,6 +132,8 @@ var Form = {
 							success = false;
 
 						}
+
+						Form.refreshPage($response);
 
 					}
 
@@ -241,9 +237,9 @@ var Form = {
 
 	},
 
-	refreshPage: (type) => {
+	refreshPage: (response) => {
 
-		if (type.type === 'back') {
+		if (response.type === 'back') {
 
 			// Form.reset();
 			// Http.goTo(type.url)
@@ -251,11 +247,23 @@ var Form = {
 
 		}
 
-		if (type.type === 'send') {
+		if (response.type === 'send') {
 
-			Http.goTo(type.url);
+			Http.goTo(response.url);
 
 		}
+
+		if (response.type === 'refresh') {
+			DataTable(true);
+		}
+
+		var input_method = _element.find('[name=_method]');
+
+		if (input_method.length == 0 || response.clean_form || (input_method.length > 0 && input_method.val() == 'put'))
+			_element.resetForm();
+
+		if (response.close_modal)
+			Form.reset();
 
 		_element.find('.files').find('.redefinir').hide();
 		_element.find('.files').find('.btn_add_new_image').show();

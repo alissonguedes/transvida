@@ -248,6 +248,39 @@ function deleteItem(item) {
 
 }
 
+function btnModalForms($button) {
+
+	$button.each(function() {
+
+		var link = typeof $(this).data('link') !== 'undefined' && $(this).data('link') != '' ? $(this).data('link') : null;
+		var modal = typeof $(this).data('target') !== undefined && $(this).data('target') != '' ? $(this).data('target') : null;
+
+		if (link == null && modal == null) return false;
+
+		$(this).bind('click', function() {
+
+			var M = $('#' + modal).modal();
+			$('#' + modal).find('.modal-content').html('Por favor, aguarde! Estamos carregando seu formulário...');
+
+			$('#' + modal).modal({
+				'dismissible': typeof $(this).data('dismissible') !== 'undefined' && $(this).data('dismissible') != '' ? $(this).data('dismissible') : false,
+				'onOpenStart': () => {
+					Http.get(link, {
+						'datatype': 'html',
+						'data': {},
+					}, (response) => {
+						$('#' + modal).find('form').html($(response).find('form').html());
+					});
+				},
+			})
+
+			M.modal('open');
+
+		});
+
+	});
+
+}
 
 function buttonActions($button) {
 
@@ -258,6 +291,7 @@ function buttonActions($button) {
 		console.error('$button deve ser informado');
 		return false;
 	}
+
 	$('body').find('.responsive-table').find($button).bind('click', function() {
 
 		var self = $(this),
@@ -559,7 +593,7 @@ function DataTable(refresh) {
 					Request.addEvent($(this).find('[href], [data-href], .link'));
 
 					if ($(this).data('disabled')) {
-						$(this).find('td').css({
+						$(this).addClass('disabled').find('td').css({
 							'cursor': 'text !important'
 						});
 					}
@@ -593,9 +627,14 @@ function DataTable(refresh) {
 
 				checkAll();
 				resizeBody();
-				buttonActions(table.find(':button[data-link]'));
+				buttonActions(table.find(':button[data-link]:not([data-target])'));
+				btnModalForms(table.find('[data-target]'));
 
 				table.parents('.dataTables_wrapper').find('[data-tooltip]').tooltip();
+
+				// if ($('.dataTables_wrapper').length > 0) new PerfectScrollbar(table.closest('.card-content'), {
+				// 	'suppressScrollX': true
+				// });
 
 			},
 
@@ -659,6 +698,13 @@ function DataTable(refresh) {
 }
 
 function delay(callback, ms) {
+
+	// if (typeof callback === 'function') {
+	// 	setTimeout(function() {
+	// 		callback
+	// 	}, 1000);
+	// 	return;
+	// }
 
 	var timer = 0;
 

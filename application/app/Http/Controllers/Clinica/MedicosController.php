@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Clinica{
 
 	use App\Models\ConvenioModel;
 	use App\Models\EstadoCivilModel;
-	use App\Models\PacienteModel;
+	use App\Models\MedicoModel;
 	use Illuminate\Http\Request;
 
 	class MedicosController extends Controller
@@ -14,7 +14,7 @@ namespace App\Http\Controllers\Clinica{
 		{
 
 			$this->convenio_model    = new ConvenioModel();
-			$this->paciente_model    = new PacienteModel();
+			$this->medico_model      = new MedicoModel();
 			$this->estadoCivil_model = new EstadoCivilModel();
 
 		}
@@ -23,24 +23,24 @@ namespace App\Http\Controllers\Clinica{
 		{
 
 			if ($request->ajax()) {
-				$dados['pacientes'] = $this->paciente_model->searchPacientes($request);
-				return response(view('clinica.pacientes.list', $dados), 200);
+				$dados['medicos'] = $this->medico_model->searchMedicos($request);
+				return response(view('clinica.medicos.list', $dados), 200);
 			}
 
-			$dados['pacientes'] = $this->paciente_model->getPacientes();
-			return view('clinica.pacientes.index', $dados);
+			$dados['medicos'] = $this->medico_model->getMedicos();
+			return view('clinica.medicos.index', $dados);
 
 		}
 
 		public function form(Request $request, $id = null)
 		{
 
-			$dados['row']          = $this->paciente_model->getPacienteById($id);
-			$dados['acomodacoes']  = $this->paciente_model->getAcomodacao();
-			$dados['etnias']       = $this->paciente_model->getEtnia();
+			$dados['row']          = $this->medico_model->getMedicoById($id);
+			$dados['acomodacoes']  = $this->medico_model->getAcomodacao();
+			$dados['etnias']       = $this->medico_model->getEtnia();
 			$dados['convenios']    = $this->convenio_model->getConvenio();
 			$dados['estado_civil'] = $this->estadoCivil_model->getEstadoCivil();
-			return view('clinica.pacientes.form', $dados);
+			return view('clinica.medicos.form', $dados);
 
 		}
 
@@ -52,15 +52,15 @@ namespace App\Http\Controllers\Clinica{
 				'email' => 'nullable|email|required_if:receber_notificacoes,on',
 			]);
 
-			$id = $this->paciente_model->cadastraPaciente($request);
+			$id = $this->medico_model->cadastraMedico($request);
 
 			$status = 'success';
-			$url    = url()->route('clinica.pacientes.index');
+			$url    = url()->route('clinica.medicos.index');
 			$type   = 'send';
 
 			return response()->json([
 				'status'  => $status,
-				'message' => 'Paciente cadastrado realizado com sucesso!',
+				'message' => 'Médico cadastrado realizado com sucesso!',
 				'type'    => $type,
 				'url'     => $url,
 			]);
@@ -75,7 +75,7 @@ namespace App\Http\Controllers\Clinica{
 			]);
 
 			$id = $request->id;
-			$this->paciente_model->editaPaciente($request, $id);
+			$this->medico_model->editaMedico($request, $id);
 
 			return response()->json(['message' => 'Dados atualizados com sucesso!']);
 
@@ -84,12 +84,12 @@ namespace App\Http\Controllers\Clinica{
 		public function patch(Request $request)
 		{
 
-			$this->paciente_model->from('tb_paciente')
+			$this->medico_model->from('tb_medico')
 				->whereIn('id', $request->id)
 				->update([$request->field => $request->value]);
 
 			return response()->json([
-				'message' => 'Paciente atualizado com sucesso!',
+				'message' => 'Médico atualizado com sucesso!',
 			]);
 
 		}
@@ -97,11 +97,11 @@ namespace App\Http\Controllers\Clinica{
 		public function delete(Request $request)
 		{
 
-			$this->paciente_model->from('tb_paciente')->whereIn('id', $request->id)->delete();
+			$this->medico_model->from('tb_medico')->whereIn('id', $request->id)->delete();
 
 			$status  = 'success';
-			$message = 'Paciente removido com sucesso!';
-			$url     = url()->route('clinica.pacientes.index');
+			$message = 'Medico removido com sucesso!';
+			$url     = url()->route('clinica.medicos.index');
 			$type    = 'send';
 
 			return json_encode(['status' => $status, 'message' => $message, 'type' => $type, 'url' => $url], 200);

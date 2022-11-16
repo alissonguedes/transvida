@@ -36,9 +36,11 @@
 				<button class="btn btn-floating blue lighten-1 list gradient-45deg-indigo-light-blue waves-effect waves-light hide" id="change-mode" disabled="disabled">
 					<i class="material-icons">list</i>
 				</button>
+				<?php $__env->startSection('btn-add'); ?>
 				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-href="<?php echo $__env->yieldContent('btn-add-route'); ?>">
 					<i class="material-icons">person_add_alt_1</i>
 				</button>
+				<?php echo $__env->yieldSection(); ?>
 			</div>
 		</div>
 	</div>

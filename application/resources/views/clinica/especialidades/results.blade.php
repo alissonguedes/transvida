@@ -41,7 +41,7 @@
 						</p> --}}
 						<div class="acoes flex flex-center mt-5">
 							<a class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Prontuário">
-								<i class="material-icons">assignment_ind</i>
+								<i class="material-icons">content_paste</i>
 							</a>
 							<a href="#" class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Agendar">
 								<i class="material-icons">event</i>

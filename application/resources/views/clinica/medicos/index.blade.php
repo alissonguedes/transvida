@@ -1,0 +1,13 @@
+@extends('clinica.layouts.index')
+
+@section('title', 'Pacientes')
+
+@section('search-label', 'Pesquisar pacientes')
+@section('data-search', 'pacientes')
+
+@section('btn-add-title','Adicionar paciente')
+@section('btn-add-route', route('clinica.pacientes.add'))
+
+@section('container')
+@include('clinica.pacientes.results')
+@endsection
