@@ -272,6 +272,10 @@ function btnModalForms($button) {
 						$('#' + modal).find('form').html($(response).find('form').html());
 					});
 				},
+				'onOpenEnd': () => {
+					$('#' + modal).find('form').find('select').formSelect();
+					App.aplicarMascaras();
+				}
 			})
 
 			M.modal('open');

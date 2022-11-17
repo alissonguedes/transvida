@@ -406,3 +406,29 @@
 .main-full .modal.offset-l2 {
 	left: 20%;
 }
+
+/* Modal Form Left */
+.form-sidenav {
+	position: absolute;
+	bottom: 0;
+	background: #fff !important;
+	z-index: 99999;
+	transform: translateX(-110%);
+	transition: 250ms;
+	padding-left: 260px;
+	width: inherit;
+	height: inherit;
+	left: 0;
+	margin: 0;
+	will-change: top, left, right, bottom;
+	overflow-x: hidden;
+}
+
+.main-full .form-sidenav {
+	padding-left: 70px;
+}
+
+.form-sidenav.open {
+	transform: translateX(0%);
+	animation-delay: 2000ms;
+}

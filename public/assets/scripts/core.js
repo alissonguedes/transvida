@@ -24,6 +24,8 @@ window.onload = () => {
 
 function core() {
 
+	$('.material-tooltip,.sidenav-overlay,.modal-overlay').remove();
+
 	$("select").formSelect();
 
 	Request.menu();
@@ -73,8 +75,6 @@ function core() {
 	// 	Storage.checkSession();
 	// }, 200);
 
-	$("[data-tooltip]").tooltip();
-
 	$(".materialboxed").each(function() {
 		var materialbox = $(this);
 		materialbox.materialbox({
@@ -123,13 +123,13 @@ function core() {
 	//     });
 	// });
 	// botão voltar para esconder o formulário da página de e-mail
-	$('.modal').modal({
-		dismissible: typeof $(this).data('dismissible') !== 'undefined' && $(this).data('dismissible') != '' ? $(this).data('dismissible') : false,
+	var modal = $('.modal').modal({
+		dismissible: typeof $(modal).data('dismissible') !== 'undefined' && $(modal).data('dismissible') != '' ? $(modal).data('dismissible') : false,
 		inDuration: 150,
 		outDuration: 200,
 		outDuration: 200,
-		startingTop: "33%",
-		endingTop: "33%",
+		startingTop: "30%",
+		endingTop: "30%",
 	});
 
 	$(".btn-back").each(function() {
@@ -167,6 +167,27 @@ function core() {
 	});
 
 	console.log($('.scroller').data('scroll-x') == '');
+
+
+
+
+	$('.form-sidenav-trigger').on('click', function() {
+
+		var target = $(this).data('target');
+		var sidenav = $('#' + target);
+		var overlay = $('<div class="modal-overlay" style="z-index: 997; display: block; opacity: 0.5">');
+		sidenav.addClass('open').parent().remove('div.modal-overlay').append(overlay);
+
+		if (typeof sidenav.data('dismissible') !== 'undefined' && !sidenav.data('dismissible')) {
+			overlay.on('click', function() {
+				sidenav.removeClass('open');
+				sidenav.next('div.modal-overlay').remove();
+			});
+		}
+
+	})
+
+
 
 	if ($(".sidenav").length > 0) new PerfectScrollbar(".sidenav");
 	if ($("div.table").length > 0) new PerfectScrollbar(".table .table-body", {

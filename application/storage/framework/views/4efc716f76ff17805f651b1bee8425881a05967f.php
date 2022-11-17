@@ -1,0 +1,180 @@
+<?php $__env->startSection('form-sidenav'); ?>
+<div class="row">
+	<div class="col s6">
+		<div id="agendamento" class="form-sidenav" data-dismissible="false" data-edge="right" data-backdrop="false">
+			<div class="row">
+				<div class="col s5">
+					<div class="container no-padding scroll" style="overflow: auto; height:calc(100vh - 64px);">
+
+						<br> local do atendimento
+						<br> - local da clínica
+						<br> Nome do médico
+						<br> - nome do médico
+						<br> Horário do agendamento
+						<br> - Horário.
+						<br> Repetição do evento
+						<br> dias da semana
+						<br> frequência:
+						<br> - diariamente;
+						<br> - semanalmente;
+						<br> - quinzenalmente;
+						<br> - mensalmente.
+						<br> Até uma data específica
+						<br> Quantidade de atendimentos.
+					</div>
+				</div>
+				<div class="col s7">
+					<div class="container no-padding" style="overflow: auto; height:calc(100vh - 64px);">
+						<div class="scroller">
+							<div class="row">
+								<div class="col s12">
+									<div class="input-field">
+										<label for="paciente">Paciente</label>
+										<input type="text" name="paciente" id="paciente" value="<?php echo e($row->nome ?? null); ?>">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									teste
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/agenda/form.blade.php ENDPATH**/ ?>

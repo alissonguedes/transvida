@@ -44,7 +44,7 @@
 										<div class="row">
 											<div class="col s2">
 												<div id="foto-paciente" class="circle flex flex-column flex-center">
-													<div id="foto" class="z-depth-3">
+													<div id="foto">
 														<img src="{{ asset($row->imagem ?? 'img/avatar/icon.png') }}" alt="" style="{{ isset($row) && empty($row->imagem) ? 'opacity: 0.4;filter: grayscale(1);' : null }}">
 													</div>
 													<div id="change-photo" class="btn btn-floating z-depth-3 waves-effect blue lighten-1">
@@ -380,7 +380,7 @@
 						</div>
 
 						<div class="card-footer right-align">
-							<button type="reset" class="btn white black-text waves-effect mr-2" data-tooltip="Voltar" data-href="{{ route('clinica.pacientes.index') }}">
+							<button type="reset" class="btn white black-text waves-effect" data-tooltip="Cancelar" data-href="{{ route('clinica.pacientes.index') }}">
 								<i class="material-icons">arrow_back</i>
 							</button>
 

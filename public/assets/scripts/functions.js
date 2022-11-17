@@ -528,6 +528,7 @@ var App = {
 
 		var is_num = $('.is_num');
 		var is_cpf = $('.is_cpf');
+		var is_crm = $('.is_crm');
 		var is_date = $('.is_date');
 		var is_cnpj = $('.is_cnpj');
 		var is_cpf_cnpj = $('.is_cpf_cnpj');
@@ -716,7 +717,7 @@ var App = {
 					$(this).val('0' + ($(this).val()));
 				}
 
-				if (is_numeric(e.key)) {
+				if (MascaraUtils.Numerico(e.key)) {
 
 					var valor = parseFloat($(this).val().replace(',', '.'));
 
@@ -731,23 +732,88 @@ var App = {
 				}
 
 
-			}) // .on('keyup', function(e) {
+			}).on('keyup', function(e) {
 
-			//	if ($(this).val() == '' || $(this).val() == '0,00' || $(this).val() == '0')
-			//		if (e.keyCode == 8) {
-			//			$(this).val('0,00');
-			//			e.preventDefault();
-			//			return false;
-			//		}
-			//
-			//}).attr('maxlength', (typeof $(this).attr('maxlength') !== 'undefined' ? $(this).attr('maxlength') : 9)).attr('placeholder', '0,00').addClass('text-' + $class).focus(function() {
-			// if ($(this).val().length == 0 || $(this).val() == 0)
-			// $(this).val('0,00');
-			//			}).on('blur', function() {
-			//				if ($(this).val().length == 0 || $(this).val() == 0)
-			//					$(this).val('0,00');
-			//
-			//			});
+				if ($(this).val() == '' || $(this).val() == '0,00' || $(this).val() == '0')
+					if (e.keyCode == 8) {
+						$(this).val('0,00');
+						e.preventDefault();
+						return false;
+					}
+
+			}).attr('maxlength', (typeof $(this).attr('maxlength') !== 'undefined' ? $(this).attr('maxlength') : 20)).attr('placeholder', '0,00').addClass('text-' + $class).focus(function() {
+				if ($(this).val().length == 0 || $(this).val() == 0)
+					$(this).val('0,00');
+			}).on('blur', function() {
+				if ($(this).val().length == 0 || $(this).val() == 0)
+					$(this).val('0,00');
+
+			});
+
+		});
+
+		is_crm.each(function() {
+
+			var exp = /^0{9}\-[0-9]{1}$/;
+			var $val = typeof $(this).attr('data-value') !== 'undefined' && $(this).attr('data-value') != null ? $(this).attr('data-value') : '';
+			var $class = typeof $(this).attr('data-align') !== 'undefined' && $(this).attr('data-align') != '' ? $(this).attr('data-align') : 'right';
+
+			$(this).val($val);
+
+			var input = this;
+			MascaraUtils.mascara(input, MascaraUtils.CRM);
+
+			$(this).on('keydown', function(e) {
+
+				MascaraUtils.mascara(this, MascaraUtils.CRM);
+
+				if ($(this).val() == '' || $(this).val() == '000000000-0' || $(this).val() == '0') {
+
+					if (e.keyCode == 8) {
+						// $(this).val('000000000-0');
+						e.preventDefault();
+						return false;
+					}
+
+				}
+
+				if ($(this).val().length <= 9) {
+					// $(this).val('0' + ($(this).val()));
+				}
+
+				if (MascaraUtils.Numerico(e.key)) {
+
+					var valor = parseFloat($(this).val().replace('-', '.'));
+					console.log(valor);
+
+					if (exp.test($(this).val())) {
+
+						if (valor < 1) {
+							$(this).val(($(this).val()).slice(-1));
+						}
+
+					}
+
+				}
+
+
+			}).on('keyup', function(e) {
+
+				if ($(this).val() == '' || $(this).val() == '000000000-0' || $(this).val() == '0')
+					if (e.keyCode == 8) {
+						// $(this).val('000000000-0');
+						e.preventDefault();
+						return false;
+					}
+
+			}).attr('maxlength', (typeof $(this).attr('maxlength') !== 'undefined' ? $(this).attr('maxlength') : 11)).attr('placeholder', '000000000-0').addClass('text-' + $class).focus(function() {
+				// if ($(this).val().length == 0 || $(this).val() == 0)
+				// 	$(this).val('000000000-0');
+			}).on('blur', function() {
+				// if ($(this).val().length == 0 || $(this).val() == 0)
+				// 	$(this).val('000000000-0');
+
+			});
 
 		});
 
@@ -912,6 +978,7 @@ var MascaraUtils = {
 	SEGUNDO: 12,
 	CEP: 13,
 	INTERVAL_TIME: 14,
+	CRM: 15,
 	fn: null,
 	obj: null,
 	mascara: function(o, f, p) {
@@ -961,6 +1028,9 @@ var MascaraUtils = {
 			case this.INTERVAL_TIME:
 				fn = this.IntervalTime;
 				break;
+			case this.CRM:
+				fn = this.Crm;
+				break;
 		}
 		setTimeout('MascaraUtils.exec()', 1);
 	},
@@ -1003,7 +1073,32 @@ var MascaraUtils = {
 		}
 		return v;
 	},
+	Crm: function(v) {
+		var splitText = v.split('');
+		var revertText = splitText.reverse();
+		var v2 = revertText.join('');
+		var v2 = v2.replace(/\D/g, '')
 
+		if (v2.length <= 2) {
+			v2 = v2.replace(/(\d)(\d)/, '$1$2-0');
+		} else {
+			v2 = v2.replace(/(\d{1})(\d)/, '$1-$2');
+		}
+
+		if (v2.length > 6) {
+
+			for (var i = 0; i < v2.length; i++) {
+				v2 = v2.replace(/(\d{1})(\d)/, '$1$2');
+			}
+
+		}
+
+		v2 = v2.split('');
+		revertText = v2.reverse();
+		v2 = revertText.join('');
+
+		return v2;
+	},
 	Decimal: function(v) {
 
 		var splitText = v.split('');

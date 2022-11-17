@@ -34,5 +34,6 @@
 		?>
 
 	</aside>
+
 <?php endif; ?>
 <?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/sidebar.blade.php ENDPATH**/ ?>

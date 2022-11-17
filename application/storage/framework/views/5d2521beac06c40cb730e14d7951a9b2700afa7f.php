@@ -55,6 +55,8 @@
 	</div>
 </div>
 
+<?php echo $__env->yieldContent('form-sidenav'); ?>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('clinica.body', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/layouts/index.blade.php ENDPATH**/ ?>

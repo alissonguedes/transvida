@@ -251,6 +251,7 @@ if (!function_exists('getMenus')) {
 		$idioma = !isset($_COOKIE['idioma']) ? get_config('language') : $_COOKIE['idioma'];
 		$ul     = null;
 
+		// Lista o menu principal da aplicação
 		$menu = $menu_model->from('tb_acl_menu')
 			->where('id_modulo', function ($query) use ($modulo) {
 				$query->select('id')
@@ -268,8 +269,23 @@ if (!function_exists('getMenus')) {
 			->get()
 			->first();
 
+		// lista outros menus que são incluídos na aplicação
 		if (!isset($menu)) {
-			$ul .= 'Nenhum menu neste módulo';
+			$menu = $menu_model->from('tb_acl_menu')
+				->where('id_modulo', function ($query) use ($modulo) {
+					$query->select('id')
+						->from('tb_acl_modulo')
+						->where('path', '/' . $modulo);
+				})
+				->where('id', function ($query) use ($local) {
+					$query->select('id_menu')
+						->from('tb_acl_menu_descricao')
+						->whereColumn('id_menu', 'id')
+						->where('descricao', $local);
+				})
+				->get()
+				->first();
+			// $ul .= 'Nenhum menu neste módulo';
 		}
 
 		if (isset($menu)) {

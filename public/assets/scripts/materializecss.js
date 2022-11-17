@@ -70,6 +70,10 @@ $(window).on("load", function() {
 
 function Materializecss() {
 
+	$("[data-tooltip]").tooltip({
+		transitionMovement: 10
+	});
+
 	$('[data-count="true"]').each(function() {
 		var maxlength = $(this).attr('maxlength');
 		$(this).attr('data-length', maxlength).characterCounter();
@@ -336,6 +340,10 @@ function Materializecss() {
 				$(".sidenav-main.nav-collapsible, .navbar .brand-sidebar").mouseleave(function() {
 					navigationCollapse()
 				}),
+				// $('.sidenav#agendamento').on('click', function() {
+				// 	$("#sidenav-overlay").trigger("click");
+				// 	return false;
+				// }),
 				$(".sidenav").sidenav({
 					edge: "left"
 				}),

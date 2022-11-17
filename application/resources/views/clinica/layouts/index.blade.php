@@ -57,4 +57,6 @@
 	</div>
 </div>
 
+@yield('form-sidenav')
+
 @endsection

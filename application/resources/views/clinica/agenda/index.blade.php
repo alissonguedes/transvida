@@ -10,7 +10,7 @@
 
 @section('container')
 
-@include('clinica.pacientes.results')
+{{-- @include('clinica.agenda.results') --}}
 @include('clinica.agenda.form')
 
 @endsection

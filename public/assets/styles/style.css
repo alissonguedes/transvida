@@ -20,7 +20,7 @@ body {
 header {
 	height: 64px;
 	position: relative;
-	z-index: 999;
+	z-index: 999999;
 }
 
 hr {
@@ -245,7 +245,7 @@ textarea {
 
 .sidenav-main {
 	width: 260px;
-	z-index: 999;
+	z-index: 999999;
 }
 
 .nav-collapsed.sidenav-main {
@@ -900,15 +900,53 @@ nav ul button i {
 }
 
 .material-tooltip {
-	padding: 5px 8px;
-	font-size: 13px;
-	margin-top: -12px;
-	font-family: 'bebas';
-	height: 23px;
-	min-height: 23px;
-	max-height: 23px;
-	background: var(--amber);
-	color: #000;
+	min-height: auto;
+	height: auto;
+	line-height: 2;
+	font-size: 12px;
+	padding: 1px 10px;
+	margin-top: -5px;
+	overflow: unset !important;
+}
+
+.material-tooltip:before,
+.material-tooltip:after {
+	content: '';
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	z-index: 1000;
+	top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+/*
+.material-tooltip:before {
+	margin-left: -10px;
+	border-bottom: 5px solid;
+	border-right: 5px solid;
+	border-top: 5px solid transparent;
+	border-left: 5px solid transparent;
+}
+
+.material-tooltip:after {
+	border-top: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid;
+	border-left: 5px solid;
+} */
+
+.material-tooltip:before {
+	margin-left: -10px;
+	border-bottom-color: #323232;
+	border-right-color: #323232;
+}
+
+.material-tooltip:after {
+	border-bottom-color: #323232;
+	border-left-color: #323232;
 }
 
 nav ul a {
@@ -1393,6 +1431,7 @@ input.no-border,
 	background-color: #fff;
 	box-shadow: none;
 }
+
 /*
 .bordered {
 	border: 1px solid #c9c9c9;
@@ -2118,12 +2157,13 @@ label.divider:after {
 .dataTables_wrapper .dataTables_processing,
 .dataTables_wrapper .dataTables_paginate {
 	position: fixed;
-	top: 64px;
+	top: 78px;
 	z-index: 998;
 	height: 54px;
 	line-height: 54px;
 	padding: 0;
 	margin: 0;
+	margin-right: 30px;
 }
 
 .dataTables_wrapper .dataTables_processing {
@@ -2306,7 +2346,7 @@ color: #fff;
 #toast-container {
 	display: block;
 	position: fixed;
-	z-index: 10000;
+	z-index: 999999999;
 }
 
 .toast {

@@ -7,82 +7,59 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PacienteModel extends Model
+class MedicoModel extends Model
 {
 
 	use HasFactory;
 
-	protected $table = 'tb_paciente';
-	protected $order = [
-		null,
-		'nome',
-		'telefone',
-		'codigo',
-		'data_nascimento',
-		'convenio',
-		'status',
-		'status',
-	];
+	protected $table = 'tb_medico';
+	protected $order = [];
 
-	private $path = 'assets/clinica/img/pacientes/';
+	private $path = 'assets/clinica/img/medicos/';
 
-	public function getPacientes($data = null)
+	public function getMedicos($data = null)
 	{
 
 		$get = $this->select(
 			'id',
+			'id_especialidade',
 			'nome',
-			'codigo',
-			'imagem',
-			'id_convenio',
-			'id_acomodacao',
-			'matricula_convenio',
-			DB::raw('DATE_FORMAT(validade_convenio, "%d/%m/%Y") AS validade_convenio'),
-			'id_estado_civil',
-			'id_etnia',
-			'sexo',
-			'data_nascimento',
 			'cpf',
 			'rg',
-			'cns',
-			'mae',
-			'pai',
-			'notas',
-			'logradouro',
-			'numero',
-			'complemento',
-			'cidade',
-			'bairro',
-			'cep',
-			'uf',
-			'pais',
-			'email',
-			'telefone',
-			'celular',
-			'receber_notificacoes',
-			'receber_email',
-			'receber_sms',
-			'obito',
-			'status',
-			DB::raw('(SELECT descricao FROM tb_convenio WHERE id = id_convenio) AS convenio'),
-			DB::raw('(SELECT descricao FROM tb_etnia WHERE id = id_etnia) AS etnia'),
-			DB::raw('DATE_FORMAT(data_nascimento, "%d/%m/%Y") AS data_nascimento'),
+			'crm',
+			DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") AS data_cadastro'),
+			DB::raw('DATE_FORMAT(updated_at, "%d/%m/%Y") AS data_atualizacao'),
+			DB::raw('(SELECT especialidade FROM tb_especialidade WHERE id = id_especialidade) AS especialidade'),
+			'status'
 		);
 
 		if (isset($data) && $search = $data['query']) {
 			$get->where(function ($query) use ($search) {
 				$query
-					->orWhere('codigo', 'like', $search . '%')
+					->orWhere('id', 'like', $search . '%')
 					->orWhere('nome', 'like', $search . '%')
-					->orWhere('matricula_convenio', 'like', $search . '%')
-					->orWhere('rg', 'like', $search . '%')
-					->orWhere('email', 'like', $search . '%')
 					->orWhere('cpf', 'like', $search . '%')
-					->orWhere('cns', 'like', $search . '%')
-					->orWhere('telefone', 'like', $search . '%')
-					->orWhere('celular', 'like', $search . '%');
+					->orWhere('rg', 'like', $search . '%')
+					->orWhere('crm', 'like', $search . '%')
+					->orWhere('id_especialidade', 'like', function ($query) use ($search) {
+						$query->select('especialidade')
+							->from('tb_especialidade')
+							->where('especialidade', 'like', $search . '%')
+							->whereColumn('id', 'id_especialidade');
+// DB::raw('(SELECT especialidade FROM tb_especialidade WHERE id = id_especialidade) AS especialidade');
+
+					});
 			});
 		}
+
+		$this->order = [
+			null,
+			'nome',
+			'crm',
+			'created_at',
+			'updated_at',
+			'status',
+		];
 
 		// Order By
 		if (isset($_GET['order']) && $_GET['order'][0]['column'] != 0) {
@@ -95,21 +72,21 @@ class PacienteModel extends Model
 
 	}
 
-	public function getPacienteById($id)
+	public function getMedicoById($id)
 	{
 
-		return $this->getPacientes()
+		return $this->getMedicos()
 			->where('id', $id)
 			->first();
 
 	}
 
-	// public function searchPacientes(Request $request)
+	// public function searchMedicos(Request $request)
 	// {
 	//
 	// $query = $request->get('query');
 	//
-	// return $this->getPacientes()
+	// return $this->getMedicos()
 	// 	->where('nome', 'like', '%' . $query . '%')
 	// 	->paginate(isset($_GET['length']) ? $_GET['length'] : 50);
 	//
@@ -150,162 +127,78 @@ class PacienteModel extends Model
 
 	}
 
-	public function cadastraPaciente($post)
+	public function cadastraMedico($post)
 	{
 
-		$id_convenio          = $post->convenio ?? 1;
-		$matricula_convenio   = $post->matricula ?? null;
-		$validade_convenio    = $post->validade_convenio ? convert_to_date($post->validade_convenio, 'd/m/Y', 'Y-m-d') : null;
-		$id_acomodacao        = $post->acomodacao ?? 1;
-		$id_estado_civil      = $post->estado_civil;
-		$id_etnia             = $post->etnia ?? 1;
-		$nome                 = $post->nome;
-		$imagem               = $this->uploadImage($post);
-		$codigo               = 'P-' . rand(111111, 999999);
-		$sexo                 = $post->sexo;
-		$data_nascimento      = $post->data_nascimento ? convert_to_date($post->data_nascimento, 'd/m/Y', 'Y-m-d') : null;
-		$cpf                  = $post->cpf;
-		$rg                   = $post->rg;
-		$cns                  = $post->cns;
-		$mae                  = $post->mae;
-		$pai                  = $post->pai;
-		$notas                = $post->notas;
-		$logradouro           = $post->logradouro;
-		$complemento          = $post->complemento;
-		$numero               = $post->numero;
-		$cidade               = $post->cidade;
-		$bairro               = $post->bairro;
-		$cep                  = $post->cep;
-		$uf                   = $post->uf;
-		$pais                 = $post->pais;
-		$email                = $post->email;
-		$telefone             = $post->telefone;
-		$celular              = $post->celular;
-		$receber_notificacoes = $post->receber_notificacoes ?? 'off';
-		$receber_email        = $post->receber_email ?? 'off';
-		$receber_sms          = $post->receber_sms ?? 'off';
-		$obito                = $post->obito ?? '0';
-		$status               = $post->status ?? '0';
+		$id_especialidade = $post->especialidade;
+		$nome             = $post->nome;
+		$imagem           = $this->uploadImage($post);
+		// $data_nascimento      = $post->data_nascimento ? convert_to_date($post->data_nascimento, 'd/m/Y', 'Y-m-d') : null;
+		$cpf = $post->cpf;
+		$rg  = $post->rg;
+		$crm = $post->crm;
+		// $email                = $post->email;
+		// $telefone             = $post->telefone;
+		// $celular              = $post->celular;
+		$status = $post->status ?? '0';
 
 		$data = [
-			'id_convenio'          => $id_convenio,
-			'matricula_convenio'   => $matricula_convenio,
-			'validade_convenio'    => $validade_convenio,
-			'id_acomodacao'        => $id_acomodacao,
-			'id_estado_civil'      => $id_estado_civil,
-			'id_etnia'             => $id_etnia,
-			'codigo'               => $codigo,
-			'nome'                 => $nome,
-			'imagem'               => $imagem,
-			'sexo'                 => $sexo,
-			'data_nascimento'      => $data_nascimento,
-			'cpf'                  => $cpf,
-			'rg'                   => $rg,
-			'cns'                  => $cns,
-			'mae'                  => $mae,
-			'pai'                  => $pai,
-			'notas'                => $notas,
-			'logradouro'           => $logradouro,
-			'numero'               => $numero,
-			'complemento'          => $complemento,
-			'cidade'               => $cidade,
-			'bairro'               => $bairro,
-			'cep'                  => $cep,
-			'uf'                   => $uf,
-			'pais'                 => $pais,
-			'email'                => $email,
-			'telefone'             => $telefone,
-			'celular'              => $celular,
-			'receber_notificacoes' => $receber_notificacoes,
-			'receber_email'        => $receber_email,
-			'receber_sms'          => $receber_sms,
-			'obito'                => $obito,
-			'status'               => $status,
+			'id_especialidade' => $id_especialidade,
+			'nome'             => $nome,
+			// 'imagem'               => $imagem,
+			// 'sexo'                 => $sexo,
+			// 'data_nascimento'      => $data_nascimento,
+			'cpf'              => $cpf,
+			'rg'               => $rg,
+			'crm'              => $crm,
+			// 'email'                => $email,
+			// 'telefone'             => $telefone,
+			// 'celular'              => $celular,
+			'status'           => $status,
 		];
 
-		$id = $this->from('tb_paciente')
+		$id = $this->from('tb_medico')
 			->insertGetId($data);
 
 		return $id;
 
 	}
 
-	public function editaPaciente(Request $post, $id)
+	public function editaMedico(Request $post, $id)
 	{
 
-		$id_convenio          = $post->convenio ?? 1;
-		$matricula_convenio   = $post->matricula ?? null;
-		$validade_convenio    = $post->validade_convenio ? convert_to_date($post->validade_convenio, 'd/m/Y', 'Y-m-d') : null;
-		$id_acomodacao        = $post->acomodacao ?? 1;
-		$id_estado_civil      = $post->estado_civil;
-		$id_etnia             = $post->etnia ?? 1;
-		$nome                 = $post->nome;
-		$imagem               = $this->uploadImage($post);
-		$sexo                 = $post->sexo;
-		$data_nascimento      = $post->data_nascimento ? convert_to_date($post->data_nascimento, 'd/m/Y', 'Y-m-d') : null;
-		$cpf                  = $post->cpf;
-		$rg                   = $post->rg;
-		$cns                  = $post->cns;
-		$mae                  = $post->mae;
-		$pai                  = $post->pai;
-		$notas                = $post->notas;
-		$logradouro           = $post->logradouro;
-		$complemento          = $post->complemento;
-		$numero               = $post->numero;
-		$cidade               = $post->cidade;
-		$bairro               = $post->bairro;
-		$cep                  = $post->cep;
-		$uf                   = $post->uf;
-		$pais                 = $post->pais;
-		$email                = $post->email;
-		$telefone             = $post->telefone;
-		$celular              = $post->celular;
-		$receber_notificacoes = $post->receber_notificacoes ?? 'off';
-		$receber_email        = $post->receber_email ?? 'off';
-		$receber_sms          = $post->receber_sms ?? 'off';
-		$obito                = $post->obito ?? '0';
-		$status               = $post->status ?? '0';
+		$id_especialidade = $post->especialidade;
+		$nome             = $post->nome;
+		$imagem           = $this->uploadImage($post);
+		// $data_nascimento      = $post->data_nascimento ? convert_to_date($post->data_nascimento, 'd/m/Y', 'Y-m-d') : null;
+		$cpf = $post->cpf;
+		$rg  = $post->rg;
+		$crm = $post->crm;
+		// $email                = $post->email;
+		// $telefone             = $post->telefone;
+		// $celular              = $post->celular;
+		$status = $post->status ?? '0';
 
 		$data = [
-			'id_convenio'          => $id_convenio,
-			'matricula_convenio'   => $matricula_convenio,
-			'validade_convenio'    => $validade_convenio,
-			'id_acomodacao'        => $id_acomodacao,
-			'id_estado_civil'      => $id_estado_civil,
-			'id_etnia'             => $id_etnia,
-			'nome'                 => $nome,
-			// 'codigo'               => $codigo,
-			'sexo'                 => $sexo,
-			'data_nascimento'      => $data_nascimento,
-			'cpf'                  => $cpf,
-			'rg'                   => $rg,
-			'cns'                  => $cns,
-			'mae'                  => $mae,
-			'pai'                  => $pai,
-			'notas'                => $notas,
-			'logradouro'           => $logradouro,
-			'numero'               => $numero,
-			'complemento'          => $complemento,
-			'cidade'               => $cidade,
-			'bairro'               => $bairro,
-			'cep'                  => $cep,
-			'uf'                   => $uf,
-			'pais'                 => $pais,
-			'email'                => $email,
-			'telefone'             => $telefone,
-			'celular'              => $celular,
-			'receber_notificacoes' => $receber_notificacoes,
-			'receber_email'        => $receber_email,
-			'receber_sms'          => $receber_sms,
-			'obito'                => $obito,
-			'status'               => $status,
+			'id_especialidade' => $id_especialidade,
+			'nome'             => $nome,
+			// 'imagem'               => $imagem,
+			// 'sexo'                 => $sexo,
+			// 'data_nascimento'      => $data_nascimento,
+			'cpf'              => $cpf,
+			'rg'               => $rg,
+			'crm'              => $crm,
+			// 'email'                => $email,
+			// 'telefone'             => $telefone,
+			// 'celular'              => $celular,
+			'status'           => $status,
 		];
 
 		if (!is_null($imagem)) {
 			$data['imagem'] = $imagem;
 		}
 
-		$id = $this->from('tb_paciente')
+		$id = $this->from('tb_medico')
 			->where('id', $id)
 			->update($data);
 
