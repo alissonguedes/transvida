@@ -42,7 +42,7 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="col s2">
+											<div class="col s12 m2 l2">
 												<div id="foto-paciente" class="circle flex flex-column flex-center">
 													<div id="foto" class="z-depth-3">
 														<img src="{{ asset($row->imagem ?? 'img/avatar/icon.png') }}" alt="" style="{{ isset($row) && empty($row->imagem) ? 'opacity: 0.4;filter: grayscale(1);' : null }}">
@@ -53,7 +53,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col s10">
+											<div class="col s12 m10 l10">
 												<div class="row">
 													<div class="col s12 m8 l8">
 														<div class="input-field">

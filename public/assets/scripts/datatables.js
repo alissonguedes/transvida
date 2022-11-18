@@ -636,9 +636,13 @@ function DataTable(refresh) {
 
 				table.parents('.dataTables_wrapper').find('[data-tooltip]').tooltip();
 
-				// if ($('.dataTables_wrapper').length > 0) new PerfectScrollbar(table.closest('.card-content'), {
-				// 	'suppressScrollX': true
-				// });
+				if ($('.dataTables_wrapper').length > 0)
+					new PerfectScrollbar('.card-content', {
+						'suppressScrollX': true
+					});
+
+				console.log(table.parents('.dataTables_wrapper').parents('.card-content'));
+
 				table.parents('.dataTables_wrapper').find('.dataTables_processing').hide();
 
 			},
