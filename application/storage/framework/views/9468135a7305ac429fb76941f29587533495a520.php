@@ -1,7 +1,11 @@
 <?php $__env->startSection('title', 'Medicos'); ?>
 
-<?php $__env->startSection('search-label', 'Pesquisar medicos'); ?>
-<?php $__env->startSection('data-search', 'medicos'); ?>
+<?php $__env->startSection('search'); ?>
+<div class="input-field search bordered">
+	<label for="">Pesquisar medicos</label>
+	<input type="search" id="search-on-page" class="dataTable_search">
+</div>
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('btn-add-title','Adicionar medico'); ?>
 <?php $__env->startSection('btn-add'); ?>

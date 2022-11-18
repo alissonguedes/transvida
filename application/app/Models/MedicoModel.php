@@ -33,7 +33,7 @@ class MedicoModel extends Model
 			'status'
 		);
 
-		if (isset($data) && $search = $data['query']) {
+		if (isset($data) && $search = $data['search']['value']) {
 			$get->where(function ($query) use ($search) {
 				$query
 					->orWhere('id', 'like', $search . '%')
@@ -46,8 +46,6 @@ class MedicoModel extends Model
 							->from('tb_especialidade')
 							->where('especialidade', 'like', $search . '%')
 							->whereColumn('id', 'id_especialidade');
-// DB::raw('(SELECT especialidade FROM tb_especialidade WHERE id = id_especialidade) AS especialidade');
-
 					});
 			});
 		}

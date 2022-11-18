@@ -1,7 +1,11 @@
 <?php $__env->startSection('title', 'Especialidades'); ?>
 
-<?php $__env->startSection('search-label', 'Pesquisar especialidades'); ?>
-<?php $__env->startSection('data-search', 'especialidades'); ?>
+<?php $__env->startSection('search'); ?>
+<div class="input-field search bordered">
+	<label for="">Pesquisar especialidades</label>
+	<input type="search" id="search-on-page" class="dataTable_search">
+</div>
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('btn-add-title','Adicionar especialidade'); ?>
 <?php $__env->startSection('btn-add'); ?>

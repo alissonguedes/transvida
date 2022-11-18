@@ -566,7 +566,7 @@ function DataTable(refresh) {
 
 		},
 		'serverSide': true,
-		'processing': false,
+		'processing': true,
 		'ajax': {
 			type: 'get',
 			dataType: 'html',
@@ -639,6 +639,7 @@ function DataTable(refresh) {
 				// if ($('.dataTables_wrapper').length > 0) new PerfectScrollbar(table.closest('.card-content'), {
 				// 	'suppressScrollX': true
 				// });
+				table.parents('.dataTables_wrapper').find('.dataTables_processing').hide();
 
 			},
 
@@ -661,33 +662,12 @@ function DataTable(refresh) {
 
 	var search = $('body').find('.dataTable_search');
 
-	search.parent().parent().find('label[for="search"]').on('click', function() {
-		$(this).addClass('active');
-		search.parent().show();
-		search.focus();
-	});
-
 	if (search.length) {
-
-		search.focus(function() {
-			$(this).parent().parent().find('.page-title').hide();
-			search.parent().show();
-		});
 
 		search.bind('keyup paste', delay(function() {
 			_self.search(this.value).draw();
+			console.log($(this).val);
 		}));
-
-		search.bind('blur', function() {
-			if (search.val().length > 0) {
-				search.parents('.header-search-wrapper').addClass('active');
-			} else {
-				search.parents('.header-search-wrapper').removeClass('active');
-				$(this).parent().parent().find('.page-title').show();
-				search.parent().hide();
-				search.parent().parent().find('label[for="search"]').removeClass('active')
-			}
-		})
 
 		if (search.val() != '') {
 			_self.search(search.val()).draw();

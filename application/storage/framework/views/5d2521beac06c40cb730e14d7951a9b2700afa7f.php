@@ -26,11 +26,13 @@
 						</button>
 					</li>
 				</ul>
+				<?php $__env->startSection('search'); ?>
 				<div class="input-field search bordered">
 					<?php $__env->startSection('search-label', 'Pesquisar...'); ?>
 					<label for=""><?php echo $__env->yieldContent('search-label'); ?></label>
 					<input type="search" id="search-on-page" data-search="<?php echo $__env->yieldContent('data-search'); ?>">
 				</div>
+				<?php echo $__env->yieldSection(); ?>
 			</div>
 			<div class="action-buttons">
 				<button class="btn btn-floating blue lighten-1 list gradient-45deg-indigo-light-blue waves-effect waves-light hide" id="change-mode" disabled="disabled">
@@ -47,7 +49,7 @@
 </div>
 
 <div class="container pt-1 scroller" style="height: calc(100vh - 145px); width: 100%;">
-	<div class="progress" style="position: absolute; top: -9px; left: 0; right: 0; display: none;">
+	<div class="progress">
 		<div class="indeterminate blue lighten-1"></div>
 	</div>
 	<div id="results">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 16/11/2022 às 04:55
+-- Tempo de geração: 17/11/2022 às 18:08
 -- Versão do servidor: 10.6.7-MariaDB-2ubuntu1.1
 -- Versão do PHP: 8.1.2-1ubuntu2.8
 
@@ -67,8 +67,8 @@ CREATE TABLE `tb_acl_menu` (
 INSERT INTO `tb_acl_menu` (`id`, `id_modulo`, `created_at`, `updated_at`, `editavel`, `status`) VALUES
 (1, 2, '2022-08-21 02:09:34', '2022-08-21 02:57:31', '1', '1'),
 (2, 6, '2022-08-21 02:56:50', '2022-11-11 20:16:17', '1', '1'),
-(3, 3, '2022-08-21 02:56:50', '2022-08-21 02:57:29', '1', '1'),
-(4, 3, '2022-11-08 19:38:24', NULL, '1', '1');
+(3, 6, '2022-08-21 02:56:50', '2022-08-21 02:57:29', '1', '1'),
+(4, 6, '2022-11-08 19:38:24', NULL, '1', '1');
 
 -- --------------------------------------------------------
 
@@ -146,8 +146,10 @@ INSERT INTO `tb_acl_menu_item` (`id`, `id_menu`, `id_item`, `id_parent`, `descri
 (16, 2, 12, 0, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'medical_services', NULL, 6, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
 (17, 2, 12, 16, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', 'Atendimentos', 'fa-clipboard-user', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
 (18, 2, 19, 0, 'Página de pacientes', 'acl_modulo_controller', NULL, 'group', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(19, 2, 21, 0, 'Página de médicos', 'acl_modulo_controller', NULL, NULL, NULL, 3, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(20, 2, 22, 0, 'Página de especialidades', 'acl_modulo_controller', NULL, 'favorite_border', NULL, 3, 0001, '2022-11-08 17:07:03', NULL, '1', '1');
+(19, 2, 21, 22, 'Página de médicos', 'acl_modulo_controller', NULL, NULL, NULL, 4, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
+(20, 2, 22, 22, 'Página de especialidades', 'acl_modulo_controller', NULL, 'favorite_border', NULL, 3, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
+(21, 2, 12, 0, 'Gerenciamento', 'acl_modulo_controller', NULL, 'construction', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
+(22, 2, 12, 21, 'Cadastros', 'acl_modulo_controller', NULL, 'manage_accounts', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, '1', '1');
 
 -- --------------------------------------------------------
 
@@ -190,6 +192,8 @@ INSERT INTO `tb_acl_menu_item_descricao` (`id_item`, `id_idioma`, `titulo`, `des
 (18, 1, 'Pacientes', 'Pacientes', 'Pacientes', 'Pacientes', 'Pacientes'),
 (19, 1, 'Médicos', 'Médicos', 'Médicos', 'Médicos', 'Médicos'),
 (20, 1, 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades'),
+(21, 1, 'Gerenciar', 'Gerenciar', 'Gerenciar', 'Gerenciar', 'Gerenciar'),
+(22, 1, 'Cadastros', 'Cadastros', 'Cadastros', 'Cadastros', 'Cadastros'),
 (1, 2, 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard'),
 (2, 2, 'Menus', 'Menus', 'Menus', 'Menus', 'Menus'),
 (4, 2, 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários'),
@@ -410,13 +414,13 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (54, 20, 48, 'delete', '/', 'delete', 'clinica.prontuarios.delete', NULL, 1111, 'inherit', '1'),
 (55, 20, 48, 'put', '/', 'edit', 'clinica.prontuarios.put', NULL, 1111, 'inherit', '1'),
 (56, 21, 0, 'any', '/medicos', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
-(57, 21, 59, 'any', '/', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
-(58, 21, 59, 'get', '/{id}', 'form', 'clinica.medicos.edit', NULL, 1111, 'inherit', '1'),
-(59, 21, 59, 'post', '/', 'create', 'clinica.medicos.post', NULL, 1111, 'inherit', '1'),
-(60, 21, 59, 'any', '/cadastro', 'form', 'clinica.medicos.add', NULL, 1111, 'inherit', '1'),
-(61, 21, 59, 'patch', '/{id}', 'patch', 'clinica.medicos.patch', NULL, 1111, 'inherit', '1'),
-(62, 21, 59, 'delete', '/', 'delete', 'clinica.medicos.delete', NULL, 1111, 'inherit', '1'),
-(63, 21, 59, 'put', '/', 'edit', 'clinica.medicos.put', NULL, 1111, 'inherit', '1'),
+(57, 21, 56, 'any', '/', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
+(58, 21, 56, 'any', '/cadastro', 'form', 'clinica.medicos.add', NULL, 1111, 'inherit', '1'),
+(59, 21, 56, 'post', '/', 'create', 'clinica.medicos.post', NULL, 1111, 'inherit', '1'),
+(60, 21, 56, 'get', '/{id}', 'form', 'clinica.medicos.edit', NULL, 1111, 'inherit', '1'),
+(61, 21, 56, 'patch', '/{id}', 'patch', 'clinica.medicos.patch', NULL, 1111, 'inherit', '1'),
+(62, 21, 56, 'delete', '/', 'delete', 'clinica.medicos.delete', NULL, 1111, 'inherit', '1'),
+(63, 21, 56, 'put', '/', 'edit', 'clinica.medicos.put', NULL, 1111, 'inherit', '1'),
 (64, 22, 0, 'any', '/especialidades', 'index', 'clinica.especialidades.index', NULL, 1111, 'inherit', '1'),
 (65, 22, 64, 'any', '/', 'index', 'clinica.especialidades.index', NULL, 1111, 'inherit', '1'),
 (66, 22, 64, 'get', '/cadastro', 'form', 'clinica.especialidades.add', NULL, 1111, 'inherit', '1'),
@@ -475,7 +479,7 @@ CREATE TABLE `tb_acl_usuario_config` (
 --
 
 INSERT INTO `tb_acl_usuario_config` (`id_usuario`, `id_modulo`, `id_config`, `value`, `created_at`, `updated_at`) VALUES
-(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-11-16 03:04:59');
+(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-11-17 23:49:04');
 
 -- --------------------------------------------------------
 
@@ -522,7 +526,7 @@ INSERT INTO `tb_acl_usuario_session` (`id`, `id_usuario`, `id_modulo`, `token`, 
 (1, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-12 17:52:24', '2022-11-12 20:21:10'),
 (2, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-15 04:59:13', '2022-11-15 05:13:22'),
 (3, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-15 02:20:18', '2022-11-15 05:24:30'),
-(4, 1, 6, 'b37a94e59b2537f7d912793b61c259d36374017ad4457', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-16 00:15:38', NULL);
+(4, 1, 6, 'ec216071b5bc45d33353b728d955447763769cea63ab8', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-17 23:43:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -544,6 +548,26 @@ INSERT INTO `tb_acomodacao` (`id`, `descricao`, `status`) VALUES
 (1, 'Outros', '1'),
 (2, 'Apartamento', '1'),
 (3, 'Enfermaria', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tb_agenda`
+--
+
+CREATE TABLE `tb_agenda` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `id_medico` int(11) UNSIGNED NOT NULL,
+  `dia` tinyint(1) UNSIGNED NOT NULL,
+  `mes` tinyint(2) UNSIGNED ZEROFILL DEFAULT 00,
+  `ano` tinyint(4) UNSIGNED ZEROFILL DEFAULT 0000,
+  `hora_inicial` time NOT NULL DEFAULT '00:00:00',
+  `hora_final` time NOT NULL DEFAULT '00:00:00',
+  `observacao` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` enum('0','1') NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela de cadastro de dias de atendimentos da agenda médica';
 
 -- --------------------------------------------------------
 
@@ -665,6 +689,19 @@ CREATE TABLE `tb_categoria` (
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Despejando dados para a tabela `tb_categoria`
+--
+
+INSERT INTO `tb_categoria` (`id`, `id_parent`, `imagem`, `ordem`, `created_at`, `updated_at`, `status`) VALUES
+(1, 0, NULL, 0, '2022-11-17 21:02:55', NULL, '1'),
+(2, 0, NULL, 0, '2022-11-17 21:02:59', NULL, '1'),
+(3, 0, NULL, 0, '2022-11-17 21:03:04', NULL, '1'),
+(4, 0, NULL, 0, '2022-11-17 21:03:05', NULL, '1'),
+(5, 2, NULL, 0, '2022-11-17 21:03:06', NULL, '1'),
+(6, 2, NULL, 0, '2022-11-17 21:03:07', NULL, '1'),
+(7, 2, NULL, 0, '2022-11-17 21:03:07', NULL, '1');
+
 -- --------------------------------------------------------
 
 --
@@ -680,6 +717,19 @@ CREATE TABLE `tb_categoria_descricao` (
   `meta_title` varchar(255) NOT NULL,
   `meta_keywords` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `tb_categoria_descricao`
+--
+
+INSERT INTO `tb_categoria_descricao` (`id_categoria`, `id_idioma`, `titulo`, `descricao`, `meta_description`, `meta_title`, `meta_keywords`) VALUES
+(1, 1, 'Consulta', '', '', '', ''),
+(2, 1, 'Exame', '', '', '', ''),
+(3, 1, 'Procedimento', '', '', '', ''),
+(4, 1, 'Cirurgia', '', '', '', ''),
+(5, 1, 'Laboratorial', '', '', '', ''),
+(6, 1, 'Imagem', '', '', '', ''),
+(7, 1, 'Outros', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -916,7 +966,7 @@ INSERT INTO `tb_especialidade` (`id`, `especialidade`, `descricao`, `created_at`
 (20, 'Cirurgia geral', NULL, '2022-11-16 07:03:34', NULL),
 (21, 'Cirurgia plástica', NULL, '2022-11-16 07:03:41', NULL),
 (22, 'Ortopedia', NULL, '2022-11-16 07:03:55', NULL),
-(23, 'Anestesiologia', NULL, '2022-11-16 07:04:01', NULL);
+(23, 'Anestesiologia', 'Médico responsável por aplicação de anestesias.', '2022-11-16 07:04:01', '2022-11-16 17:55:07');
 
 -- --------------------------------------------------------
 
@@ -1082,6 +1132,16 @@ CREATE TABLE `tb_medico` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de atendimentos realizados.';
+
+--
+-- Despejando dados para a tabela `tb_medico`
+--
+
+INSERT INTO `tb_medico` (`id`, `id_especialidade`, `nome`, `cpf`, `rg`, `crm`, `created_at`, `updated_at`, `status`) VALUES
+(1, 1, 'Marcos', '123.456.789-10', '1234123412', '12341234', '2022-11-16 15:41:45', '2022-11-17 05:38:36', '1'),
+(2, 1, 'Maria', '123.412.341-23', '12341234', '1234', '2022-11-16 15:47:56', '2022-11-16 19:14:56', '1'),
+(6, 5, 'Antônio', '123.412.341-22', '123412345', '123412345', '2022-11-16 15:51:55', '2022-11-16 19:16:05', '1'),
+(7, 23, 'Alisson Guedes', '069.422.924-51', '3177241', '589284-01', '2022-11-16 16:16:38', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -1551,6 +1611,14 @@ ALTER TABLE `tb_acomodacao`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `tb_agenda`
+--
+ALTER TABLE `tb_agenda`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tb_agenda_id_medico` (`id_medico`),
+  ADD KEY `horario_atendimento_UNIQUE` (`dia`,`mes`,`ano`,`hora_inicial`,`hora_final`) USING BTREE;
+
+--
 -- Índices de tabela `tb_atendimento`
 --
 ALTER TABLE `tb_atendimento`
@@ -1905,7 +1973,7 @@ ALTER TABLE `tb_acl_menu`
 -- AUTO_INCREMENT de tabela `tb_acl_menu_item`
 --
 ALTER TABLE `tb_acl_menu_item`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_menu_secao`
@@ -1956,6 +2024,12 @@ ALTER TABLE `tb_acomodacao`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de tabela `tb_agenda`
+--
+ALTER TABLE `tb_agenda`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `tb_atendimento`
 --
 ALTER TABLE `tb_atendimento`
@@ -1977,7 +2051,7 @@ ALTER TABLE `tb_banner`
 -- AUTO_INCREMENT de tabela `tb_categoria`
 --
 ALTER TABLE `tb_categoria`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `tb_cliente`
@@ -2055,7 +2129,7 @@ ALTER TABLE `tb_link`
 -- AUTO_INCREMENT de tabela `tb_medico`
 --
 ALTER TABLE `tb_medico`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `tb_midia`
@@ -2194,6 +2268,12 @@ ALTER TABLE `tb_acl_usuario_imagem`
 ALTER TABLE `tb_acl_usuario_session`
   ADD CONSTRAINT `fk_tb_acl_usuario_session_id_modulo` FOREIGN KEY (`id_modulo`) REFERENCES `tb_acl_modulo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tb_acl_usuario_session_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `tb_acl_usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Restrições para tabelas `tb_agenda`
+--
+ALTER TABLE `tb_agenda`
+  ADD CONSTRAINT `fk_tb_agenda_id_medico` FOREIGN KEY (`id_medico`) REFERENCES `tb_medico` (`id`);
 
 --
 -- Restrições para tabelas `tb_atendimento`

@@ -3,7 +3,7 @@
 <?php $__env->startSection('main'); ?>
 
 <div class="container scroller" style="height: calc(100vh - 64px)">
-	<div class="progress" style="position: absolute; top: -9px; left: 0; right: 0; display: none;">
+	<div class="progress">
 		<div class="indeterminate blue lighten-1"></div>
 	</div>
 

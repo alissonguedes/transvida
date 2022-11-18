@@ -2,8 +2,12 @@
 
 @section('title', 'Especialidades')
 
-@section('search-label', 'Pesquisar especialidades')
-@section('data-search', 'especialidades')
+@section('search')
+<div class="input-field search bordered">
+	<label for="">Pesquisar especialidades</label>
+	<input type="search" id="search-on-page" class="dataTable_search">
+</div>
+@endsection
 
 @section('btn-add-title','Adicionar especialidade')
 @section('btn-add')

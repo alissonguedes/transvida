@@ -4,15 +4,6 @@
 			<nav class="navbar-main navbar-color navbar-collapsible blue lighten-1">
 				<div class="nav-wrapper">
 
-					@section('search')
-					<label for="search" class="btn btn-flat btn-medium btn-floating waves-effect waves-light">
-						<i class="material-icons prefix">search</i>
-					</label>
-					<div class="header-search-wrapper hide-on-med-and-down grey-text">
-						<input type="search" name="search" id="search" class="header-search-input z-depth-2 dataTable_search browser-default" placeholder="@yield('placeholder')" autocomplete="off">
-					</div>
-					@show
-
 					@section('header')
 					<div class="page-title">
 						<h5 class="title">@yield('title')</h5>

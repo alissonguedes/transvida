@@ -21,7 +21,16 @@
 					<div class="card-content white-text">
 						<div class="foto-paciente">
 							<div class="foto circle z-depth-4 left">
-								<img class="img-responsive" src="{{ asset($paciente->imagem ?? (is_null($paciente->sexo) ? 'img/avatar/icon.png' : ($paciente->sexo == 'M' ? 'img/avatar/homem.png' : 'img/avatar/mulher.png') ) ) }}" alt="">
+								@php
+									$style = null;
+									if ($paciente->status === '0'):
+									$style = 'opacity: 0.3; filter: grayscale(1)';
+									endif;
+								@endphp
+								<img class="img-responsive" src="{{ asset($paciente->imagem ?? (is_null($paciente->sexo) ? 'img/avatar/icon.png' : ($paciente->sexo == 'M' ? 'img/avatar/homem.png' : 'img/avatar/mulher.png') ) ) }}" alt="" style="{{ $style }}">
+								@if($paciente->status === '0')
+									<i class="material-icons" style="position: absolute; left: 18px; top: 18px;">lock</i>
+								@endif
 							</div>
 							<h6 class="white-text">{{ $paciente->nome }}</h6>
 							<p>

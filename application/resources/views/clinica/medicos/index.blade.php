@@ -2,8 +2,12 @@
 
 @section('title', 'Medicos')
 
-@section('search-label', 'Pesquisar medicos')
-@section('data-search', 'medicos')
+@section('search')
+<div class="input-field search bordered">
+	<label for="">Pesquisar medicos</label>
+	<input type="search" id="search-on-page" class="dataTable_search">
+</div>
+@endsection
 
 @section('btn-add-title','Adicionar medico')
 @section('btn-add')

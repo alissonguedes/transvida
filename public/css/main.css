@@ -524,23 +524,26 @@ input.no-border,
 
 .input-field.bordered label.active {
 	padding: 0px 6px;
-	background: #eceff1 !important;
+	/* background: #eceff1 !important; */
 	color: var(--grey-darken-2);
 	font-size: 0.9rem;
-	line-height: 2rem;
+	line-height: 1rem;
 }
 
-.input-field.bordered label.active::after {
-	content: "";
-	left: 0px;
-	padding: 0 8px;
-	position: absolute;
-	-webkit-transition: none;
-	transition: none;
-	top: 15px;
+.input-field.bordered label.active::before {
+	content: '';
 	width: 100%;
+	height: 3px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50%;
+	bottom: 50%;
 	z-index: -1;
-	border-top: 5px solid #eceff1;
+	padding: 0 80px;
+	margin-top: -2px;
+	margin-bottom: -2px;
+	background-color: #eceff1;
 }
 
 .bordered input:disabled {

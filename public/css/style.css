@@ -100,6 +100,24 @@ ul {
 	z-index: -1;
 }
 
+.dataTables_wrapper .dataTables_processing {
+	top: 137px;
+	z-index: -1;
+	height: 2px;
+	left: 0;
+}
+
+.progress {
+	position: absolute;
+	top: -9px;
+	left: 0;
+	right: 0;
+	/* display: none; */
+	height: 2px;
+	/* position: absolute; top: -9px; left: 0; right: 0; display: none; */
+	/* position: absolute; top: -9px; left: 0; right: 0; display: none; */
+}
+
 /** Header And Menu **/
 
 header {

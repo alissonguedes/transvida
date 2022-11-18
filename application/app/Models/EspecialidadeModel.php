@@ -35,7 +35,7 @@ class EspecialidadeModel extends Model
 			DB::raw('DATE_FORMAT(updated_at, "%d/%m/%Y") AS data_atualizacao'),
 		);
 
-		if (isset($data) && $search = $data['query']) {
+		if (isset($data) && $search = $data['search']['value']) {
 			$get->where(function ($query) use ($search) {
 				$query
 					->orWhere('id', 'like', $search . '%')
