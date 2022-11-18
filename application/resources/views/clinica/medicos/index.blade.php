@@ -34,7 +34,7 @@
 <div class="row">
 	<div class="col s12">
 		<div class="card">
-			<div class="card-content scroller" style="overflow: auto; height: calc(100vh - 200px)">
+			<div class="card-content scroller">
 				<div class="card-body responsive-table">
 					<table class="table dataTable no-footer dataTable-fixed" data-link="{{ route('clinica.medicos.index') }}">
 						<thead>
