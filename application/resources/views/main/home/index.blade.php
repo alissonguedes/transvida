@@ -481,8 +481,8 @@
 	</div>
 </section>
 
-<section class="row white">
-	<div class="col s12 red darken-2">
+<section class="row">
+	<div class="col s12 red darken-2 z-depth-2">
 		<div class="container pb-6 pt-6">
 			<div class="row">
 				<div class="col s12 m6 l4 center-align">

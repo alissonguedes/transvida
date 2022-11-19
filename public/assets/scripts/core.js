@@ -188,17 +188,19 @@ function core() {
 	})
 
 
-
 	if ($(".sidenav").length > 0) new PerfectScrollbar(".sidenav");
 	if ($("div.table").length > 0) new PerfectScrollbar(".table .table-body", {
 		'suppressScrollX': true
 	});
 
-	if (0 < $(".scroller").length) new PerfectScrollbar(".scroller", {
+	$scroller = '.scroller';
+	new PerfectScrollbar($scroller);
+
+	if (0 < $(".scroller").length) new PerfectScrollbar($scroller, {
 		theme: "dark",
 		'wheelPropagation': false,
-		'suppressScrollY': typeof $('.scroller').data('scroll-y') !== 'undefined' && $('.scroller').data('scroll-y') != '' ? $('.scroller').data('scroll-y') : false,
-		'suppressScrollX': typeof $('.scroller').data('scroll-x') !== 'undefined' && $('.scroller').data('scroll-x') != '' ? $('.scroller').data('scroll-x') : false
+		'suppressScrollY': typeof $($scroller).data('hide-y') !== 'undefined' && $($scroller).data('hide-y') != '' ? $($scroller).data('hide-y') : false,
+		'suppressScrollX': typeof $($scroller).data('hide-x') !== 'undefined' && $($scroller).data('hide-x') != '' ? $($scroller).data('hide-x') : false
 	});
 
 	$("#contact-sidenav").sidenav({

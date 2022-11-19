@@ -368,11 +368,6 @@
 	position: relative;
 }
 
-/*.pacientes .card-content h6:hover,
-			.pacientes .card-content p a:hover {
-				text-overflow: initial;
-			}*/
-
 .pacientes .card-content p a i {
 	font-size: 18px;
 	margin-right: 8px;
@@ -432,17 +427,12 @@
 	z-index: 99999;
 	transform: translateX(-110%);
 	transition: 250ms;
-	padding-left: 260px;
 	width: inherit;
 	height: inherit;
 	left: 0;
 	margin: 0;
 	will-change: top, left, right, bottom;
 	overflow-x: hidden;
-}
-
-.main-full .form-sidenav {
-	padding-left: 70px;
 }
 
 .form-sidenav.open {

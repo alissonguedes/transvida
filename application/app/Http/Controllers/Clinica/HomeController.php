@@ -8,7 +8,7 @@ namespace App\Http\Controllers\Clinica{
 		public function index()
 		{
 
-			return view('clinica.index');
+			return view('clinica.dashboard');
 
 		}
 

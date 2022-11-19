@@ -829,4 +829,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('clinica.body', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('clinica.body', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/dashboard.blade.php ENDPATH**/ ?>

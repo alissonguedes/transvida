@@ -4,7 +4,7 @@
 
 @section('main')
 
-<div class="container scroller" style="height: calc(100vh - 64px)">
+<div class="container scroller" style="height: calc(100vh - 64px)" data-hide-x="true">
 	<div class="progress">
 		<div class="indeterminate blue lighten-1"></div>
 	</div>
