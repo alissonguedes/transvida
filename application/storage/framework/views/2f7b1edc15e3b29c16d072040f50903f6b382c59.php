@@ -40,9 +40,6 @@
 											</div>
 										</div>
 										<div class="row">
-
-										
-
 											<div class="col s12 m10 l10">
 												<div class="row">
 													<div class="col s12 m6 l6">
@@ -311,6 +308,22 @@
 										<div class="row">
 											<div class="col s12 mt-1 mb-4">
 												<h6>Outras informações</h6>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12 m2 l12">
+												<div class="input-field">
+													<label class="active">Imagem de apresentação</label>
+												</div>
+												<div id="foto" class="capa flex flex-column flex-center mt-5">
+													<div id="preview" class="z-depth-4">
+														<img src="<?php echo e(asset($row->imagem ?? 'img/avatar/capa.jpg')); ?>" alt="" style="<?php echo e(isset($row) && empty($row->imagem) ? 'opacity: 0.1;filter: grayscale(1);' : null); ?>">
+													</div>
+													<div id="change-photo" class="btn btn-large btn-floating z-depth-3 waves-effect blue lighten-1" data-tooltip="Alterar imagem">
+														<label for="imagem" class="material-icons white-text cursor-pointer" style="line-height: inherit;">photo_camera</label>
+														<input type="file" name="imagem" id="imagem" style="position: absolute; left: 0; top: 0; bottom: 0; opacity: 0; z-index: -1; cursor: pointer">
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="row">

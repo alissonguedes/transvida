@@ -9,26 +9,13 @@
 
 <?php $__env->startSection('btn-add-title','Adicionar clinica'); ?>
 <?php $__env->startSection('btn-add'); ?>
-<button class="modal-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-link="<?php echo e(route('clinica.clinicas.add')); ?>" data-target="modal_clinica" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-href="<?php echo $__env->yieldContent('btn-add-route'); ?>" data-position="left">
+<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-href="<?php echo e(route('clinica.clinicas.add')); ?>" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-position="left">
 	<i class="material-icons bolder">add</i>
 </button>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('container'); ?>
-<style>
-	td p {
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-		width: 250px;
-		transition: 500ms;
-	}
 
-	tr.disabled,
-	tr.disabled td {
-		cursor: text;
-	}
-</style>
 <div class="row">
 	<div class="col s12">
 		<div class="card">
@@ -37,20 +24,20 @@
 					<table class="table dataTable no-footer dataTable-fixed" data-link="<?php echo e(route('clinica.clinicas.index')); ?>">
 						<thead>
 							<tr>
-								<th data-disabled="true">
+								<th data-disabled="true" data-orderable="false">
 									<label class="grey-text text-darken-2 font-14 left">
 										<input type="checkbox" name="check-all" id="check-all" class="filled-in">
 										<span></span>
 									</label>
 								</th>
-								<th class="center-align" width="25%">nome</th>
-								<th class="center-align" width="15%">cnpj</th>
+								<th class="center-align" width="20%">nome</th>
+								<th class="center-align" width="20%">cnpj</th>
 								<th class="center-align" width="15%">cidade</th>
 								<th class="center-align">estado</th>
 								<th class="center-align">Data de cadastro</th>
 								
 								<th class="center-align" data-disabled="true">status</th>
-								<th class="center-align" width="15%" data-disabled="true">Ações</th>
+								<th class="center-align" width="15%" data-disabled="true" data-orderable="false">Ações</th>
 							</tr>
 						</thead>
 					</table>

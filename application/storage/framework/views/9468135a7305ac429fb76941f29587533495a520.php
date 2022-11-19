@@ -14,21 +14,10 @@
 </button>
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('container'); ?>
-<style>
-	td p {
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-		width: 250px;
-		transition: 500ms;
-	}
 
-	tr.disabled,
-	tr.disabled td {
-		cursor: text;
-	}
-</style>
+
+<?php $__env->startSection('container'); ?>
+
 <div class="row">
 	<div class="col s12">
 		<div class="card">
@@ -37,18 +26,18 @@
 					<table class="table dataTable no-footer dataTable-fixed" data-link="<?php echo e(route('clinica.medicos.index')); ?>">
 						<thead>
 							<tr>
-								<th data-disabled="true">
+								<th data-orderable="false">
 									<label class="grey-text text-darken-2 font-14 left">
 										<input type="checkbox" name="check-all" id="check-all" class="filled-in">
 										<span></span>
 									</label>
 								</th>
-								<th class="">Medico</th>
+								<th width="15%" class="">Medico</th>
 								<th class="">Especialidade</th>
 								<th class="center-align">CRM</th>
-								<th width="25%" class="center-align">Data de cadastro</th>
+								<th class="center-align">Data de cadastro</th>
 								<th class="center-align">status</th>
-								<th class="center-align" class="center-align" data-disabled="true">Ações</th>
+								<th width="15%" class="center-align" class="center-align" data-orderable="false">Ações</th>
 							</tr>
 						</thead>
 					</table>

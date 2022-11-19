@@ -34,7 +34,7 @@ function core() {
 
 	resizeble();
 	DataTable();
-	buttonActions($('.responsive-table').find(':button[data-link]'));
+	buttonActions($('#dropdown-actions').find(':button[data-link]'));
 	btnModalForms($('body').find('button[data-link][data-target]'));
 	Materializecss();
 	editor();
@@ -166,16 +166,11 @@ function core() {
 		});
 	});
 
-	console.log($('.scroller').data('scroll-x') == '');
-
-
-
-
 	$('.form-sidenav-trigger').on('click', function() {
 
 		var target = $(this).data('target');
 		var sidenav = $('#' + target);
-		var overlay = $('<div class="modal-overlay" style="z-index: 997; display: block; opacity: 0.5">');
+		var overlay = $('<div class="modal-overlay" style="z-index: 9; display: block; opacity: 0.5">');
 		sidenav.addClass('open').parent().remove('div.modal-overlay').append(overlay);
 
 		if (typeof sidenav.data('dismissible') !== 'undefined' && !sidenav.data('dismissible')) {
@@ -194,7 +189,6 @@ function core() {
 	});
 
 	$scroller = '.scroller';
-	new PerfectScrollbar($scroller);
 
 	if (0 < $(".scroller").length) new PerfectScrollbar($scroller, {
 		theme: "dark",
@@ -379,8 +373,8 @@ function core() {
 						'class': '',
 					});
 
-					// $(this).parents('#foto-paciente').find('#foto').find('img').remove();
-					$(this).parents('#foto-paciente').find('#foto').html(img);
+					// $(this).parents('#foto').find('#preview').find('img').remove();
+					$(this).parents('#foto').find('#preview').html(img);
 
 				}
 

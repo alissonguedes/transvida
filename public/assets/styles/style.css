@@ -20,7 +20,7 @@ body {
 header {
 	height: 64px;
 	position: relative;
-	z-index: 999999;
+	z-index: 998;
 }
 
 hr {
@@ -36,6 +36,8 @@ hr {
 	overflow: hidden;
 	padding-bottom: 24px;
 	height: calc(100vh - 64px);
+	/* z-index: 997; */
+	position: relative;
 }
 
 .container {
@@ -245,7 +247,7 @@ textarea {
 
 .sidenav-main {
 	width: 260px;
-	z-index: 999999;
+	z-index: 999;
 }
 
 .nav-collapsed.sidenav-main {
@@ -899,6 +901,7 @@ nav ul button i {
 	font-size: 24px !important;
 }
 
+/*
 .material-tooltip {
 	min-height: auto;
 	height: auto;
@@ -920,7 +923,7 @@ nav ul button i {
 	border-width: 5px;
 	border-style: solid;
 	border-color: transparent;
-}
+} */
 
 /*
 .material-tooltip:before {

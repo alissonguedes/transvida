@@ -234,7 +234,7 @@
 	margin-left: 10px;
 }
 
-#foto-paciente #foto {
+#foto #preview {
 	width: 100px;
 	height: 100px;
 	overflow: hidden;
@@ -246,12 +246,40 @@
 	margin-bottom: 10px;
 }
 
-#foto-paciente img {
+#foto img {
 	/* height: 100px; */
 	/* width: 100px; */
 	/* position: absolute; */
 	/* top: 0; */
 	height: 100%;
+}
+
+#foto.capa {
+	width: inherit;
+	height: 300px;
+	flex: 1 auto;
+	position: relative;
+}
+
+#foto.capa #preview {
+	width: inherit;
+	height: inherit;
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+#foto.capa .btn {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	padding-top: 2px;
+}
+
+#foto.capa img {
+	width: 100%;
+	height: auto !important;
+	position: absolute;
+	top: 0;
 }
 
 @media only screen and (max-width: 992px) {
@@ -333,7 +361,7 @@
 }
  */
 
-.pacientes .card-content .foto-paciente .foto {
+.pacientes .card-content .foto {
 	width: 60px;
 	height: 60px;
 	margin: 0 8px 20px 0;
@@ -424,7 +452,7 @@
 	position: absolute;
 	bottom: 0;
 	background: #fff !important;
-	z-index: 99999;
+	z-index: 10;
 	transform: translateX(-110%);
 	transition: 250ms;
 	width: inherit;

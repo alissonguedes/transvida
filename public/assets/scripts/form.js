@@ -606,6 +606,8 @@ var Form = {
 
 		M.Toast.dismissAll();
 
+		if (typeof _element === 'undefined') return false;
+
 		_element.find('.input-field').find('input').each(function() {
 			if ($(this).val() != '') {
 				$(this).parent().removeClass('error').find('.error').remove();

@@ -210,6 +210,8 @@ var checkAll = () => {
 					.find('.selecteds-label').html(selecteds_label);
 				$(this).parents('.responsive-table').find('.show-buttons').hide();
 
+				$('#btn-delete').attr('disabled', false);
+
 				if (checkeds === countCheckbox) {
 					indeterminateCheckbox.indeterminate = false;
 				} else if (checkeds < countCheckbox) {
@@ -225,6 +227,9 @@ var checkAll = () => {
 					.parents('.action-btns')
 					.find('.selecteds-label').empty();
 				$(this).parents('.responsive-table').find('.show-buttons').css('display', 'flex');
+
+				$('#btn-delete').attr('disabled', true);
+
 				indeterminateCheckbox.indeterminate = false;
 				checked = false;
 
@@ -241,10 +246,6 @@ var checkAll = () => {
 		});
 
 	});
-
-}
-
-function deleteItem(item) {
 
 }
 
@@ -288,26 +289,24 @@ function btnModalForms($button) {
 
 function buttonActions($button) {
 
-	// var button_del = typeof $button !== 'undefined' ? $button : ':button.excluir, :button.delete';
-
 	if (typeof $button === 'undefined') {
 		alert('$button deve ser informado');
 		console.error('$button deve ser informado');
 		return false;
 	}
 
-	$('body').find('.responsive-table').find($button).bind('click', function() {
+	$('body').find($button).bind('click', function() {
 
 		var self = $(this),
 			id = [],
 			type = null,
-			link = typeof self.data('link') !== 'undefined' ? self.data('link') : alert('Você deve informar um link para este botão!'),
+			link = typeof self.data('link') !== 'undefined' ? self.data('link') : window.location.href,
 			field = self.attr('name'),
 			status = typeof self.attr('name') ? self.val() : null,
 			method = typeof self.data('method') !== 'undefined' ? self.data('method') : alert('Você deve informar o método ["patch/put | delete"]para este botão!');
 
-		if (self.parents('.responsive-table').find('.dataTables_wrapper').length > 0) {
-			self.parents('.responsive-table').find('.dataTables_wrapper').find('tbody :checkbox:checked').each(function() {
+		if (self.parents().find('.dataTables_wrapper').length > 0) {
+			self.parents().find('.dataTables_wrapper').find('tbody :checkbox:checked').each(function() {
 				id.push($(this).val());
 			});
 		} else {
@@ -346,129 +345,6 @@ function buttonActions($button) {
 		});
 
 	});
-
-	// Excluir dados em massa no datatables
-	// // $('body').find('.action-btns').find(':button.excluir').bind('click', function() {
-	// $('body')
-	// 	.find('.responsive-table')
-	// 	.find(button_del)
-	// 	.bind('click', function() {
-
-	// 		alert('teste2 ')
-	// 		var self = $(this);
-	// 		var id = [];
-	// 		var type = null;
-
-	// 		if (self.parents('.responsive-table').find('.dataTables_wrapper').length > 0) {
-	// 			self.parents('.responsive-table').find('.dataTables_wrapper').find('tbody :checkbox:checked').each(function() {
-	// 				id.push($(this).val());
-	// 			});
-	// 		} else {
-	// 			id.push(self.val());
-	// 			type = 'back';
-	// 		}
-
-	// 		Http.post($(this).data('link'), {
-	// 			'method': 'delete',
-	// 			'datatype': 'json',
-	// 			'data': {
-	// 				'id': id,
-	// 				'type': type,
-	// 			}
-	// 		}, ($response) => {
-
-	// 			if ($response.type === 'back')
-	// 				Http.goTo((typeof $response.url !== 'undefined' ? $response.url : $(this).data('link')), {
-	// 					'message': $response.message,
-	// 					'status': $response.status
-	// 				});
-	// 			else {
-
-	// 				if (typeof $response.message !== 'undefined')
-	// 					Form.showMessage($response.message, $response.status);
-
-	// 				DataTable(true);
-
-	// 			}
-
-	// 		});
-
-	// 	});
-
-	// var i = 0;
-
-	// // Altera recursos individualmente
-	// $('body')
-	// 	.find('.responsive-table')
-	// 	.find(':button.update_resources, :button.update')
-	// 	.bind('click', function() {
-
-	// 		alert('teste')
-	// 		var self = $(this);
-	// 		var id = [];
-	// 		var status = $(this).val();
-	// 		var method = typeof $(this).data('method') !== 'undefined' ? $(this).data('method') : 'patch';
-
-	// 		if (self.parents('.responsive-table').find('.dataTables_wrapper').length > 0) {
-	// 			self.parents('.responsive-table').find('.dataTables_wrapper').find('tbody :checkbox:checked').each(function() {
-	// 				id.push($(this).val());
-	// 			});
-	// 		} else {
-	// 			id.push(self.val());
-	// 			type = 'back';
-	// 		}
-
-	// 		Http.post($(this).data('link'), {
-	// 			'datatype': 'json',
-	// 			'headers': {
-	// 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 			},
-	// 			'data': {
-	// 				'id': id,
-	// 				'value': status,
-	// 				'_method': method
-	// 			}
-	// 		}, ($response) => {
-
-	// 			if ($response.type === 'back')
-	// 				Http.goTo($response.url, {
-	// 					'message': $response.message,
-	// 					'status': $response.status
-	// 				});
-	// 			else {
-
-	// 				if (typeof $response.message !== 'undefined')
-	// 					Form.showMessage($response.message, $response.status);
-
-	// 				DataTable(true);
-
-	// 			}
-
-	// 		});
-
-	// 	});
-
-
-	// // Ação para botão de tradução
-	// $('body').find('.responsive-table').find(':button.translator').bind('click', function() {
-
-	// 	var self = $(this);
-	// 	var id = [];
-	// 	var type = null;
-	// 	var status = $(this).val();
-	// 	var url = $(this).data('link');
-
-	// 	if (self.parents('.responsive-table').find('.dataTables_wrapper').length > 0) {
-	// 		self.parents('.responsive-table').find('.dataTables_wrapper').find('tbody :checkbox:checked').each(function() {
-	// 			id.push($(this).val());
-	// 		});
-	// 	} else {
-	// 		id.push(self.val());
-	// 	}
-
-	// 	Http.goTo(url + '/' + id);
-
-	// });
 
 }
 
@@ -522,49 +398,6 @@ function DataTable(refresh) {
 		},
 		'scrollCollapse': false,
 		'sPaginationType': 'materialize',
-		// 'scrollY': '300px',
-		// 'scrollX': !0,
-		// 'paging': !0,
-		// 'responsive': false,
-		'fnInitComplete': function() {
-
-			// if ($('body').find('table').length)
-			// 	new PerfectScrollbar(".dataTables_scrollBody");
-
-		},
-		'fnDrawCallback': function() {
-
-			// if ($('body').find('table').length)
-			// 	new PerfectScrollbar(".dataTables_scrollBody");
-
-			// checkAll();
-			// resizeBody();
-			// Request.addEvent();
-
-			// $('.dropdown-trigger').each(function() {
-			//     $(this).dropdown({
-			//         'alignment': typeof $(this).data('alignment') !== 'undefined' ? $(this).data('alignment') : null,
-			//         'constrainWidth': true
-			//     });
-			// });
-
-		},
-		'fnRowCallback': function(row, data, index) {
-
-			// $(row).addClass('animated fadeInUpBig slow delay-' + index + '');
-
-			// $(row).find('td').on('click', function(e) {
-			//     var index = $($(this).parents('.dataTables_wrapper').find($('thead th'))[$(this).index()]);
-			//     if (!index.hasClass('disabled')) {
-			//         var id = $(data[0]).find(':checkbox').val();
-			//         var url = $(this).parents('.dataTables_wrapper').find('table').attr('data-link') + '/' + id;
-			//         Http.goTo(url);
-			//     }
-			// });
-
-			// $(row).find('.blocked').parent().parent().addClass('blocked');
-
-		},
 		'serverSide': true,
 		'processing': true,
 		'ajax': {
@@ -577,10 +410,6 @@ function DataTable(refresh) {
 					Storage.removeSession('token');
 				}
 
-				// if ($('body').find('table').length)
-				// 	new PerfectScrollbar(".dataTables_scrollBody");
-
-
 			},
 			success: (response) => {
 
@@ -589,8 +418,6 @@ function DataTable(refresh) {
 
 				// Adiciona linhas à tabela
 				table.find('tbody').html(response).find('#pagination, #info').remove();
-
-				// table.parents('.dataTables_wrapper').find('.dataTables_processing').css('display', 'none')
 
 				table.find('tr').each(function() {
 

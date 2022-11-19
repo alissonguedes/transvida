@@ -43,11 +43,12 @@
 						<i class="material-icons grey-text">edit</i>
 					</button>
 				@endif
-				{{-- @if(!$disabled)
+				@if(!$disabled)
 					{? $status = ($row->status === '0' ? '1' : '0'); ?}
 					<button class="btn-small btn-flat btn-edit btn-floating waves-effect" name="status" value="{{ $status }}" data-tooltip="{{ $status === '0' ? 'Bloquear' : 'Desbloquear' }}" data-link="{{ route('clinica.especialidades.patch', 'status', $row->id) }}" data-method="patch">
-				<i class="material-icons grey-text">{{ $row->status === '1' ? 'lock' : 'lock_open' }}</i>
-				</button> @endif--}}
+						<i class="material-icons grey-text">{{ $row->status === '1' ? 'lock' : 'lock_open' }}</i>
+					</button>
+				@endif
 				@if(!$disabled)
 					<button class="btn-small btn-flat btn-floating excluir waves-effect" data-link="{{ route('clinica.especialidades.delete', $row->id) }}" data-method="delete" data-tooltip="Excluir">
 						<i class="material-icons grey-text">delete</i>

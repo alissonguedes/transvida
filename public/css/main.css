@@ -111,6 +111,19 @@ table tr label>input[type=checkbox]~span:not(.lever) {
 	margin-top: 6px;
 }
 
+table td p {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	width: 250px;
+	transition: 500ms;
+}
+
+table tr.disabled,
+tr.disabled td {
+	cursor: text;
+}
+
 .dataTables_wrapper .dataTables_paginate {
 	right: 50px;
 }

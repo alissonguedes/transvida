@@ -40,18 +40,46 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
+		public function validateForm(Request $request)
+		{
+
+			return $request->validate([
+				'nome_fantasia' => 'required',
+				'razao_social'  => 'required',
+				'cnpj'          => [
+					'required',
+					'regex:/[\d]{2}\.[\d]{3}\.[\d]{3}\/[\d]{4}\-[\d]{2}/i',
+				],
+				'email'         => [
+					'nullable',
+					'email',
+					'required_if:receber_notificacoes,on',
+				],
+				'cep'           => [
+					'required',
+					'regex:/[\d]{5}\-[\d]{3}/i',
+				],
+				'logradouro'    => 'required',
+				'bairro'        => 'required',
+				'cidade'        => 'required',
+				'uf'            => [
+					'required',
+					'min:2',
+					'max:2',
+				],
+			]);
+
+		}
+
 		public function create(Request $request)
 		{
 
-			$request->validate([
-				'nome_fantasia' => 'required',
-				'email'         => 'nullable|email|required_if:receber_notificacoes,on',
-			]);
+			$this->validateForm($request);
 
 			$id = $this->empresa_model->cadastraEmpresa($request);
 
 			$status = 'success';
-			$url    = url()->route('clinica.empresas.index');
+			$url    = url()->route('clinica.clinicas.index');
 			$type   = 'send';
 
 			return response()->json([
@@ -66,10 +94,7 @@ namespace App\Http\Controllers\Clinica{
 		public function edit(Request $request)
 		{
 
-			$request->validate([
-				'nome_fantasia' => 'required',
-				'email'         => 'nullable|email|required_if:receber_notificacoes,on',
-			]);
+			$this->validateForm($request);
 
 			$id = $request->id;
 			$this->empresa_model->editaEmpresa($request, $id);
@@ -78,8 +103,8 @@ namespace App\Http\Controllers\Clinica{
 			$data['type']        = 'refresh';
 			$data['clean_form']  = true;
 			$data['close_modal'] = true;
-			$data['url']         = url()->route('clinica.especialidades.index');
-			$data['message']     = 'Especialidade cadastrada com sucesso!';
+			$data['url']         = url()->route('clinica.clinicas.index');
+			$data['message']     = 'Cadastro alterado com sucesso!';
 
 			return response()->json($data);
 
@@ -88,32 +113,48 @@ namespace App\Http\Controllers\Clinica{
 		public function patch(Request $request)
 		{
 
-			$this->empresa_model->from('tb_empresa')
-				->whereIn('id', $request->id)
-				->update([$request->field => $request->value]);
+			$status  = 'error';
+			$message = 'Não foi possível atualizar a empresa.';
 
-			return response()->json([
-				'message' => 'Empresa atualizado com sucesso!',
-			]);
+			if ($this->empresa_model->atualizaEmpresa($request->id, [$request->field => $request->value])) {
+
+				$status  = 'success';
+				$message = 'Clínica atualizada com sucesso!';
+
+			}
+
+			$data['status']      = $status;
+			$data['type']        = 'refresh';
+			$data['clean_form']  = true;
+			$data['close_modal'] = true;
+			$data['url']         = url()->route('clinica.clinicas.index');
+			$data['message']     = $message;
+
+			return response()->json($data);
 
 		}
 
 		public function delete(Request $request)
 		{
 
-			$this->empresa_model->from('tb_empresa')->whereIn('id', $request->id)->delete();
+			if ($this->empresa_model->removeEmpresa($request->id)) {
 
-			$status  = 'success';
-			$message = 'Empresa removido com sucesso!';
-			$url     = url()->route('clinica.empresas.index');
-			$type    = 'send';
+				$status  = 'success';
+				$message = 'Clínia removida com sucesso!';
 
-			$data['status']      = 'success';
+			} else {
+
+				$status  = 'error';
+				$message = 'Clínica não pôde ser removida!';
+
+			}
+
+			$data['status']      = $status;
 			$data['type']        = 'refresh';
 			$data['clean_form']  = true;
 			$data['close_modal'] = true;
-			$data['url']         = url()->route('clinica.especialidades.index');
-			$data['message']     = 'Especialidade cadastrada com sucesso!';
+			$data['url']         = url()->route('clinica.clinicas.index');
+			$data['message']     = $message;
 
 			return response()->json($data);
 

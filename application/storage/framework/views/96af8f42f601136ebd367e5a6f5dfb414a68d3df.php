@@ -28,7 +28,7 @@
 								</ul>
 							</div>
 						</div>
-						<div class="card-body pt-2 fixed-height scroller" data-scroll-x="true">
+						<div class="card-body pt-2 fixed-height scroller" data-hide-x="true">
 							<div class="row">
 								<div class="col s10 offset-s1">
 
@@ -41,8 +41,8 @@
 										</div>
 										<div class="row">
 											<div class="col s12 m2 l2">
-												<div id="foto-paciente" class="circle flex flex-column flex-center">
-													<div id="foto" class="z-depth-3">
+												<div id="foto" class="circle flex flex-column flex-center">
+													<div id="preview" class="z-depth-3">
 														<img src="<?php echo e(asset($row->imagem ?? 'img/avatar/icon.png')); ?>" alt="" style="<?php echo e(isset($row) && empty($row->imagem) ? 'opacity: 0.4;filter: grayscale(1);' : null); ?>">
 													</div>
 													<div id="change-photo" class="btn btn-floating z-depth-3 waves-effect blue lighten-1">

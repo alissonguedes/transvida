@@ -19,9 +19,8 @@ class EmpresaModel extends Model
 		'cnpj',
 		'cidade',
 		'uf',
-		'convenio',
+		'created_at',
 		'status',
-		null,
 	];
 
 	private $path = 'assets/clinica/img/empresas/';
@@ -73,17 +72,17 @@ class EmpresaModel extends Model
 			'status'
 		);
 
-		if (isset($data) && $search = $data['query']) {
+		if (isset($data) && $search = $data['search']['value']) {
 			$get->where(function ($query) use ($search) {
 				$query
-					->orWhere('cnpj', 'like', $search . '%')
+					->orWhere(DB::raw('REGEXP_REPLACE(cnpj, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
 					->orWhere('nome_fantasia', 'like', $search . '%')
 					->orWhere('razao_social', 'like', $search . '%')
 					->orWhere('inscricao_estadual', 'like', $search . '%')
 					->orWhere('inscricao_municipal', 'like', $search . '%')
 					->orWhere('email', 'like', $search . '%')
-					->orWhere('telefone', 'like', $search . '%')
-					->orWhere('celular', 'like', $search . '%');
+					->orWhere(DB::raw('REGEXP_REPLACE(telefone, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
+					->orWhere(DB::raw('REGEXP_REPLACE(celular, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%');
 			});
 		}
 
@@ -318,4 +317,19 @@ class EmpresaModel extends Model
 
 	}
 
+	public function atualizaEmpresa($id, $campos = [])
+	{
+
+		return $this->from('tb_empresa')
+			->whereIn('id', $id)
+			->update($campos);
+
+	}
+
+	public function removeEmpresa($id)
+	{
+		return $this->from('tb_empresa')
+			->whereIn('id', $id)
+			->delete();
+	}
 }

@@ -13,7 +13,7 @@
 	@endphp
 
 	@foreach($paginate as $ind => $row)
-		<tr class="{{ $row->status === '0' ? 'blocked' : null }}" style="position: relative;" id="{{ $row->id }}" data-disabled="true">
+		<tr class="{{ $row->status === '0' ? 'blocked' : null }}" style="position: relative;" id="{{ $row->id }}" data-disabled="false">
 			<td width="1%" data-disabled="true">
 				<label>
 					<input type="checkbox" name="id[]" class="filled-in" value="{{ $row->id }}" data-status="{{ $row->status }}">
@@ -47,11 +47,12 @@
 						<i class="material-icons grey-text">edit</i>
 					</button>
 				@endif
-				{{-- @if(!$disabled)
+				@if(!$disabled)
 					{? $status = ($row->status === '0' ? '1' : '0'); ?}
 					<button class="btn-small btn-flat btn-edit btn-floating waves-effect" name="status" value="{{ $status }}" data-tooltip="{{ $status === '0' ? 'Bloquear' : 'Desbloquear' }}" data-link="{{ route('clinica.clinicas.patch', 'status', $row->id) }}" data-method="patch">
-				<i class="material-icons grey-text">{{ $row->status === '1' ? 'lock' : 'lock_open' }}</i>
-				</button> @endif--}}
+						<i class="material-icons grey-text">{{ $row->status === '1' ? 'lock' : 'lock_open' }}</i>
+					</button>
+				@endif
 				@if(!$disabled)
 					<button class="btn-small btn-flat btn-floating excluir waves-effect" data-link="{{ route('clinica.clinicas.delete', $row->id) }}" data-method="delete" data-tooltip="Excluir">
 						<i class="material-icons grey-text">delete</i>

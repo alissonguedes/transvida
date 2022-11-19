@@ -45,7 +45,12 @@
 						<i class="material-icons grey-text">edit</i>
 					</button>
 				<?php endif; ?>
-				
+				<?php if(!$disabled): ?>
+					<?php  $status = ($row->status === '0' ? '1' : '0');  ?>
+					<button class="btn-small btn-flat btn-edit btn-floating waves-effect" name="status" value="<?php echo e($status); ?>" data-tooltip="<?php echo e($status === '0' ? 'Bloquear' : 'Desbloquear'); ?>" data-link="<?php echo e(route('clinica.especialidades.patch', 'status', $row->id)); ?>" data-method="patch">
+						<i class="material-icons grey-text"><?php echo e($row->status === '1' ? 'lock' : 'lock_open'); ?></i>
+					</button>
+				<?php endif; ?>
 				<?php if(!$disabled): ?>
 					<button class="btn-small btn-flat btn-floating excluir waves-effect" data-link="<?php echo e(route('clinica.especialidades.delete', $row->id)); ?>" data-method="delete" data-tooltip="Excluir">
 						<i class="material-icons grey-text">delete</i>

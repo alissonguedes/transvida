@@ -10,18 +10,18 @@
 				</button>
 				<ul id="dropdown-actions" class="dropdown-content">
 					<li>
-						<a>
+						<button type="button" data-link=" #route('clinica.medicos.delete', $row->id) " data-method="get">
 							<i class="material-icons">file_download</i>PDF
-						</a>
+						</button>
 					</li>
 					<li>
-						<a>
+						<button type="button" data-link=" #route('clinica.medicos.delete', $row->id) " data-method="get">
 							<i class="material-icons">file_download</i>XLS
-						</a>
+						</button>
 					</li>
 					<li class="divider" tabindex="-1"></li>
 					<li class="disabled red-text">
-						<button disabled>
+						<button type="button" disabled="disabled" id="btn-delete" data-link="<?php echo $__env->yieldContent('btn-delete-route'); ?>" data-method="delete">
 							<i class="material-icons">delete</i>Excluir
 						</button>
 					</li>

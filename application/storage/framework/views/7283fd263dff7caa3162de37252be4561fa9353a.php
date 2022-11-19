@@ -9,7 +9,7 @@
 	<?php
 		$permissao = new PermissaoModel();
 		$permissao = true;
-//		$permissao = $permissao->getPermissao('clinica.medicos.edit');
+		// $permissao = $permissao->getPermissao('clinica.medicos.edit');
 		$disabled = !$permissao ? true : false;
 	?>
 
@@ -43,13 +43,18 @@
 				<?php echo e($row->status === '0' ? 'Inativo' : 'Ativo'); ?>
 
 			</td>
-			<td data-disabled="true" width="15%" class="center-align">
+			<td data-disabled="true" width="25%" class="center-align">
 				<?php if(!$disabled): ?>
 					<button type="button" data-link="<?php echo e(route('clinica.medicos.edit', $row->id)); ?>" class="btn-small btn-flat btn-floating float-none waves-effect" data-target="modal_medico" data-tooltip="Editar">
 						<i class="material-icons grey-text">edit</i>
 					</button>
 				<?php endif; ?>
-				
+				<?php if(!$disabled): ?>
+					<?php  $status = ($row->status === '0' ? '1' : '0');  ?>
+					<button class="btn-small btn-flat btn-edit btn-floating waves-effect" name="status" value="<?php echo e($status); ?>" data-tooltip="<?php echo e($status === '0' ? 'Bloquear' : 'Desbloquear'); ?>" data-link="<?php echo e(route('clinica.medicos.patch', 'status', $row->id)); ?>" data-method="patch">
+						<i class="material-icons grey-text"><?php echo e($row->status === '1' ? 'lock' : 'lock_open'); ?></i>
+					</button>
+				<?php endif; ?>
 				<?php if(!$disabled): ?>
 					<button class="btn-small btn-flat btn-floating excluir waves-effect" data-link="<?php echo e(route('clinica.medicos.delete', $row->id)); ?>" data-method="delete" data-tooltip="Excluir">
 						<i class="material-icons grey-text">delete</i>
