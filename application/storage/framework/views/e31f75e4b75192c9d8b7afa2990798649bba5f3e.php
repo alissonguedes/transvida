@@ -33,7 +33,7 @@
 
 			</td>
 			<td class="center-align">
-				<?php echo e($row->estado); ?>
+				<?php echo e($row->uf); ?>
 
 			</td>
 			<td class="center-align">

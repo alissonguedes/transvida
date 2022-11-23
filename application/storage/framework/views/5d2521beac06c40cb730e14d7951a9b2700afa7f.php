@@ -39,8 +39,8 @@
 					<i class="material-icons">list</i>
 				</button>
 				<?php $__env->startSection('btn-add'); ?>
-				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-href="<?php echo $__env->yieldContent('btn-add-route'); ?>">
-					<i class="material-icons">person_add_alt_1</i>
+				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-href="<?php echo $__env->yieldContent('btn-add-route'); ?>" data-position="">
+					<i class="material-icons"><?php echo $__env->yieldContent('btn-add-icon'); ?></i>
 				</button>
 				<?php echo $__env->yieldSection(); ?>
 			</div>

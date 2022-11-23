@@ -10,9 +10,11 @@
 					<img src="<?php echo e(asset('img/site/logo/logo.png')); ?>" alt="" class="logo">
 				</a>
 
-				<ul class="hide-on-med-and-down">
-					<?php echo $__env->yieldContent('menu-list'); ?>
-				</ul>
+				<div class="hide-on-med-and-down">
+					<ul class="hide-on-med-and-down" id="ul-horizontal-nav">
+						<?php echo $__env->yieldContent('menu-list'); ?>
+					</ul>
+				</div>
 
 				<div class="flex flex-center flex-end">
 

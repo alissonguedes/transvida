@@ -30,7 +30,7 @@
 						</div>
 						<div class="card-body pt-2 fixed-height scroller" data-hide-x="true">
 							<div class="row">
-								<div class="col s10 offset-s1">
+								<div class="col s12 m10 l10 offset-m2 offset-l1">
 
 									<!-- BEGIN #informacoes_pessoais -->
 									<div id="informacoes_pessoais">
@@ -41,11 +41,11 @@
 										</div>
 										<div class="row">
 											<div class="col s12 m2 l2">
-												<div id="foto" class="circle flex flex-column flex-center">
-													<div id="preview" class="z-depth-3">
+												<div class="foto circle flex flex-column flex-center">
+													<div class="preview z-depth-3">
 														<img src="<?php echo e(asset($row->imagem ?? 'img/avatar/icon.png')); ?>" alt="" style="<?php echo e(isset($row) && empty($row->imagem) ? 'opacity: 0.4;filter: grayscale(1);' : null); ?>">
 													</div>
-													<div id="change-photo" class="btn btn-floating z-depth-3 waves-effect blue lighten-1">
+													<div class="change-photo btn btn-floating z-depth-3 waves-effect blue lighten-1">
 														<label for="imagem" class="material-icons white-text cursor-pointer" style="line-height: inherit;">photo_camera</label>
 														<input type="file" name="imagem" id="imagem" style="position: absolute; left: 0; top: 0; bottom: 0; opacity: 0; z-index: -1; cursor: pointer">
 													</div>

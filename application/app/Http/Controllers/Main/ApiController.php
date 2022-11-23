@@ -108,4 +108,43 @@ class ApiController extends Controller
 
 	}
 
+	public function getCep(Request $request, $cep)
+	{
+
+		$data = [
+			'status'  => 'success',
+			'message' => null,
+			'fields'  => [
+				// 'cep' => null,
+				'cidade'     => null,
+				'logradouro' => null,
+				'bairro'     => null,
+				'uf'         => null,
+			],
+		];
+
+		$url    = 'https://viacep.com.br/ws/' . limpa_string($cep) . '/json';
+		$json   = file_get_contents($url);
+		$result = json_decode($json);
+
+		if (isset($result->erro)) {
+			$message         = 'CEP não encontrado';
+			$data['status']  = 'error';
+			$data['message'] = $message;
+			$data['errors']  = ['cep' => $message];
+			return json_encode($data);
+		} else {
+			$data['fields'] = [
+				// 'cep'        => $result->cep,
+				'cidade'     => $result->localidade,
+				'logradouro' => $result->logradouro,
+				'bairro'     => $result->bairro,
+				'uf'         => $result->uf,
+			];
+		}
+
+		return $data;
+
+	}
+
 }

@@ -6,6 +6,7 @@
 @section('data-search', 'pacientes')
 
 @section('btn-add-title','Adicionar paciente')
+@section('btn-add-icon', 'person_add_alt_1')
 @section('btn-add-route', route('clinica.pacientes.add'))
 
 @section('container')

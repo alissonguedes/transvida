@@ -1,43 +1,27 @@
-<!-- Core Javascript -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- plugins | jQuery/Materialize -->
+<script src="{{ asset('assets/plugins/pace/pace.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery/jquery-ui.js') }}"></script>
+<script src="{{ asset('assets/plugins/materializecss/materialize.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery/form.js') }}"></script>
 
-<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatable/v10.2/jquery.dataTables.min.js') }}"></script>
 
-<script>
-	$(document).ready(function() {
-		$('.slider').slider({
-			'duration': 2000,
-			'indicators': false
-		});
-		$('.sidenav').sidenav();
-		$('.parallax').parallax();
-	});
-	$(function() {
-		$(".popup-gallery").magnificPopup({
-			delegate: "a",
-			type: "image",
-			closeOnContentClick: !0,
-			fixedContentPos: !0,
-			tLoading: "Loading image #%curr%...",
-			mainClass: "mfp-img-mobile mfp-no-margins mfp-with-zoom",
-			gallery: {
-				enabled: !0,
-				navigateByImgClick: !0,
-				preload: [0, 1]
-			},
-			image: {
-				verticalFit: !0,
-				tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-				titleSrc: function(e) {
-					return e.el.attr("title") + "<small>by Marsel Van Oosten</small>"
-				},
-				zoom: {
-					enabled: !0,
-					duration: 300
-				}
-			}
-		})
-	});
+<script src="{{ asset('assets/plugins/isotope/js/isotope.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/masonry/masonry.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/nestable/jquery.nestable.js') }}"></script>
+<script src="{{ asset('assets/plugins/requirejs/require.js') }}"></script>
 
-</script>
+<!-- scripts | Padrão -->
+<script src="{{ asset('assets/scripts/materializecss.js') }}"></script>
+<script src="{{ asset('assets/scripts/datatables.js') }}"></script>
+<script src="{{ asset('assets/scripts/storage.js') }}"></script>
+<script src="{{ asset('assets/scripts/functions.js') }}"></script>
+<script src="{{ asset('assets/scripts/http/http.js') }}"></script>
+<script src="{{ asset('assets/scripts/http/request.js') }}"></script>
+<script src="{{ asset('assets/scripts/form.js') }}"></script>
+<script src="{{ asset('assets/scripts/core.js') }}"></script>
+<script src="{{ asset('assets/scripts/banner.js') }}"></script>

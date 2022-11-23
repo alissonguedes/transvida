@@ -1,19 +1,60 @@
 @extends('app')
 
 @section('menu-list')
-<li><a href="{{ route('main.home') }}">Início</a></li>
-<li><a href="{{ route('main.about') }}">Sobre Nós</a></li>
-<li><a href="{{ route('main.services') }}">Serviços</a></li>
-<li><a href="{{ route('main.health') }}">Saúde</a></li>
-<li><a href="{{ route('main.contact') }}">Atendimento</a></li>
+<li>
+	<a href="{{ route('main.home') }}">
+		<span>Início</span>
+	</a>
+</li>
+<li>
+	<a href="{{ route('main.about') }}">
+		<span>Sobre nós</span>
+	</a>
+</li>
+<li>
+	<a class="dropdown-menu" href="Javascript:void(0)" data-target="services">
+		<span class="dropdown-title">Serviços</span>
+	</a>
+	<ul class="dropdown-content dropdown-horizontal-list" id="services">
+		<li tabindex="0">
+			<a href="{{ route('main.services.medicos') }}">
+				<span data-i18n="Modern Menu">Serviços Médicos</span>
+			</a>
+		</li>
+		<li tabindex="0">
+			<a href="{{ route('main.services.area_protegida') }}">
+				<span data-i18n="Navbar Dark">Área Protegida</span>
+			</a>
+		</li>
+		<li tabindex="0">
+			<a href="{{ route('main.services.remocao') }}">
+				<span data-i18n="Gradient Menu">Remoção e Transporte</span>
+			</a>
+		</li>
+		<li tabindex="0">
+			<a href="{{ route('main.services.comercial') }}">
+				<span data-i18n="Navbar Dark">Comercial</span>
+			</a>
+		</li>
+	</ul>
+</li>
+<li>
+	<a href="{{ route('main.health') }}">
+		<span class="dropdown-title" data-i18n="Apps">Saúde</span>
+	</a>
+</li>
+<li>
+	<a href="{{ route('main.contact') }}">
+		<span>Atendimento</span>
+	</a>
+</li>
 @endsection
-
 @section('body')
 
-	@include('main.header')
-	@yield('capa')
-	@include('main.sidebar')
-	@yield('main')
-	@include('main.footer')
+@include('main.header')
+@yield('capa')
+@include('main.sidebar')
+@yield('main')
+@include('main.footer')
 
 @endsection

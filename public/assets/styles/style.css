@@ -901,15 +901,15 @@ nav ul button i {
 	font-size: 24px !important;
 }
 
-/*
 .material-tooltip {
 	min-height: auto;
 	height: auto;
-	line-height: 2;
+	line-height: 1rem;
 	font-size: 12px;
-	padding: 1px 10px;
+	padding: 6px 10px;
 	margin-top: -5px;
 	overflow: unset !important;
+	min-width: 80px;
 }
 
 .material-tooltip:before,
@@ -923,7 +923,7 @@ nav ul button i {
 	border-width: 5px;
 	border-style: solid;
 	border-color: transparent;
-} */
+}
 
 /*
 .material-tooltip:before {
@@ -1009,8 +1009,8 @@ nav ul a {
 
 /** input-field **/
 
-.input-field label,
-nav .input-field label {
+.input-field>label,
+nav .input-field>label {
 	font-family: Roboto, sans-serif;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
@@ -2274,12 +2274,18 @@ table:not(.datepicker-table) tbody td {
 	padding: 10px !important;
 }
 
+table:not(.datepicker-table) thead th:not(.sorting_disabled) {
+	cursor: pointer;
+}
 
 table.dataTable tr th label,
 table.dataTable tr td label {
 	margin-top: 3px !important;
 }
 
+.sorting_disabled {
+	cursor: text !important;
+}
 
 /* table.dataTable thead th {
 padding-bottom: 15px !important;

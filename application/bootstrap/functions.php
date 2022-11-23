@@ -238,6 +238,14 @@ if (!function_exists('base_url')) {
 	}
 }
 
+if (!function_exists('site_url')) {
+	function site_url()
+	{
+
+		return url('/') . '/';
+
+	}
+}
 /*
  * Fução para obter os menus da página
  */

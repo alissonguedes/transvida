@@ -26,11 +26,18 @@ function core() {
 
 	$('.material-tooltip,.sidenav-overlay,.modal-overlay').remove();
 
-	$("select").formSelect();
+	$("select").formSelect({
+		isMultiple: false
+	});
 
 	Request.menu();
 	Request.addEvent();
 	Form.init();
+
+	checkAll();
+	// resizeBody();
+	// buttonActions(table.find(':button[data-link]:not([data-target])'));
+	// btnModalForms(table.find('[data-target]'));
 
 	resizeble();
 	DataTable();
@@ -345,42 +352,49 @@ function core() {
 
 	});
 
-	$('#change-photo').on('click', function() {
 
-		$(this).find('[type="file"]').on('change', function() {
+	$('.change-photo').each(function() {
 
-			console.log($(this).val());
-			var self = $(this);
-			var $len = (self.parent().find('[type="file"]').length);
+		$(this).on('click', function() {
 
-			if (typeof id === 'undefined')
-				var id = $(this).attr('id');
-			else
-				var id = 'file' + id;
+			$(this).find('[type="file"]').on('change', function() {
 
-			if ($('#' + id).is(':visible')) {
+				console.log($(this).val());
+				var self = $(this);
+				var $len = self.parent().find('[type="file"]').length;
 
-				for (var i = 0; i < document.getElementById(id).files.length; i++) {
+				if (typeof id === 'undefined')
+					var id = $(this).attr('id');
+				else
+					var id = 'file' + id;
 
-					src = window.URL.createObjectURL(document.querySelector('#' + id).files[i]);
+				console.log('teste');
 
-					var div = $('<div/>', {
-						'class': 'miniaturas',
-					});
+				if ($('#' + id).is(':visible')) {
 
-					var img = $('<img/>', {
-						'src': src,
-						'class': '',
-					});
+					for (var i = 0; i < document.getElementById(id).files.length; i++) {
 
-					// $(this).parents('#foto').find('#preview').find('img').remove();
-					$(this).parents('#foto').find('#preview').html(img);
+						src = window.URL.createObjectURL(document.querySelector('#' + id).files[i]);
+
+						var div = $('<div/>', {
+							'class': 'miniaturas',
+						});
+
+						var img = $('<img/>', {
+							'src': src,
+							'class': '',
+						});
+
+						// $(this).parents('#foto').find('#preview').find('img').remove();
+						$(this).parents('.foto').find('.preview').html(img);
+
+					}
 
 				}
 
-			}
+			})
 
-		})
+		});
 
 	});
 

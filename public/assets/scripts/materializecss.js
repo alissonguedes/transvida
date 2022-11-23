@@ -109,7 +109,9 @@ function Materializecss() {
 
 			$('.input-field:not(.browser-default) select').on('change', function() {
 				$(this).parents('.select-wrapper').find(':input:text').addClass('selected');
-			}).formSelect();
+			}).formSelect({
+				isMultiple: true
+			});
 
 			$('.chips').each(function() {
 

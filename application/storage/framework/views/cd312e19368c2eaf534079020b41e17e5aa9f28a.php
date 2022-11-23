@@ -27,6 +27,7 @@
 		<script>
 			var BASE_URL = "<?php echo e(base_url()); ?>";
 			var BASE_PATH = "<?php echo e(implode('/', explode('/index.php', $_SERVER['SCRIPT_FILENAME']))); ?>";
+			var SITE_URL = "<?php echo e(site_url()); ?>";
 		</script>
 
 		<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">

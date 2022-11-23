@@ -14,6 +14,58 @@ TB_FUNCIONARIO - médico, recepcionista, enfermeiro...
 	id_empresa_departamento (TB_EMPRESA_DEPARTAMENTO - id)
 	id_funcao
 
+--
+-- Estrutura da tabela `tb_funcao`
+--
+
+CREATE TABLE `tb_funcao` (
+	id			int		unsigned		not null	primary key	auto_increment,
+	`codigo` int(11) UNSIGNED NOT NULL,
+	`funcao` varchar(255) NOT NULL,
+	`descricao` varchar(255) NOT NULL,
+	`created_at`			timestamp				not null 	default current_timestamp(),
+	`updated_at`			timestamp				    null 	default null,
+	`status`				enum('0','1')				not null 	default '1'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='Tabela para cadastro de funções';
+
+
+CREATE TABLE tb_funcionario (
+
+	id			int		unsigned		not null	primary key	auto_increment,
+	id_empresa_departamento	int(11)		unsigned		not null,
+	id_funcao		int(11)		unsigned		not null,
+	nome			varchar(100)				not null,
+	cpf			varchar(14)				not null	unique,
+	rg			varchar(14)				not null	unique,
+	created_at			timestamp				not null 	default current_timestamp(),
+	updated_at			timestamp				    null 	default null,
+	status				enum('0','1')				not null 	default '1',
+	
+	constraint `fk_tb_funcionario_id_empresa_departamento` foreign key (`id_empresa_departamento`) references `tb_departamento_empresa`(`id`),
+	CONSTRAINT `fk_tb_funcionario_id_funcao` FOREIGN KEY (`id_funcao`) REFERENCES `tb_funcao` (`id`) ON DELETE CASCADE ON UPDATE CASCADE	
+	
+) ENGINE=innodb charset=utf8 comment='Tabela para cadastro de funcionários';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 CREATE TABLE tb_departamento (
 

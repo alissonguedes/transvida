@@ -30,7 +30,7 @@
 				{{ $row->cidade }}
 			</td>
 			<td class="center-align">
-				{{ $row->estado }}
+				{{ $row->uf }}
 			</td>
 			<td class="center-align">
 				{{ $row->data_cadastro }}

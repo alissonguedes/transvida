@@ -27,6 +27,7 @@
 		<script>
 			var BASE_URL = "{{ base_url() }}";
 			var BASE_PATH = "{{ implode('/', explode('/index.php', $_SERVER['SCRIPT_FILENAME'])) }}";
+			var SITE_URL = "{{ site_url() }}";
 		</script>
 
 		<meta name="csrf-token" content="{{ csrf_token() }}">

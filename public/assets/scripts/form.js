@@ -259,8 +259,8 @@ var Form = {
 
 		var input_method = _element.find('[name=_method]');
 
-		if (input_method.length == 0 || response.clean_form || (input_method.length > 0 && input_method.val() == 'put'))
-			_element.resetForm();
+		// if (input_method.length == 0 || response.clean_form || (input_method.length > 0 && input_method.val() == 'put'))
+		// 	_element.resetForm();
 
 		if (response.close_modal)
 			Form.reset();

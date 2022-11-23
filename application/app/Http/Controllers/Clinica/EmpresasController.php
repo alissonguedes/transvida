@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clinica{
 
 	use App\Models\ConvenioModel;
+	use App\Models\DepartamentoModel;
 	use App\Models\EmpresaModel;
 	use App\Models\EstadoCivilModel;
 	use Illuminate\Http\Request;
@@ -13,9 +14,10 @@ namespace App\Http\Controllers\Clinica{
 		public function __construct()
 		{
 
-			$this->convenio_model    = new ConvenioModel();
-			$this->empresa_model     = new EmpresaModel();
-			$this->estadoCivil_model = new EstadoCivilModel();
+			$this->convenio_model     = new ConvenioModel();
+			$this->empresa_model      = new EmpresaModel();
+			$this->departamento_model = new DepartamentoModel();
+			$this->estadoCivil_model  = new EstadoCivilModel();
 
 		}
 
@@ -35,7 +37,8 @@ namespace App\Http\Controllers\Clinica{
 		public function form(Request $request, $id = null)
 		{
 
-			$dados['row'] = $this->empresa_model->getEmpresaById($request->id);
+			$dados['row']           = $this->empresa_model->getEmpresaById($request->id);
+			$dados['departamentos'] = $this->departamento_model->getDepartamentos();
 			return view('clinica.empresas.form', $dados);
 
 		}
@@ -97,14 +100,20 @@ namespace App\Http\Controllers\Clinica{
 			$this->validateForm($request);
 
 			$id = $request->id;
-			$this->empresa_model->editaEmpresa($request, $id);
 
-			$data['status']      = 'success';
-			$data['type']        = 'refresh';
-			$data['clean_form']  = true;
-			$data['close_modal'] = true;
-			$data['url']         = url()->route('clinica.clinicas.index');
-			$data['message']     = 'Cadastro alterado com sucesso!';
+			if ($data = $this->empresa_model->editaEmpresa($request, $id)) {
+				$status              = 'success';
+				$message             = 'Cadastro alterado com sucesso!';
+				$data['status']      = $status;
+				$data['type']        = 'null';
+				$data['clean_form']  = false;
+				$data['close_modal'] = false;
+				$data['url']         = url()->route('clinica.clinicas.index');
+				$data['message']     = $message;
+			} else {
+				print_r($data);
+				return response()->json($data);
+			}
 
 			return response()->json($data);
 

@@ -134,14 +134,14 @@ $.extend($.fn.dataTableExt.oPagination, {
 
 var checkAll = () => {
 
-	$('.dataTables_wrapper')
+	$('table.table')
 		.find('thead,tbody')
 		.find(':input:checkbox:checked')
 		.prop('checked', false)
 		.change();
 
 	// Ativar preenchimento de checkboxes nas tabelas
-	$('body').find('.dataTables_wrapper').each(function() {
+	$('body').find('table.table').each(function() {
 
 		var status = 0;
 		var btn_status = $(this).parents('.responsive-table').find(':button.update_resources, :button.update');
@@ -150,31 +150,26 @@ var checkAll = () => {
 		var dataTables_wrapper = $(this);
 
 		if (dataTables_wrapper.find('tbody').find(':input:checkbox').length === 0) {
-			// dataTables_wrapper.find('thead').find(':input:checkbox').attr('disabled', true);
 			$('#check-all').attr('disabled', true);
 			return false;
 		} else {
-			// dataTables_wrapper.find('thead').find(':input:checkbox').attr('disabled', false);
 			$('#check-all').attr('disabled', false);
 		}
 
-		// dataTables_wrapper.find('thead').find(':input:checkbox').on('change', function() {
 		$('#check-all').on('change', function() {
 
-			$(this).parents('.responsive-table')
-				.find('.dataTables_wrapper')
+			$(this).parents('table.table')
 				.find('tbody').find('tr')
 				.removeClass('selected');
 
 			if ($(this).prop('checked')) {
-				$(this).parents('.responsive-table')
-					.find('.dataTables_wrapper')
+				$(this).parents('table.table')
+					// .find('.dataTables_wrapper')
 					.find('tbody')
 					.find(':checkbox')
 					.prop('checked', true);
 			} else {
-				$(this).parents('.responsive-table')
-					.find('.dataTables_wrapper')
+				$(this).parents('table.table')
 					.find('tbody')
 					.find(':checkbox')
 					.prop('checked', false);
@@ -184,13 +179,12 @@ var checkAll = () => {
 
 		dataTables_wrapper.find(':input:checkbox').on('change', function() {
 
-			var checkeds = $(this).parents('.dataTables_wrapper').find('tbody').find(':input:checkbox:checked').length;
-			var countCheckbox = $(this).parents('.dataTables_wrapper').find('tbody').find(':input:checkbox').length;
-			// var checkAll = $(this).parents('.dataTables_wrapper').find('thead').find(':input:checkbox').attr('id');
-			var checkAll = $(this).parents('.responsive-table').find('#check-all').attr('id');
+			var checkeds = $(this).parents('table.table').find('tbody').find(':input:checkbox:checked').length;
+			var countCheckbox = $(this).parents('table.table').find('tbody').find(':input:checkbox').length;
+			var checkAll = $(this).parents('table.table').find('#check-all').attr('id');
 			var indeterminateCheckbox = document.getElementById(checkAll);
 			var selecteds_label = checkeds > 1 ? checkeds + ' itens selecionados' : checkeds + ' item selecionado';
-			var chkStatusLength = $(this).parents('.dataTables_wrapper').find('tbody').find(':checkbox[data-status="0"]:checked').length;
+			var chkStatusLength = $(this).parents('table.table').find('tbody').find(':checkbox[data-status="0"]:checked').length;
 
 			btn_status.each(function() {
 				if (chkStatusLength === 0)
@@ -203,12 +197,12 @@ var checkAll = () => {
 
 				checked = true;
 
-				$(this).parents('.responsive-table').find('.hide-buttons')
+				$(this).parents('table.table').find('.hide-buttons')
 					.css('display', 'flex')
 					.find('button').attr('disabled', false).parents('.action-btns')
 					.find('.hide-buttons')
 					.find('.selecteds-label').html(selecteds_label);
-				$(this).parents('.responsive-table').find('.show-buttons').hide();
+				$(this).parents('table.table').find('.show-buttons').hide();
 
 				$('#btn-delete').attr('disabled', false);
 
@@ -221,12 +215,12 @@ var checkAll = () => {
 
 			} else {
 
-				$(this).parents('.responsive-table')
+				$(this).parents('table.table')
 					.find('.hide-buttons').hide()
 					.find('button').attr('disabled', true)
 					.parents('.action-btns')
 					.find('.selecteds-label').empty();
-				$(this).parents('.responsive-table').find('.show-buttons').css('display', 'flex');
+				$(this).parents('table.table').find('.show-buttons').css('display', 'flex');
 
 				$('#btn-delete').attr('disabled', true);
 
@@ -235,9 +229,8 @@ var checkAll = () => {
 
 			}
 
-			// $(this).parents('.dataTables_wrapper').find('thead').find(':input:checkbox').prop(
-			$(this).parents('.responsive-table').find('#check-all').prop('checked', checked);
-			$(this).parents('.dataTables_wrapper').find('tbody').find(':input:checkbox:checked').parents('tr').addClass('selected');
+			$(this).parents('table.table').find('#check-all').prop('checked', checked);
+			$(this).parents('table.table').find('tbody').find(':input:checkbox:checked').parents('tr').addClass('selected');
 
 			if (!$(this).is(':checked')) {
 				$(this).parents('tr').removeClass('selected');
@@ -352,6 +345,12 @@ function DataTable(refresh) {
 
 	var table = $('table.dataTable');
 
+	var url_datatable = typeof table.data('link') !== 'undefined' ? table.data('link') : null;
+
+	if (url_datatable === null) {
+		return false;
+	}
+
 	var order = 1,
 		direction = 'asc';
 
@@ -403,7 +402,7 @@ function DataTable(refresh) {
 		'ajax': {
 			type: 'get',
 			dataType: 'html',
-			url: typeof $(this).data('link') !== 'undefined' ? $(this).data('link') : window.location.href,
+			url: url_datatable,
 			beforeSend: () => {
 
 				if (!Storage.checkSession()) {
@@ -497,7 +496,7 @@ function DataTable(refresh) {
 
 		search.bind('keyup paste', delay(function() {
 			_self.search(this.value).draw();
-			console.log($(this).val);
+			// console.log($(this).val);
 		}));
 
 		if (search.val() != '') {

@@ -9,6 +9,21 @@
 	background-color: inherit;
 }
 
+.tabs.vertical {
+	display: block;
+	height: auto;
+	text-align: left;
+}
+
+.tabs.vertical li {
+	display: block;
+	text-align: left;
+}
+
+.tabs.vertical .indicator {
+	display: none;
+}
+
 .cursor-pointer * {
 	cursor: pointer;
 }

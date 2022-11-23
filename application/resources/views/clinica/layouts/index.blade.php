@@ -41,8 +41,8 @@
 					<i class="material-icons">list</i>
 				</button>
 				@section('btn-add')
-				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')">
-					<i class="material-icons">person_add_alt_1</i>
+				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')" data-position="">
+					<i class="material-icons">@yield('btn-add-icon')</i>
 				</button>
 				@show
 			</div>

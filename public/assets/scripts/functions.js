@@ -936,15 +936,18 @@ var App = {
 
 			var input = this;
 
-			//          $(window).load(function(e){
 			MascaraUtils.mascara(input, MascaraUtils.CEP);
-			//          });
 
-			$(this).keyup(function() {
-				MascaraUtils.mascara(this, MascaraUtils.CEP);
-			}).on('keypress', function() {
+			$(this).bind('keyup paste', function() {
+				$(input).parent().removeClass('error').find('.error').remove().removeClass('error');
 				MascaraUtils.mascara(this, MascaraUtils.CEP);
 			}).attr('maxlength', 9);
+
+			$(this).bind('keyup paste', delay(function(e) {
+				if (e.keyCode !== 32 || e.keyCode !== 27 || e.keyCode !== 17 || e.keyCode !== 8) {
+					getEndereco($(this));
+				}
+			}, 300));
 
 			if (typeof $(this).attr('placeholder') !== 'undefined' && $(this).attr('placeholder') != '')
 				$(this).attr('placeholder', $(this).attr('placeholder'));
@@ -959,6 +962,31 @@ var App = {
 	}
 
 };
+
+function getEndereco(cep) {
+
+	if (cep.val().length === parseInt(cep.attr('maxlength'))) {
+
+		Http.get(SITE_URL + 'api/cep/' + cep.val(), {}, (response) => {
+
+			if (response.status === 'error') {
+				// cep.parents('form').find('input[name="' + i + '"]').val(response[i]).parents('.input-field').find('label').addClass('active');
+				Form.showErrors(response, response.status);
+			}
+
+			for (var i in response.fields) {
+				cep.parents('form').find('input[name="' + i + '"]').val(response.fields[i])
+				if (response.fields[i] != null)
+					cep.parents('form').find('input[name="' + i + '"]').parents('.input-field').find('label').addClass('active');
+				else
+					cep.parents('form').find('input[name="' + i + '"]').parents('.input-field').find('label').removeClass('active');
+			}
+
+		});
+
+	}
+
+}
 
 var obj,
 	fn;

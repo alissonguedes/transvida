@@ -598,7 +598,7 @@ CREATE TABLE `tb_atendimento` (
   `id_medico` int(11) UNSIGNED NOT NULL,
   `id_paciente` int(11) UNSIGNED NOT NULL,
   `id_categoria` int(11) UNSIGNED NOT NULL COMMENT 'Consulta, exame, procedimento, cirurgia etc.',
-  `data` date NOT NULL DEFAULT current_timestamp(),
+  `data` date NOT NULL DEFAULT '0000-00-00',
   `hora_agendada` time NOT NULL,
   `hora_inicial` time NOT NULL DEFAULT '00:00:00',
   `hora_final` time NOT NULL DEFAULT '00:00:00',

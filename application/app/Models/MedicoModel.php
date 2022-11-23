@@ -23,26 +23,33 @@ class MedicoModel extends Model
 		$get = $this->select(
 			'id',
 			'id_especialidade',
-			'nome',
-			'cpf',
-			'rg',
 			'crm',
-			DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") AS data_cadastro'),
-			DB::raw('DATE_FORMAT(updated_at, "%d/%m/%Y") AS data_atualizacao'),
+			'status',
 			DB::raw('(SELECT especialidade FROM tb_especialidade WHERE id = id_especialidade) AS especialidade'),
-			'status'
+			DB::raw('(SELECT nome FROM tb_funcionario WHERE id = id_funcionario) AS nome'),
+			DB::raw('(SELECT cpf FROM tb_funcionario WHERE id = id_funcionario) AS cpf'),
+			DB::raw('(SELECT rg FROM tb_funcionario WHERE id = id_funcionario) AS rg'),
+			DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") AS data_cadastro'),
+			DB::raw('DATE_FORMAT(updated_at, "%d/%m/%Y") AS data_atualizacao')
 		);
 
 		if (isset($data) && $search = $data['search']['value']) {
 			$get->where(function ($query) use ($search) {
 				$query
 					->orWhere('id', 'like', $search . '%')
-					->orWhere('nome', 'like', $search . '%')
-					->orWhere('cpf', 'like', $search . '%')
-					->orWhere('rg', 'like', $search . '%')
-					->orWhere('crm', 'like', $search . '%')
-					->orWhere('id_especialidade', 'like', function ($query) use ($search) {
-						$query->select('especialidade')
+					->orWhere(DB::raw('REGEXP_REPLACE(crm, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
+					->orWhere('id_funcionario', function ($query) use ($search) {
+						$query->select('id')
+							->from('tb_funcionario')
+							->where(function ($query) use ($search) {
+								$query->where('nome', 'like', $search . '%')
+									->orWhere(DB::raw('REGEXP_REPLACE(cpf, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
+									->orWhere(DB::raw('REGEXP_REPLACE(rg, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%');
+							})
+							->whereColumn('id', 'id_funcionario');
+					})
+					->orWhere('id_especialidade', function ($query) use ($search) {
+						$query->select('id')
 							->from('tb_especialidade')
 							->where('especialidade', 'like', $search . '%')
 							->whereColumn('id', 'id_especialidade');
@@ -52,10 +59,10 @@ class MedicoModel extends Model
 
 		$this->order = [
 			null,
-			'nome',
+			DB::raw('(SELECT nome FROM tb_funcionario WHERE id = id_funcionario)'),
+			DB::raw('(SELECT especialidade FROM tb_especialidade WHERE id = id_especialidade)'),
 			'crm',
 			'created_at',
-			'updated_at',
 			'status',
 		];
 

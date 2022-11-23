@@ -7,66 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class EmpresaModel extends Model
+class DepartamentoModel extends Model
 {
 
 	use HasFactory;
 
-	protected $table = 'tb_empresa';
+	protected $table = 'tb_departamento';
 	protected $order = [
 		null,
-		'nome_fantasia',
-		'cnpj',
-		'cidade',
-		'uf',
+		'titulo',
+		'descricao',
 		'created_at',
+		'updated_at',
 		'status',
 	];
 
-	private $path = 'assets/clinica/img/empresas/';
+	private $path = 'assets/clinica/img/departamentos/';
 
-	public function getEmpresas($data = null)
+	public function getDepartamentos($data = null)
 	{
 
 		$get = $this->select(
 			'id',
-			'nome_fantasia',
-			'razao_social',
-			'cnpj',
-			'inscricao_estadual',
-			'inscricao_municipal',
-			'cep',
-			'logradouro',
-			'numero',
-			'bairro',
-			'complemento',
-			'cidade',
-			'uf',
-			'pais',
-			'quem_somos',
-			'quem_somos_imagem',
-			'distribuidor_imagem',
-			'contato_imagem',
-			'telefone',
-			'celular',
-			'email',
-			'facebook',
-			'instagram',
-			'youtube',
-			'linkedin',
-			'github',
-			'gmaps',
-			'aliquota_imposto',
-			'tributacao',
-			'certificado',
-			'senha_certificado',
-			'ambiente',
-			'sequence_nfe',
-			'serie_nfe',
-			'sequence_nfce',
-			'tokencsc',
-			'csc',
-			'matriz',
+			'titulo',
+			'descricao',
 			DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") AS data_cadastro'),
 			DB::raw('DATE_FORMAT(updated_at, "%d/%m/%Y") AS data_atualizacao'),
 			'status'
@@ -75,14 +39,9 @@ class EmpresaModel extends Model
 		if (isset($data) && $search = $data['search']['value']) {
 			$get->where(function ($query) use ($search) {
 				$query
-					->orWhere(DB::raw('REGEXP_REPLACE(cnpj, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
-					->orWhere('nome_fantasia', 'like', $search . '%')
-					->orWhere('razao_social', 'like', $search . '%')
-					->orWhere('inscricao_estadual', 'like', $search . '%')
-					->orWhere('inscricao_municipal', 'like', $search . '%')
-					->orWhere('email', 'like', $search . '%')
-					->orWhere(DB::raw('REGEXP_REPLACE(telefone, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
-					->orWhere(DB::raw('REGEXP_REPLACE(celular, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%');
+					->orWhere('id', 'like', $search . '%')
+					->orWhere('titulo', 'like', $search . '%')
+					->orWhere('descricao', 'like', $search . '%');
 			});
 		}
 
@@ -97,10 +56,10 @@ class EmpresaModel extends Model
 
 	}
 
-	public function getEmpresaById($id)
+	public function getDepartamentoById($id)
 	{
 
-		return $this->getEmpresas()
+		return $this->getDepartamentos()
 			->where('id', $id)
 			->first();
 
@@ -125,7 +84,7 @@ class EmpresaModel extends Model
 
 	}
 
-	public function cadastraEmpresa($post)
+	public function cadastraDepartamento($post)
 	{
 
 		$id                  = $post->id;
@@ -209,14 +168,14 @@ class EmpresaModel extends Model
 			'status'              => $status,
 		];
 
-		$id = $this->from('tb_empresa')
+		$id = $this->from('tb_departamento')
 			->insertGetId($data);
 
 		return $id;
 
 	}
 
-	public function editaEmpresa(Request $post, $id)
+	public function editaDepartamento(Request $post, $id)
 	{
 
 		$id                  = $post->id;
@@ -309,112 +268,26 @@ class EmpresaModel extends Model
 			$data['contato_imagem'] = $contato_imagem;
 		}
 
-		$id_empresa = $this->from('tb_empresa')
+		$id = $this->from('tb_departamento')
 			->where('id', $id)
 			->update($data);
 
-		if ($id_empresa) {
-
-			$data = [];
-
-			if (!empty($data)) {
-
-				foreach ($post->departamento as $departamento) {
-					$data[] = ['id_departamento' => $departamento, 'id_empresa' => $id_empresa];
-				}
-
-				return $this->cadastraDepartamento($data);
-
-			} else {
-
-				return $this->removeDepartamento(['id_empresa' => $id_empresa]);
-
-			}
-
-		}
-
-		// return $id_empresa;
+		return $id;
 
 	}
 
-	public function cadastraDepartamento($dados = [])
+	public function atualizaDepartamento($id, $campos = [])
 	{
 
-		print_r($dados);
-
-		// $dados = [
-		// 	'id_departamento' => $departamento,
-		// 	'id_empresa'      => $empresa,
-		// ];
-
-		// $dep = $this->select('id')
-		// 	->from('tb_departamento_empresa')
-		// 	->where($dados)
-		// 	->first();
-
-		// if (!isset($dep)) {
-		// 	$this->from('tb_departamento_empresa')
-		// 		->insert($dados);
-		// }
-
-		// $this->from('tb_departamento_empresa')
-		// 	->whereNotIn($dados)
-		// 	->remove();
-
-	}
-
-	public function removeDepartamento($dados = [])
-	{
-
-		/**
-		 * Para remover um departamento de uma empresa/clínica,
-		 * primeiro, deve-se remover todos os funcionários daquele departamento.
-		 * Do contrário, o sistema irá bloquear a removção do departamento da empresa.
-		 */
-
-		$funcionario = $this->from('tb_funcionario')
-			->select('id_empresa_departamento')
-			->whereIn('id_empresa_departamento', function ($query) {
-				$query->select('id_departamento')
-					->from('tb_departamento_empresa')
-					->whereColumn('id_departamento', 'id_empresa_departamento');
-			})
-			->get();
-
-		if ($funcionario->count() > 0) {
-			$data['status']      = 'error';
-			$data['type']        = 'null';
-			$data['clean_form']  = false;
-			$data['close_modal'] = false;
-			$data['url']         = url()->route('clinica.clinicas.index');
-			$data['message']     = 'Você não pode remover os departamentos desta empresa enquanto houver funcionário nele';
-			return $data;
-		}
-
-		// $remove = $this->from('tb_departamento_empresa');
-
-		// // if (!empty($dados)) {
-		// // 	$remove->whereNotIn($dados);
-		// // } else {
-		// $remove->where($dados);
-		// // }
-
-		// $remove->delete();
-
-	}
-
-	public function atualizaEmpresa($id, $campos = [])
-	{
-
-		return $this->from('tb_empresa')
+		return $this->from('tb_departamento')
 			->whereIn('id', $id)
 			->update($campos);
 
 	}
 
-	public function removeEmpresa($id)
+	public function removeDepartamento($id)
 	{
-		return $this->from('tb_empresa')
+		return $this->from('tb_departamento')
 			->whereIn('id', $id)
 			->delete();
 	}

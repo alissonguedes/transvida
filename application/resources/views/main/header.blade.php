@@ -10,9 +10,11 @@
 					<img src="{{ asset('img/site/logo/logo.png') }}" alt="" class="logo">
 				</a>
 
-				<ul class="hide-on-med-and-down">
-					@yield('menu-list')
-				</ul>
+				<div class="hide-on-med-and-down">
+					<ul class="hide-on-med-and-down" id="ul-horizontal-nav">
+						@yield('menu-list')
+					</ul>
+				</div>
 
 				<div class="flex flex-center flex-end">
 

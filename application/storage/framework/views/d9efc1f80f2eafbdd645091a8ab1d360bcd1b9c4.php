@@ -4,6 +4,7 @@
 <?php $__env->startSection('data-search', 'pacientes'); ?>
 
 <?php $__env->startSection('btn-add-title','Adicionar paciente'); ?>
+<?php $__env->startSection('btn-add-icon', 'person_add_alt_1'); ?>
 <?php $__env->startSection('btn-add-route', route('clinica.pacientes.add')); ?>
 
 <?php $__env->startSection('container'); ?>

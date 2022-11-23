@@ -18,7 +18,7 @@
 				<div class="row">
 					<div class="col s12">
 						<div class="input-field">
-							<label for="descricao" class="{{ isset($row) && $row->descricao ? 'active' : null }}">Especialidade</label>
+							<label for="descricao" class="{{ isset($row) && $row->descricao ? 'active' : null }}">Descrição</label>
 							<textarea name="descricao" id="descricao" class="materialize-textarea">{{ $row->descricao ?? null }}</textarea>
 						</div>
 					</div>

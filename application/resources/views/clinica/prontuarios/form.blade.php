@@ -23,8 +23,10 @@
 						<br>
 						<div class="card-body scroller" data-scroll-x="true">
 							<div class="row">
-								<div class="col s10 offset-m1">
+								<div class="col s12 m10 l10 offset-m2 offset-l2">
+
 									<div id="informacoes_pessoais">
+
 										<div class="row">
 											<div class="col s12">
 												<h6>Informações pessoais</h6>
