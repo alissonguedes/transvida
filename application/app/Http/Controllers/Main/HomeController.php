@@ -25,8 +25,26 @@ namespace App\Http\Controllers\Main{
 
 		}
 
+		public function validateForm(Request $request)
+		{
+
+			return $request->validate([
+				'nome'     => 'required',
+				'email'    => 'required',
+				'telefone' => [
+					'required',
+					'regex:/\([\d]{2}\)\s([\d]{1}\s)?[\d]{4}\.[\d]{4}/i',
+				],
+				'assunto'  => 'required',
+				'mensagem' => 'required',
+			]);
+
+		}
+
 		public function send_mail(Request $request)
 		{
+
+			$this->validateForm($request);
 
 			$this->contato_model = new ContatoModel();
 			Mail::to('atendimento@medicus24h.com.br')->send(new ContactMail($request));
