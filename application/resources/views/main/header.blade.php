@@ -10,15 +10,15 @@
 					<img src="{{ asset('img/site/logo/logo.png') }}" alt="" class="logo">
 				</a>
 
-				<div class="hide-on-med-and-down">
-					<ul class="hide-on-med-and-down" id="ul-horizontal-nav">
-						@yield('menu-list')
-					</ul>
-				</div>
-
 				<div class="flex flex-center flex-end">
 
-					<div class="form-search">
+					<div class="hide-on-med-and-down">
+						<ul class="hide-on-med-and-down" id="ul-horizontal-nav">
+							@yield('menu-list')
+						</ul>
+					</div>
+
+					<div class="form-search hide">
 						<input type="search" class="hide-on-small-only" placeholder="Pesquisar no site...">
 						<button type="submit" class="btn btn-flat btn-floating waves-effect">
 							<i class="material-icons">search</i>

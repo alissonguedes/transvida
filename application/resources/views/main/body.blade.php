@@ -38,11 +38,11 @@
 		</li>
 	</ul>
 </li>
-<li>
+{{-- <li>
 	<a href="{{ route('main.health') }}">
 		<span class="dropdown-title" data-i18n="Apps">Saúde</span>
 	</a>
-</li>
+</li> --}}
 <li>
 	<a href="{{ route('main.contact') }}">
 		<span>Atendimento</span>

@@ -36,11 +36,7 @@
 		</li>
 	</ul>
 </li>
-<li>
-	<a href="<?php echo e(route('main.health')); ?>">
-		<span class="dropdown-title" data-i18n="Apps">Saúde</span>
-	</a>
-</li>
+
 <li>
 	<a href="<?php echo e(route('main.contact')); ?>">
 		<span>Atendimento</span>

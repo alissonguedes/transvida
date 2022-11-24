@@ -521,6 +521,10 @@ i.icon {
 	background-image: url('../img/site/social/whatsapp.png');
 }
 
+.icon.whatsapp-black {
+	background-image: url('../img/site/social/whatsapp-black.png');
+}
+
 .icon.instagram {
 	background-image: url('../img/site/social/instagram.png');
 }
