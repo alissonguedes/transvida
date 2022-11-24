@@ -51,6 +51,10 @@
 @endsection
 @section('body')
 
+<div class="progress" style="z-index: 9999999; display: none;">
+	<div class="indeterminate blue lighten-1"></div>
+</div>
+
 @include('main.header')
 @yield('capa')
 @include('main.sidebar')

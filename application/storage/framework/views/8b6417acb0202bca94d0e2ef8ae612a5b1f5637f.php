@@ -49,6 +49,10 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('body'); ?>
 
+<div class="progress" style="z-index: 9999999; display: none;">
+	<div class="indeterminate blue lighten-1"></div>
+</div>
+
 <?php echo $__env->make('main.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->yieldContent('capa'); ?>
 <?php echo $__env->make('main.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
