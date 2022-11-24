@@ -91,7 +91,6 @@
 
 @else
 
-
 	<tr data-disabled="true">
 		<td colspan="6">
 			Nenhum registro encontrado.
