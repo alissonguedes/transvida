@@ -91,9 +91,12 @@
 
 @else
 
-	<div class="no-results white-text center-align">
-		Nenhum registro encontrado.
-	</div>
+
+	<tr data-disabled="true">
+		<td colspan="6">
+			Nenhum registro encontrado.
+		</td>
+	</tr>
 
 	<div id="pagination"></div>
 
