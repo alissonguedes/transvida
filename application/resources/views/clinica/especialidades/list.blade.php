@@ -23,8 +23,8 @@
 			<td width="25%">
 				{{ $row->especialidade }}
 			</td>
-			<td width="15%" @if($row->descricao) data-tooltip="{{ $row->descricao }}" @endif>
-				<p>
+			<td width="15%">
+				<p @if($row->descricao) data-tooltip="{{ $row->descricao }}" @endif>
 					{{ $row->descricao }}
 				</p>
 			</td>

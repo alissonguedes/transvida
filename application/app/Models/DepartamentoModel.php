@@ -65,6 +65,25 @@ class DepartamentoModel extends Model
 
 	}
 
+	public function getDepartamentoEmpresa($id_empresa, $id_departamento = null)
+	{
+
+		$dp = $this->select('id', 'titulo', 'descricao', 'status')
+			->from('tb_departamento')
+			->whereIn('id', function ($query) use ($id_empresa, $id_departamento) {
+				$query->select('id_departamento')
+					->from('tb_departamento_empresa')
+					->whereColumn('id_departamento', 'tb_departamento.id')
+					->where('id_empresa', $id_empresa)
+					->where('id_departamento', $id_departamento);
+			})
+			->get()
+			->first();
+
+		return $dp;
+
+	}
+
 	public function uploadImage(Request $image)
 	{
 		$imagem = null;

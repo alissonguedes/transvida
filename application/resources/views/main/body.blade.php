@@ -38,11 +38,11 @@
 		</li>
 	</ul>
 </li>
-{{-- <li>
-	<a href="{{ route('main.health') }}">
-		<span class="dropdown-title" data-i18n="Apps">Saúde</span>
+<li>
+	<a href="{{ url('https://www.clubmedicus24h.com.br/') }}" target="_blank">
+		<span class="dropdown-title" data-i18n="Apps">ClubMedicus24h</span>
 	</a>
-</li> --}}
+</li>
 <li>
 	<a href="{{ route('main.contact') }}">
 		<span>Atendimento</span>

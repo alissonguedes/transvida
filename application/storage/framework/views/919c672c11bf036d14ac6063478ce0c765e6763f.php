@@ -24,8 +24,8 @@
 				<?php echo e($row->especialidade); ?>
 
 			</td>
-			<td width="15%" <?php if($row->descricao): ?> data-tooltip="<?php echo e($row->descricao); ?>" <?php endif; ?>>
-				<p>
+			<td width="15%">
+				<p <?php if($row->descricao): ?> data-tooltip="<?php echo e($row->descricao); ?>" <?php endif; ?>>
 					<?php echo e($row->descricao); ?>
 
 				</p>
@@ -90,9 +90,11 @@
 
 <?php else: ?>
 
-	<div class="no-results white-text center-align">
-		Nenhum registro encontrado.
-	</div>
+	<tr data-disabled="true">
+		<td colspan="6">
+			Nenhum registro encontrado.
+		</td>
+	</tr>
 
 	<div id="pagination"></div>
 

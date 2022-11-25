@@ -116,11 +116,24 @@
 															</tr>
 														</thead>
 														<tbody>
+
+															<?php if(isset($row) ): ?>
+																<?php
+																	$departamento_model = new App\Models\DepartamentoModel();
+																?>
+															<?php endif; ?>
+
 															<?php $__currentLoopData = $departamentos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $departamento): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+																<?php if(isset($row)): ?>
+																	<?php
+																		$dep = $departamento_model->getDepartamentoEmpresa($row->id, $departamento->id);
+																		$checked = isset($dep) && $departamento->id === $dep->id ? 'checked=checked' : null;
+																	?>
+																<?php endif; ?>
 																<tr class="sorting_disabled">
 																	<td class="sorting_disabled">
 																		<label>
-																			<input type="checkbox" name="departamento[]" class="filled-in" value="<?php echo e($departamento->id); ?>" data-status="<?php echo e($departamento->status); ?>">
+																			<input type="checkbox" name="departamento[]" class="filled-in" value="<?php echo e($departamento->id); ?>" data-status="<?php echo e($departamento->status); ?>" <?php echo e($checked ?? null); ?>>
 																			<span></span>
 																		</label>
 																	</td>

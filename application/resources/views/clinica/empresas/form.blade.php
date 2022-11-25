@@ -118,11 +118,24 @@
 															</tr>
 														</thead>
 														<tbody>
+
+															@if(isset($row) )
+																@php
+																	$departamento_model = new App\Models\DepartamentoModel();
+																@endphp
+															@endif
+
 															@foreach($departamentos as $departamento)
+																@if(isset($row))
+																	@php
+																		$dep = $departamento_model->getDepartamentoEmpresa($row->id, $departamento->id);
+																		$checked = isset($dep) && $departamento->id === $dep->id ? 'checked=checked' : null;
+																	@endphp
+																@endif
 																<tr class="sorting_disabled">
 																	<td class="sorting_disabled">
 																		<label>
-																			<input type="checkbox" name="departamento[]" class="filled-in" value="{{ $departamento->id }}" data-status="{{ $departamento->status }}">
+																			<input type="checkbox" name="departamento[]" class="filled-in" value="{{ $departamento->id }}" data-status="{{ $departamento->status }}" {{ $checked ?? null }}>
 																			<span></span>
 																		</label>
 																	</td>

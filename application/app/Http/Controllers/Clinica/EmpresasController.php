@@ -101,19 +101,21 @@ namespace App\Http\Controllers\Clinica{
 
 			$id = $request->id;
 
-			if ($data = $this->empresa_model->editaEmpresa($request, $id)) {
-				$status              = 'success';
-				$message             = 'Cadastro alterado com sucesso!';
-				$data['status']      = $status;
-				$data['type']        = 'null';
-				$data['clean_form']  = false;
-				$data['close_modal'] = false;
-				$data['url']         = url()->route('clinica.clinicas.index');
-				$data['message']     = $message;
+			if ($this->empresa_model->editaEmpresa($request, $id)) {
+				$status  = 'success';
+				$message = 'Cadastro alterado com sucesso!';
 			} else {
-				print_r($data);
-				return response()->json($data);
+				$status = 'error';
+				// $message = 'Não foi possível atualizar os dados.';
+				$message = $this->empresa_model->getErros();
 			}
+
+			$data['status']      = $status;
+			$data['type']        = 'null';
+			$data['clean_form']  = false;
+			$data['close_modal'] = false;
+			$data['url']         = url()->route('clinica.clinicas.index');
+			$data['message']     = $message;
 
 			return response()->json($data);
 

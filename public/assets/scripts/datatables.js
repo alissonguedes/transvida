@@ -135,7 +135,7 @@ $.extend($.fn.dataTableExt.oPagination, {
 var checkAll = () => {
 
 	$('table.table')
-		.find('thead,tbody')
+		.find('thead')
 		.find(':input:checkbox:checked')
 		.prop('checked', false)
 		.change();

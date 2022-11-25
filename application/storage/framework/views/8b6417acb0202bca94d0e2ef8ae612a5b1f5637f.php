@@ -36,7 +36,11 @@
 		</li>
 	</ul>
 </li>
-
+<li>
+	<a href="<?php echo e(url('https://www.clubmedicus24h.com.br/')); ?>" target="_blank">
+		<span class="dropdown-title" data-i18n="Apps">ClubMedicus24h</span>
+	</a>
+</li>
 <li>
 	<a href="<?php echo e(route('main.contact')); ?>">
 		<span>Atendimento</span>
