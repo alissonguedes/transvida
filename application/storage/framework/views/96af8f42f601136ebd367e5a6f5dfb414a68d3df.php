@@ -380,11 +380,11 @@
 
 						<div class="card-footer right-align">
 							<button type="reset" class="btn white black-text waves-effect mr-2" data-tooltip="Voltar" data-href="<?php echo e(route('clinica.pacientes.index')); ?>">
-								<i class="material-icons-outlined">arrow_back</i>
+								<i class="material-icons">arrow_back</i>
 							</button>
 
 							<button type="submit" class="btn green waves-effect" data-tooltip="Salvar">
-								<i class="material-icons-outlined">save</i>
+								<i class="material-icons">save</i>
 							</button>
 						</div>
 					</div>
