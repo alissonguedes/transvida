@@ -8,12 +8,12 @@
 
 	@php
 		$permissao = new PermissaoModel();
-		$permissao = $permissao->getPermissao('clinica.pacientes.edit');
+		$permissao = $permissao->getPermissao('clinica.departamentos.edit');
 		$disabled = !$permissao ? true : false;
 	@endphp
 
 	@foreach($paginate as $ind => $row)
-		<tr class="{{ $row->status === '0' ? 'blocked' : null }}" style="position: relative;" id="{{ $row->id }}" data-disabled="{{ $disabled ? 'true' : 'false' }}">
+		<tr class="{{ $row->status === '0' ? 'blocked' : null }}" style="position: relative;" id="{{ $row->id }}" data-disabled="true">
 			<td width="1%" data-disabled="true">
 				<label>
 					<input type="checkbox" name="id[]" class="filled-in" value="{{ $row->id }}" data-status="{{ $row->status }}">
@@ -21,37 +21,36 @@
 				</label>
 			</td>
 			<td width="25%">
-				{{ $row->nome }}
+				{{ $row->titulo }}
 			</td>
 			<td width="15%">
-				{{ $row->telefone ?? $row->celular }}
+				<p @if($row->descricao) data-tooltip="{{ $row->descricao }}" @endif>
+					{{ $row->descricao }}
+				</p>
 			</td>
-			<td width="15%">
-				{{ $row->codigo }}
+			<td class="center-align" width="15%">
+				{{ $row->data_cadastro }}
 			</td>
-			<td>
-				{{ $row->data_nascimento }}
-			</td>
-			<td width="1px">
-				{{ $row->convenio }}
-			</td>
-			<td>
+			{{-- <td class="center-align">
+				{{ $row->data_atualizacao ?? '-' }}
+			</td> --}}
+			<td class="center-align">
 				{{ $row->status === '0' ? 'Inativo' : 'Ativo' }}
 			</td>
 			<td data-disabled="true" width="18%" class="center-align border-rl">
 				@if(!$disabled)
-					<button type="button" class="btn-small grey lighten-4 btn-floating float-none waves-effect" name="edit" value="{{ $row->id }}" data-href="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar">
+					<button type="button" class="btn-small grey lighten-4 btn-floating float-none waves-effect" name="edit" value="{{ $row->id }}" data-link="{{ route('clinica.departamentos.edit', $row->id) }}" data-target="modal_departamento" data-tooltip="Editar">
 						<i class="material-icons-outlined grey-text">edit</i>
 					</button>
 				@endif
 				@if(!$disabled)
 					{? $status = ($row->status === '0' ? '1' : '0'); ?}
-					<button type="button" class="btn-small ml-3 mr-3 teal lighten-3 btn-edit btn-floating waves-effect" name="status" value="{{ $status }}" data-link="{{ route('clinica.pacientes.patch', 'status', $row->id) }}" data-tooltip="{{ $status === '0' ? 'Bloquear' : 'Desbloquear' }}" data-method="patch">
+					<button type="button" class="btn-small ml-3 mr-3 teal lighten-3 btn-edit btn-floating waves-effect" name="status" value="{{ $status }}" data-link="{{ route('clinica.departamentos.patch', 'status', $row->id) }}" data-tooltip="{{ $status === '0' ? 'Bloquear' : 'Desbloquear' }}" data-method="patch">
 						<i class="material-icons white-text">{{ $row->status === '1' ? 'lock' : 'lock_open' }}</i>
 					</button>
 				@endif
 				@if(!$disabled)
-					<button type="button" class="btn-small red lighten-3 btn-floating excluir waves-effect" value="{{ $row->id }}" data-link="{{ route('clinica.pacientes.delete', $row->id) }}" data-tooltip="Excluir" data-method="delete">
+					<button type="button" class="btn-small red lighten-3 btn-floating excluir waves-effect" value="{{ $row->id }}" data-link="{{ route('clinica.departamentos.delete', $row->id) }}" data-tooltip="Excluir" data-method="delete">
 						<i class="material-icons-outlined white-text">delete</i>
 					</button>
 				@endif
@@ -88,9 +87,11 @@
 
 @else
 
-	<div class="no-results white-text center-align">
-		Nenhum registro encontrado.
-	</div>
+	<tr data-disabled="true">
+		<td colspan="6">
+			Nenhum registro encontrado.
+		</td>
+	</tr>
 
 	<div id="pagination"></div>
 

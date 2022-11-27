@@ -399,6 +399,7 @@ select {
 	border: none;
 	color: inherit;
 	white-space: nowrap;
+	place-content: start;
 }
 
 .dropdown-content a:disabled,
@@ -2248,8 +2249,12 @@ table.dataTable {
 	width: 100%;
 	margin: 0 auto;
 	clear: both;
+	border-collapse: collapse;
+}
+
+table.dataTable.col-separated {
 	border-collapse: separate;
-	border-spacing: 0;
+	border-spacing: 1px;
 }
 
 table.dataTable,

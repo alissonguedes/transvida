@@ -34,28 +34,28 @@
 							</div>
 							<h6 class="white-text"><?php echo e($paciente->nome); ?></h6>
 							<p>
-								<a href="#"><i class="material-icons">cake</i><?php echo e($paciente->data_nascimento ?? 'Não informado'); ?></a>
-								<a href="#"><i class="material-icons">credit_card</i><?php echo e($paciente->cpf ?? 'Não informado'); ?></a>
+								<a href="#"><i class="material-icons-outlined">cake</i><?php echo e($paciente->data_nascimento ?? 'Não informado'); ?></a>
+								<a href="#"><i class="material-icons-outlined">credit_card</i><?php echo e($paciente->cpf ?? 'Não informado'); ?></a>
 							</p>
 							<div class="clear"></div>
 						</div>
 						<div class="contato">
 							<p class="mt-4">
-								<a href="#"><i class="material-icons left">phone</i> <?php echo e($paciente->telefone ?? 'Não informado'); ?></a>
-								<a href="#"><i class="material-icons left">message</i> <?php echo e($paciente->whatsapp ?? 'Não informado'); ?></a>
-								<a href="#"><i class="material-icons left">mail</i> <?php echo e($paciente->email ?? 'Não informado'); ?></a>
+								<a href="#"><i class="material-icons-outlined left">phone</i> <?php echo e($paciente->telefone ?? 'Não informado'); ?></a>
+								<a href="#"><i class="material-icons-outlined left">message</i> <?php echo e($paciente->whatsapp ?? 'Não informado'); ?></a>
+								<a href="#"><i class="material-icons-outlined left">mail</i> <?php echo e($paciente->email ?? 'Não informado'); ?></a>
 							</p>
 						</div>
 						
 						<div class="acoes flex flex-center mt-5">
 							<a class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Prontuário">
-								<i class="material-icons">assignment_ind</i>
+								<i class="material-icons-outlined">assignment_ind</i>
 							</a>
 							<a href="#" data-target="agendamento" class="form-sidenav-trigger waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Agendar">
-								<i class="material-icons">event</i>
+								<i class="material-icons-outlined">event</i>
 							</a>
 							<a href="<?php echo e(route('clinica.pacientes.edit', $paciente->id)); ?>" class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Editar">
-								<i class="material-icons">edit</i>
+								<i class="material-icons-outlined">edit</i>
 							</a>
 						</div>
 					</div>

@@ -8,7 +8,8 @@
 
 	<?php
 		$permissao = new PermissaoModel();
-		$permissao = $permissao->getPermissao('clinica.especialidades.edit');
+		$permissao = true;
+		// $permissao = $permissao->getPermissao('clinica.funcionarios.edit');
 		$disabled = !$permissao ? true : false;
 	?>
 
@@ -20,39 +21,42 @@
 					<span></span>
 				</label>
 			</td>
-			<td width="25%">
-				<?php echo e($row->especialidade); ?>
+			<td width="20%">
+				<p>
+					<?php echo e($row->nome); ?>
+
+				</p>
+			</td>
+			<td width="15%">
+				<?php echo e($row->funcao); ?>
 
 			</td>
 			<td width="15%">
-				<p <?php if($row->descricao): ?> data-tooltip="<?php echo e($row->descricao); ?>" <?php endif; ?>>
-					<?php echo e($row->descricao); ?>
+				<?php echo e($row->cpf); ?>
 
-				</p>
 			</td>
 			<td class="center-align" width="15%">
 				<?php echo e($row->data_cadastro); ?>
 
 			</td>
 			<td class="center-align">
-				<?php echo e($row->data_atualizacao ?? '-'); ?>
+				<?php echo e($row->status === '0' ? 'Inativo' : 'Ativo'); ?>
 
 			</td>
-			
 			<td data-disabled="true" width="18%" class="center-align border-rl">
 				<?php if(!$disabled): ?>
-					<button type="button" class="btn-small grey lighten-4 btn-floating float-none waves-effect" name="edit" value="<?php echo e($row->id); ?>" data-link="<?php echo e(route('clinica.especialidades.edit', $row->id)); ?>" data-target="modal_especialidade" data-tooltip="Editar">
+					<button type="button" class="btn-small grey lighten-4 btn-floating float-none waves-effect" name="edit" value="<?php echo e($row->id); ?>" data-link="<?php echo e(route('clinica.funcionarios.edit', $row->id)); ?>" data-target="modal_funcionario" data-tooltip="Editar">
 						<i class="material-icons-outlined grey-text">edit</i>
 					</button>
 				<?php endif; ?>
 				<?php if(!$disabled): ?>
 					<?php  $status = ($row->status === '0' ? '1' : '0');  ?>
-					<button type="button" class="btn-small ml-3 mr-3 teal lighten-3 btn-edit btn-floating waves-effect" name="status" value="<?php echo e($status); ?>" data-link="<?php echo e(route('clinica.especialidades.patch', 'status', $row->id)); ?>" data-tooltip="<?php echo e($status === '0' ? 'Bloquear' : 'Desbloquear'); ?>" data-method="patch">
+					<button type="button" class="btn-small ml-3 mr-3 teal lighten-3 btn-edit btn-floating waves-effect" name="status" value="<?php echo e($status); ?>" data-link="<?php echo e(route('clinica.funcionarios.patch', 'status', $row->id)); ?>" data-tooltip="<?php echo e($status === '0' ? 'Bloquear' : 'Desbloquear'); ?>" data-method="patch">
 						<i class="material-icons white-text"><?php echo e($row->status === '1' ? 'lock' : 'lock_open'); ?></i>
 					</button>
 				<?php endif; ?>
 				<?php if(!$disabled): ?>
-					<button type="button" class="btn-small red lighten-3 btn-floating excluir waves-effect" value="<?php echo e($row->id); ?>" data-link="<?php echo e(route('clinica.especialidades.delete', $row->id)); ?>" data-tooltip="Excluir" data-method="delete">
+					<button type="button" class="btn-small red lighten-3 btn-floating excluir waves-effect" value="<?php echo e($row->id); ?>" data-link="<?php echo e(route('clinica.funcionarios.delete', $row->id)); ?>" data-tooltip="Excluir" data-method="delete">
 						<i class="material-icons-outlined white-text">delete</i>
 					</button>
 				<?php endif; ?>
@@ -101,4 +105,4 @@
 	<div id="info"></div>
 
 <?php endif; ?>
-<?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/especialidades/list.blade.php ENDPATH**/ ?>
+<?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/funcionarios/list.blade.php ENDPATH**/ ?>

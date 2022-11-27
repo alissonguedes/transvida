@@ -306,7 +306,7 @@ nav a {
 	font-family: 'Roboto', sans-serif;
 }
 
-.sidenav li a i {
+.sidenav li a span{
 	font-size: 1.4rem;
 	line-height: inherit;
 	display: block;
@@ -316,7 +316,7 @@ nav a {
 	margin-left: 1px;
 }
 
-.sidenav li .collapsible-body a i {
+.sidenav li .collapsible-body a span {
 	font-size: 1rem;
 }
 

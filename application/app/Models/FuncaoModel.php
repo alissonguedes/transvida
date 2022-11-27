@@ -7,29 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DepartamentoModel extends Model
+class FuncaoModel extends Model
 {
 
 	use HasFactory;
 
-	protected $table = 'tb_departamento';
+	protected $table = 'tb_funcao';
 	protected $order = [
 		null,
-		'titulo',
+		'funcao',
 		'descricao',
 		'created_at',
 		'updated_at',
-		'status',
 	];
 
-	private $path = 'assets/clinica/img/departamentos/';
+	private $path = 'assets/clinica/img/funcoes/';
 
-	public function getDepartamentos($data = null)
+	public function getFuncoes($data = null)
 	{
 
 		$get = $this->select(
 			'id',
-			'titulo',
+			'funcao',
 			'descricao',
 			DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") AS data_cadastro'),
 			DB::raw('DATE_FORMAT(updated_at, "%d/%m/%Y") AS data_atualizacao'),
@@ -40,7 +39,7 @@ class DepartamentoModel extends Model
 			$get->where(function ($query) use ($search) {
 				$query
 					->orWhere('id', 'like', $search . '%')
-					->orWhere('titulo', 'like', $search . '%')
+					->orWhere('funcao', 'like', $search . '%')
 					->orWhere('descricao', 'like', $search . '%');
 			});
 		}
@@ -56,32 +55,41 @@ class DepartamentoModel extends Model
 
 	}
 
-	public function getDepartamentoById($id)
+	public function getFuncaoById($id)
 	{
 
-		return $this->getDepartamentos()
+		return $this->getFuncoes()
 			->where('id', $id)
 			->first();
 
 	}
 
-	public function getDepartamentoEmpresa($id_empresa, $id_departamento = null)
+	public function searchFuncoes(Request $request)
 	{
 
-		$dp = $this->select('id', 'titulo', 'descricao', 'status')
-			->from('tb_departamento')
-			->whereIn('id', function ($query) use ($id_empresa, $id_departamento) {
-				$query->select('id_departamento')
-					->from('tb_departamento_empresa')
-					->whereColumn('id_departamento', 'tb_departamento.id')
-					->where('id_empresa', $id_empresa)
-					->where('id_departamento', $id_departamento);
-			})
-			->get()
-			->first();
+		$query = $request->get('query');
 
-		return $dp;
+		$this->where('nome', 'like', '%' . $query . '%');
 
+		return $this->getFuncoes();
+		// ->where('nome', 'like', '%' . $query . '%');
+
+	}
+
+	public function getEtnia()
+	{
+		return $this->select('id', 'descricao')
+			->from('tb_etnia')
+		// ->orderBy('descricao')
+			->get();
+	}
+
+	public function getAcomodacao()
+	{
+		return $this->select('id', 'descricao')
+			->from('tb_acomodacao')
+			->orderBy('descricao')
+			->get();
 	}
 
 	public function uploadImage(Request $image)
@@ -103,50 +111,48 @@ class DepartamentoModel extends Model
 
 	}
 
-	public function cadastraDepartamento($post)
+	public function cadastraFuncao($post)
 	{
 
-		$id        = $post->id;
-		$titulo    = $post->titulo;
+		$funcao = $post->funcao;
+		// $imagem               = $this->uploadImage($post);
 		$descricao = $post->descricao;
-		$imagem    = $this->uploadImage($post);
 		$status    = $post->status ?? '0';
 
 		$data = [
-			'titulo'    => $titulo,
+			'funcao'    => $funcao,
+			// 'imagem'               => $imagem,
 			'descricao' => $descricao,
-			// 'imagem'              => $imagem,
-			'status'    => $status,
+			// 'status'               => $status,
 		];
 
-		$id = $this->from('tb_departamento')
+		$id = $this->from('tb_funcao')
 			->insertGetId($data);
 
 		return $id;
 
 	}
 
-	public function editaDepartamento(Request $post, $id)
+	public function editaFuncao(Request $post, $id)
 	{
 
-		$id        = $post->id;
-		$titulo    = $post->titulo;
+		$funcao = $post->funcao;
+		// $imagem               = $this->uploadImage($post);
 		$descricao = $post->descricao;
-		$imagem    = $this->uploadImage($post);
 		$status    = $post->status ?? '0';
 
 		$data = [
-			'titulo'    => $titulo,
+			'funcao'    => $funcao,
+			// 'imagem'               => $imagem,
 			'descricao' => $descricao,
-			// 'imagem'              => $imagem,
-			'status'    => $status,
+			// 'status'               => $status,
 		];
 
-		if (!is_null($imagem)) {
+		if (isset($imagem) && !empty($imagem)) {
 			$data['imagem'] = $imagem;
 		}
 
-		$id = $this->from('tb_departamento')
+		$id = $this->from('tb_funcao')
 			->where('id', $id)
 			->update($data);
 
@@ -154,19 +160,4 @@ class DepartamentoModel extends Model
 
 	}
 
-	public function atualizaDepartamento($id, $campos = [])
-	{
-
-		return $this->from('tb_departamento')
-			->whereIn('id', $id)
-			->update($campos);
-
-	}
-
-	public function removeDepartamento($id)
-	{
-		return $this->from('tb_departamento')
-			->whereIn('id', $id)
-			->delete();
-	}
 }

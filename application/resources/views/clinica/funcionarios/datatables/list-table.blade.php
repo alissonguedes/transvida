@@ -38,21 +38,21 @@
 			<td>
 				{{ $row->status === '0' ? 'Inativo' : 'Ativo' }}
 			</td>
-			<td data-disabled="true" width="18%" class="center-align border-rl">
+			<td data-disabled="true" width="15%" class="center-align">
 				@if(!$disabled)
-					<button type="button" class="btn-small grey lighten-4 btn-floating float-none waves-effect" name="edit" value="{{ $row->id }}" data-href="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar">
-						<i class="material-icons-outlined grey-text">edit</i>
+					<button data-href="{{ route('clinica.pacientes.edit', $row->id) }}" class="btn-small btn-flat btn-edit btn-floating float-none waves-effect" data-tooltip="Editar">
+						<i class="material-icons grey-text">edit</i>
 					</button>
 				@endif
 				@if(!$disabled)
 					{? $status = ($row->status === '0' ? '1' : '0'); ?}
-					<button type="button" class="btn-small ml-3 mr-3 teal lighten-3 btn-edit btn-floating waves-effect" name="status" value="{{ $status }}" data-link="{{ route('clinica.pacientes.patch', 'status', $row->id) }}" data-tooltip="{{ $status === '0' ? 'Bloquear' : 'Desbloquear' }}" data-method="patch">
-						<i class="material-icons white-text">{{ $row->status === '1' ? 'lock' : 'lock_open' }}</i>
+					<button class="btn-small btn-flat btn-edit btn-floating waves-effect" name="status" value="{{ $status }}" data-tooltip="{{ $status === '0' ? 'Bloquear' : 'Desbloquear' }}" data-link="{{ route('clinica.pacientes.patch', 'status', $row->id) }}" data-method="patch">
+						<i class="material-icons grey-text">{{ $row->status === '1' ? 'lock' : 'lock_open' }}</i>
 					</button>
 				@endif
 				@if(!$disabled)
-					<button type="button" class="btn-small red lighten-3 btn-floating excluir waves-effect" value="{{ $row->id }}" data-link="{{ route('clinica.pacientes.delete', $row->id) }}" data-tooltip="Excluir" data-method="delete">
-						<i class="material-icons-outlined white-text">delete</i>
+					<button class="btn-small btn-flat btn-floating excluir waves-effect" data-link="{{ route('clinica.pacientes.delete', $row->id) }}" data-method="delete" data-tooltip="Excluir">
+						<i class="material-icons grey-text">delete</i>
 					</button>
 				@endif
 			</td>

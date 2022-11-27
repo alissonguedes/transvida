@@ -1,5 +1,6 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
+
+<link href="<?php echo e(asset('css/fonts.css')); ?>" rel="stylesheet">
 <link href="<?php echo e(asset('plugins/font-awesome/6.2.0/css/all.css')); ?>" rel="stylesheet">
 
 <link href="<?php echo e(asset('plugins/materializecss/materialize.min.css')); ?>" rel="stylesheet">
@@ -10,7 +11,6 @@
 
 <link rel="stylesheet" media="screen" href="<?php echo e(asset('assets/styles/style.css')); ?>">
 
-<link href="<?php echo e(asset('css/fonts.css')); ?>" rel="stylesheet">
 <link href="<?php echo e(asset('css/animate.css')); ?>" rel="stylesheet">
 <link href="<?php echo e(asset('css/colors.css')); ?>" rel="stylesheet">
 <link href="<?php echo e(asset('css/main.css')); ?>" rel="stylesheet">

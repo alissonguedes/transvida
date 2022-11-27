@@ -274,6 +274,7 @@ if (!function_exists('getMenus')) {
 					->where('value', get_config($local))
 					->whereColumn('id_modulo', 'id_modulo');
 			})
+			->where('status', '1')
 			->get()
 			->first();
 
@@ -301,6 +302,7 @@ if (!function_exists('getMenus')) {
 				->where('id_menu', $menu->id)
 				->where('id_parent', $id)
 				->orderBy('ordem', 'asc')
+				->where('status', '1')
 				->get();
 
 			if ($items->count() > 0) {
@@ -360,18 +362,9 @@ if (!function_exists('getMenus')) {
 						->first();
 
 					$ul .= '<a ' . (($submenus->count() > 0) ? 'class="collapsible-header waves-effect waves-cyan" href="javascript:void(0);" tabindex="0"' : 'href="' . (route($route->name) ?? null) . '"') . '>';
-					$ul .= $item->icon
-					?
-					(
-						preg_match('[^fa\-]', $item->icon)
-						?
-						'<i class="fa-icon fa-solid ' . $item->icon . '"></i>'
-						:
-						'<i class="material-icons">' . $item->icon . '</i>'
-					)
-					:
-					'<i class="material-icons">radio_button_unchecked</i>';
-					$ul .= '<span class="menu-title" data-i18n="' . $label->titulo . '">' . $label->titulo . '</span>';
+					$ul .= $item->icon ? (preg_match('[^fa\-]', $item->icon) ? '<span class="fa-icon fa-solid ' . $item->icon . '"></span>' : '<span class="material-symbols-outlined">' . $item->icon . '</span>') : '<span class="material-symbols-outlined">radio_button_unchecked</span>';
+
+					$ul .= $label->titulo;
 					$ul .= '</a>';
 
 					if ($submenus->count() > 0) {

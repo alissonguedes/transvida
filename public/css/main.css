@@ -13,6 +13,32 @@ strong {
 	background-color: inherit;
 }
 
+.border-rl,
+.border-lr {
+	border-left: 1px solid #ebebeb !important;
+	border-right: 1px solid #ebebeb !important;
+}
+
+/** Select **/
+/* .dropdown-content {
+	background: none;
+}
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+	background-color: white;
+}
+
+.dropdown-content li:hover,
+.dropdown-content li.active {
+	background: none;
+}
+
+.dropdown-content li.spacer {
+	min-height: 65px;
+	cursor: default;
+	opacity: 0;
+} */
 
 /** Toast **/
 
@@ -63,6 +89,48 @@ strong {
 .toast.error button i,
 .toast.warn button i {
 	color: #fff !important;
+}
+
+.sidenav li>a li>a>[class*=mdi-],
+.sidenav li>a>[class^=mdi-],
+.sidenav li>a>i,
+.sidenav li>a>i.material-icons,
+.sidenav li>a>span.material-icons,
+.sidenav li>a>span.material-icons-outlined {
+	line-height: 48px;
+	float: left;
+	width: 24px;
+	height: 48px;
+	margin: 0 32px 0 0;
+	color: rgba(0, 0, 0, .54);
+}
+
+.sidenav li>a>span.material-symbols-outlined {
+	color: rgba(0, 0, 0, .54);
+}
+
+
+.sidenav-active-rounded .sidenav li:not(.open)>a.active,
+.sidenav-active-rounded .sidenav li:not(.open)>a.active>span.material-icons,
+.sidenav-active-rounded .sidenav li>a.active>span.material-symbols-outlined {
+	color: #fff;
+}
+
+.sidenav li a span {
+	font-size: 1.4rem;
+	line-height: inherit;
+	display: block;
+	float: left;
+	width: 2rem;
+	margin-right: 1rem;
+}
+
+.sidenav li a span {
+	text-align: center;
+}
+
+.sidenav li .collapsible-body a span {
+	font-size: 1rem;
 }
 
 @media only screen and (min-width: 993px) {

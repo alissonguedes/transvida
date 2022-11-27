@@ -43,6 +43,14 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
+		public function getDepartamentos(Request $request)
+		{
+
+			$dados['select'] = $this->empresa_model->getDepartamentos($request->clinica);
+			return view('clinica.empresas.select_departamentos', $dados);
+
+		}
+
 		public function validateForm(Request $request)
 		{
 

@@ -258,6 +258,7 @@ function btnModalForms($button) {
 
 			$('#' + modal).modal({
 				'dismissible': typeof $(this).data('dismissible') !== 'undefined' && $(this).data('dismissible') != '' ? $(this).data('dismissible') : false,
+				'isMultiple': true,
 				'onOpenStart': () => {
 					Http.get(link, {
 						'datatype': 'html',
@@ -267,8 +268,62 @@ function btnModalForms($button) {
 					});
 				},
 				'onOpenEnd': () => {
-					$('#' + modal).find('form').find('select').formSelect();
+					var select = $('#' + modal).find('form').find('select').formSelect();
 					App.aplicarMascaras();
+
+					select.each(function() {
+
+						var id = $(this).attr('id');
+						var link = typeof $(this).data('link') !== 'undefined' ? $(this).data('link') : false;
+						var target = typeof $(this).data('target') !== 'undefined' ? $(this).data('target') : false;
+
+						if (link) {
+
+							$('#' + id).change(function() {
+
+								Http.get(link, {
+									'datatype': 'json',
+									'data': {
+										[$(this).attr('name')]: $(this).val()
+									}
+								}, (response) => {
+
+									if (target) {
+
+										$('#' + target).attr('disabled', false);
+										$('#' + target).find('option:not(:disabled)').remove()
+
+										var options = [];
+										if (response.length > 0) {
+											for (var i of response) {
+												var option = $('<option/>', {
+													'value': i.id,
+													'text': i.titulo
+												});
+												options.push(option);
+											}
+											$('#' + target).append(options)
+										} else {
+											$('#' + target).html($('<option/>', {
+												'value': '',
+												'selected': true,
+												'disabled': true,
+												'text': $('#'+target).find('option:disabled').text()
+											}));
+										}
+
+										$('#' + target).formSelect();
+
+									}
+
+								})
+
+							});
+
+						}
+
+					});
+
 				}
 			})
 
