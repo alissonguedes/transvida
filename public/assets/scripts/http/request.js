@@ -31,11 +31,9 @@ var Request = {
 					// 	$(this).hide();
 					// });
 					// setTimeout(function() {
-						Http.goTo(link);
+					Http.goTo(link);
 					// }, 500);
 
-
-					console.log('verificar sessão antes de redirecionar');
 				}
 
 			} else {

@@ -73,7 +73,7 @@ function core() {
 					'idMenu': self.find('.dd-list').data('menu')
 				}
 			}, function(response) {
-				console.log('Response: ', response);
+				// console.log('Response: ', response);
 			})
 		});
 	})
@@ -245,7 +245,6 @@ function core() {
 		var self = $(this);
 		Http.delete($(this).data("url"), function(response) {
 
-			console.log(response);
 			var len = self.parents("ul").find("li").length;
 			self.parents("#file_" + self.attr("id")).remove();
 			$(".count-files").html(len - 1);
@@ -359,7 +358,6 @@ function core() {
 
 			$(this).find('[type="file"]').on('change', function() {
 
-				console.log($(this).val());
 				var self = $(this);
 				var $len = self.parent().find('[type="file"]').length;
 
@@ -367,8 +365,6 @@ function core() {
 					var id = $(this).attr('id');
 				else
 					var id = 'file' + id;
-
-				console.log('teste');
 
 				if ($('#' + id).is(':visible')) {
 

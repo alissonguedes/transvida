@@ -16,7 +16,6 @@ var Http = {
 		Request.refreshUrl(url);
 
 		var BASE = BASE_URL.split('/').slice(0, -1).join('/');
-		console.log(BASE);
 
 		// Redirecionar url com parâmetro.
 		if (typeof params !== 'undefined') {

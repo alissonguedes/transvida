@@ -102,7 +102,7 @@
 										<div class="row">
 											<div class="col s12 m12 l12">
 												<div class="input-field">
-													<table class="table dataTable">
+													<table class="table dataTable" data-ajax="false">
 														<thead>
 															<tr data-disabled="true">
 																<th class="sorting_disabled">

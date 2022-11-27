@@ -96,8 +96,6 @@ var Form = {
 					var id = $(this).attr('id');
 					var input = $(this).parent().find('input[name="' + id + '"]');
 
-					console.log(input.next('[type=hidden]').val(input.val()));
-
 				})
 
 			},
@@ -624,7 +622,6 @@ var Form = {
 
 	__button__: (label, block) => {
 
-		console.log(label, block);
 		var spinner = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
 
 		if (block) {

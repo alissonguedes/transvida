@@ -308,7 +308,7 @@ function btnModalForms($button) {
 												'value': '',
 												'selected': true,
 												'disabled': true,
-												'text': $('#'+target).find('option:disabled').text()
+												'text': $('#' + target).find('option:disabled').text()
 											}));
 										}
 
@@ -400,11 +400,12 @@ function DataTable(refresh) {
 
 	var table = $('table.dataTable');
 
-	var url_datatable = typeof table.data('link') !== 'undefined' ? table.data('link') : null;
-
-	if (url_datatable === null) {
+	if (typeof table.data('ajax') !== 'undefined' && !table.data('ajax')) {
 		return false;
 	}
+
+	var url_datatable = // typeof table.data('link') !== 'undefined' ? table.data('link') :
+		window.location.href;
 
 	var order = 1,
 		direction = 'asc';
@@ -521,8 +522,6 @@ function DataTable(refresh) {
 					new PerfectScrollbar('.card-content', {
 						'suppressScrollX': true
 					});
-
-				console.log(table.parents('.dataTables_wrapper').parents('.card-content'));
 
 				table.parents('.dataTables_wrapper').find('.dataTables_processing').hide();
 
