@@ -4,16 +4,16 @@
 
 @section('search')
 <div class="input-field search bordered border-round z-depth-1">
-	<label for="">Pesquisar clinicas</label>
+	<label for="">Pesquisar agendamentos</label>
 	<input type="search" id="search-on-page" class="dataTable_search">
 </div>
 @endsection
 
-@section('btn-add-title','Adicionar clinica')
+@section('btn-add-title','Agendar paciente')
 @section('btn-add')
-<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-href="{{ route('clinica.clinicas.add') }}" data-tooltip="@yield('btn-add-title')" data-position="left">
+<a href="#" data-target="agendamento" data-link="{{ route('clinica.agendamentos.add') }}" class="form-sidenav-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-tooltip="Agendar">
 	<i class="material-icons bolder">add</i>
-</button>
+</a>
 @endsection
 
 @section('container')
@@ -49,4 +49,8 @@
 	</div>
 </div>
 
+@endsection
+
+@section('form-sidenav')
+@include('clinica.agendamentos.form')
 @endsection

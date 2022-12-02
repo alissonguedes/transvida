@@ -6,7 +6,7 @@
 	<div class="topbar-fixed topbar-color flex flex-auto z-depth-1">
 		<div class="flex flex-auto flex-center">
 			<div class="flex flex-auto flex-start flex-center" style="">
-				<button class="dropdown-trigger btn white black-text z-depth-1" data-target="dropdown-actions">
+				<button class="dropdown-trigger btn white black-text z-depth-3 border-round" data-target="dropdown-actions">
 					<i class="material-icons checkbox">check_box</i>
 					<i class="material-icons">keyboard_arrow_down</i>
 				</button>
@@ -29,10 +29,10 @@
 					</li>
 				</ul>
 				@section('search')
-				<div class="input-field search bordered">
+				<div class="input-field search bordered border-round z-depth-1">
 					@section('search-label', 'Pesquisar...')
 					<label for="">@yield('search-label')</label>
-					<input type="search" id="search-on-page" data-search="@yield('data-search')">
+					<input type="search" id="search-on-page" data-search="@yield('data-search')" >
 				</div>
 				@show
 			</div>
@@ -41,7 +41,7 @@
 					<i class="material-icons">list</i>
 				</button>
 				@section('btn-add')
-				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')" data-position="">
+				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')" data-position="">
 					<i class="material-icons">@yield('btn-add-icon')</i>
 				</button>
 				@show

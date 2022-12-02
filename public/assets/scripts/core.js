@@ -173,19 +173,83 @@ function core() {
 		});
 	});
 
+
 	$('.form-sidenav-trigger').on('click', function() {
 
-		var target = $(this).data('target');
-		var sidenav = $('#' + target);
-		var overlay = $('<div class="modal-overlay" style="z-index: 9; display: block; opacity: 0.5">');
-		sidenav.addClass('open').parent().remove('div.modal-overlay').append(overlay);
+		var link = typeof $(this).data('link') !== 'undefined' && $(this).data('link') != '' ? $(this).data('link') : null;
+		var modal = typeof $(this).data('target') !== undefined && $(this).data('target') != '' ? $(this).data('target') : null;
 
-		if (typeof sidenav.data('dismissible') !== 'undefined' && !sidenav.data('dismissible')) {
-			overlay.on('click', function() {
-				sidenav.removeClass('open');
+		var name = typeof $(this).attr('name') !== 'undefined' ? $(this).attr('name') : null;
+		var id = typeof $(this).attr('id') !== 'undefined' ? $(this).attr('id') : null;
+
+		var params = {
+			[name]: id
+		};
+
+		console.log(id);
+
+		Http.get(link, {
+			'datatype': 'html',
+			'data': params,
+		}, (response) => {
+
+			Form.clearErrors();
+
+			var errors = isJSON(response) ? JSON.parse(response) : null;
+
+			if (errors != null) {
+
+				$('.form-sidenav#' + target).find('.modal-close').click(function() {
+					sidenav.removeClass('open')
+					sidenav.next('div.modal-overlay').remove();
+				});
+				$('.form-sidenav#' + target).find('.modal-close').click();
+
+				alert(errors.status, errors);
+
+				return false;
+
+			}
+
+			var target = $(this).data('target');
+			var sidenav = $('#' + target);
+			var overlay = $('<div class="modal-overlay" style="z-index: 9; display: block; opacity: 0.5">');
+			sidenav.addClass('open').parent().remove('div.modal-overlay').append(overlay);
+
+
+			$('#' + target).find('form').html($(response).find('#' + target).html());
+
+			if (typeof sidenav.data('dismissible') !== 'undefined' && !sidenav.data('dismissible')) {
+				overlay.on('click', function() {
+					sidenav.removeClass('open');
+					sidenav.next('div.modal-overlay').remove();
+				});
+			}
+
+			$('.form-sidenav#' + target).find('.modal-close').click(function() {
+				sidenav.removeClass('open')
 				sidenav.next('div.modal-overlay').remove();
 			});
-		}
+
+			$('#recorrente').on('change', function() {
+
+				if ($(this).prop('checked')) {
+					$(this).parents('.input').css({
+						'border-bottom-left-radius': '0px',
+						'border-bottom-right-radius': '0px'
+					}).next('.days-of-week').slideDown(100);
+				} else {
+					$(this).parents('.input').css({
+						'border-bottom-left-radius': '24px',
+						'border-bottom-right-radius': '24px'
+					}).next('.days-of-week').slideUp(100);
+				}
+			});
+
+			App.aplicarMascaras();
+
+		});
+
 
 	})
 

@@ -102,10 +102,16 @@ namespace App\Http\Controllers\Clinica{
 		public function delete(Request $request)
 		{
 
-			$this->departamento_model->from('tb_departamento')->whereIn('id', $request->id)->delete();
+			if ($this->departamento_model->removeDepartamento($request->id)) {
+				$status  = 'success';
+				$message = 'Clínia removida com sucesso!';
+			} else {
+				$status  = 'error';
+				$message = $this->departamento_model->getErros();
+			}
 
-			$status  = 'success';
-			$message = 'Departamento removido com sucesso!';
+			$status  = $status;
+			$message = $message;
 			$url     = url()->route('clinica.departamentos.index');
 			$type    = 'send';
 

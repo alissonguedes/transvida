@@ -10,8 +10,9 @@
 @section('btn-add-route', route('clinica.pacientes.add'))
 
 @section('container')
-
 @include('clinica.pacientes.results')
-@include('clinica.agenda.form')
+@endsection
 
+@section('form-sidenav')
+@include('clinica.agendamentos.form')
 @endsection

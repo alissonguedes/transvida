@@ -23,6 +23,10 @@ class FuncionarioModel extends Model
 		$get = $this->select(
 			'id',
 			'id_funcao',
+			DB::raw('(SELECT id_empresa FROM tb_departamento_empresa WHERE
+				tb_funcionario.id_empresa_departamento = tb_departamento_empresa.id) AS id_clinica'),
+			DB::raw('(SELECT id_departamento FROM tb_departamento_empresa WHERE
+				tb_funcionario.id_empresa_departamento = tb_departamento_empresa.id) AS id_departamento'),
 			DB::raw('(SELECT funcao FROM tb_funcao WHERE id = id_funcao) AS funcao'),
 			'nome',
 			'cpf',
@@ -78,16 +82,40 @@ class FuncionarioModel extends Model
 
 	}
 
-	// public function searchFuncionarios(Request $request)
-	// {
-	//
-	// $query = $request->get('query');
-	//
-	// return $this->getFuncionarios()
-	// 	->where('nome', 'like', '%' . $query . '%')
-	// 	->paginate(isset($_GET['length']) ? $_GET['length'] : 50);
-	//
-	// }
+	public function getFuncionariosDepartamento($id_departamento)
+	{
+		$funcionario = $this->select(
+			'id_empresa_departamento',
+			DB::raw('(SELECT titulo FROM tb_departamento WHERE tb_departamento.id = (
+						SELECT id_departamento FROM tb_departamento_empresa
+						WHERE tb_departamento.id = tb_departamento_empresa.id_departamento
+						AND tb_funcionario.id_empresa_departamento = tb_departamento_empresa.id
+						AND tb_departamento_empresa.id = ' . $id_departamento . ')) AS departamento'
+			),
+			DB::raw('(SELECT id_departamento FROM tb_departamento_empresa
+						WHERE tb_departamento_empresa.id = tb_funcionario.id_empresa_departamento
+						AND tb_departamento_empresa.id = ' . $id_departamento . ') AS id_departamento'
+			),
+			DB::raw('(SELECT nome_fantasia FROM tb_empresa WHERE tb_empresa.id = (
+						SELECT id_empresa FROM tb_departamento_empresa
+						WHERE tb_departamento_empresa.id_empresa = tb_empresa.id
+						AND tb_departamento_empresa.id = ' . $id_departamento . ')) AS empresa')
+		)
+			->from('tb_funcionario')
+			->distinct(true)
+			->whereIn('tb_funcionario.id_empresa_departamento', function ($query) use ($id_departamento) {
+				$query->select('tb_departamento_empresa.id')
+					->from('tb_departamento_empresa')
+					->whereColumn('tb_departamento_empresa.id', 'tb_funcionario.id_empresa_departamento')
+					->where('tb_departamento_empresa.id', $id_departamento);
+
+			})
+			->get()
+			->first();
+
+		return $funcionario;
+
+	}
 
 	public function getEtnia()
 	{
@@ -127,18 +155,20 @@ class FuncionarioModel extends Model
 	public function cadastraFuncionario($post)
 	{
 
-		$id_empresa_departamento = $post->departamento;
+		$id_empresa              = $post->clinica;
+		$id_departamento         = $post->departamento;
+		$id_empresa_departamento = $this->select('id')->from('tb_departamento_empresa')->where('id_empresa', $id_empresa)->where('id_departamento', $id_departamento)->first()->id;
 		$id_funcao               = $post->funcao;
 		$nome                    = $post->nome;
 		$imagem                  = $this->uploadImage($post);
+		$cpf                     = $post->cpf;
+		$rg                      = $post->rg;
+		$status                  = $post->status ?? '0';
 		// $data_nascimento      = $post->data_nascimento ? convert_to_date($post->data_nascimento, 'd/m/Y', 'Y-m-d') : null;
-		$cpf = $post->cpf;
-		$rg  = $post->rg;
 		// $crm = $post->crm;
 		// $email                = $post->email;
 		// $telefone             = $post->telefone;
 		// $celular              = $post->celular;
-		$status = $post->status ?? '0';
 
 		$data = [
 			'id_empresa_departamento' => $id_empresa_departamento,
@@ -166,31 +196,35 @@ class FuncionarioModel extends Model
 	public function editaFuncionario(Request $post, $id)
 	{
 
-		$id_especialidade = $post->especialidade;
-		$nome             = $post->nome;
-		$imagem           = $this->uploadImage($post);
+		$id_empresa              = $post->clinica;
+		$id_departamento         = $post->departamento;
+		$id_empresa_departamento = $this->select('id')->from('tb_departamento_empresa')->where('id_empresa', $id_empresa)->where('id_departamento', $id_departamento)->first()->id;
+		$id_funcao               = $post->funcao;
+		$nome                    = $post->nome;
+		$imagem                  = $this->uploadImage($post);
+		$cpf                     = $post->cpf;
+		$rg                      = $post->rg;
+		$status                  = $post->status ?? '0';
 		// $data_nascimento      = $post->data_nascimento ? convert_to_date($post->data_nascimento, 'd/m/Y', 'Y-m-d') : null;
-		$cpf = $post->cpf;
-		$rg  = $post->rg;
-		$crm = $post->crm;
+		// $crm = $post->crm;
 		// $email                = $post->email;
 		// $telefone             = $post->telefone;
 		// $celular              = $post->celular;
-		$status = $post->status ?? '0';
 
 		$data = [
-			'id_especialidade' => $id_especialidade,
-			'nome'             => $nome,
+			'id_empresa_departamento' => $id_empresa_departamento,
+			'id_funcao'               => $id_funcao,
+			'nome'                    => $nome,
 			// 'imagem'               => $imagem,
 			// 'sexo'                 => $sexo,
 			// 'data_nascimento'      => $data_nascimento,
-			'cpf'              => $cpf,
-			'rg'               => $rg,
-			'crm'              => $crm,
+			'cpf'                     => $cpf,
+			'rg'                      => $rg,
+			// 'crm'       => $crm,
 			// 'email'                => $email,
 			// 'telefone'             => $telefone,
 			// 'celular'              => $celular,
-			'status'           => $status,
+			'status'                  => $status,
 		];
 
 		if (!is_null($imagem)) {

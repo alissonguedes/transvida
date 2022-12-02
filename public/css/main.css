@@ -6,6 +6,13 @@ strong {
 	font-weight: 900;
 }
 
+small {
+	line-height: 1.2;
+	display: block;
+	margin-top: 5px;
+	font-size: .75rem;
+}
+
 .btn:focus,
 .btn-large:focus,
 .btn-small:focus,
@@ -17,6 +24,12 @@ strong {
 .border-lr {
 	border-left: 1px solid #ebebeb !important;
 	border-right: 1px solid #ebebeb !important;
+}
+
+/** Perfect Scrollbar */
+.ps__rail-y,
+.ps__rail-x {
+	z-index: 999;
 }
 
 /** Select **/
@@ -39,6 +52,43 @@ strong {
 	cursor: default;
 	opacity: 0;
 } */
+
+/** Alerts **/
+#alerts {
+	width: inherit !important;
+	overflow: hidden;
+}
+
+#alerts .modal-content::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 10px;
+}
+
+#alerts.error .modal-content::before {
+	background-color: var(--red-lighten-3);
+}
+
+#alerts.warn .modal-content::before {
+	background-color: var(--orange-lighten-3);
+}
+
+#alerts.success .modal-content::before {
+	background-color: var(--green-lighten-3);
+}
+
+#alerts.info .modal-content::before {
+	background-color: var(--white);
+}
+
+#alerts .modal-footer {
+	height: 70px;
+	padding: 10px 20px;
+	border-top: 1px solid var(--grey-lighten-5);
+}
 
 /** Toast **/
 
@@ -116,7 +166,7 @@ strong {
 	color: #fff;
 }
 
-.sidenav li a span {
+.sidenav li a span:not(.menu-title) {
 	font-size: 1.4rem;
 	line-height: inherit;
 	display: block;
@@ -131,6 +181,10 @@ strong {
 
 .sidenav li .collapsible-body a span {
 	font-size: 1rem;
+}
+
+.sidenav-main.nav-collapsed .sidenav li.menu-description {
+	display: none;
 }
 
 @media only screen and (min-width: 993px) {
@@ -206,7 +260,7 @@ strong {
 [type=checkbox].filled-in:checked+span:not(.lever):before {
 	top: -1px;
 	left: 1px;
-	width: 5px;
+	width: 8px;
 	height: 13px;
 }
 
@@ -280,20 +334,90 @@ tr.disabled td {
 	right: 50px;
 }
 
+
+.dataTables_wrapper [type=checkbox].filled-in:checked+span:not(.lever):before {
+	width: 5px;
+}
+
+/*
+table.dataTable-fixed thead {
+	position: fixed;
+	background: #fff;
+	z-index: 9;
+}
+
+table.dataTable-fixed thead tr {
+	display: table-row;
+}
+
+table.dataTable-fixed tbody {
+	top: 65px;
+	position: relative;
+} */
+div.input {
+	padding: 5px;
+	min-height: 45px;
+	vertical-align: middle;
+	display: flex;
+	align-items: center;
+	place-content: space-between;
+	border-radius: 24px;
+	position: relative;
+}
+
+div.input label {
+	color: #fff;
+	font-size: 1rem
+}
+
+.days-of-week {
+	display: none;
+	padding: 0 15px;
+	height: auto;
+	margin-bottom: 1rem;
+}
+
+.days-of-week {
+	border-bottom-left-radius: 24px;
+	border-bottom-right-radius: 24px;
+}
+
+.days-of-week [type=checkbox]+span:not(.lever) {
+	line-height: 20px;
+	padding-left: 25px;
+}
+
+.days-of-week .days {
+	border-radius: 10px;
+	margin-bottom: 0.5rem;
+}
+
 .input-field>label {
 	-webkit-transition: color var(--webkit-transition) ease-out, -webkit-transform var(--webkit-transition) ease-out;
 	transition: color var(--webkit-transition) ease-out, -webkit-transform var(--webkit-transition) ease-out;
 	transition: transform var(--webkit-transition) ease-out, color var(--webkit-transition) ease-out;
 	transition: transform var(--webkit-transition) ease-out, color var(--webkit-transition) ease-out, -webkit-transform var(--webkit-transition) ease-out;
+	/* display: flex;
+	align-items: center;
+	place-content: start; */
+}
+
+.input-field>label.active {
+	font-size: 15px;
+}
+
+.input-field label .info {
+	font-size: 14px;
+	margin-left: 5px;
 }
 
 .input-label {
-	padding: 15px 0;
-	position: relative;
-	top: 0px;
+	border-bottom: 1px solid #d9d9d9;
+	display: block;
+	margin-top: 15px;
 	height: 3rem;
-	line-height: 1.15;
-	color: var(--grey-lighten-2)
+	line-height: 3rem;
+	color: inherit;
 }
 
 input:not([type]),
@@ -382,7 +506,7 @@ textarea.materialize-textarea:focus:not([readonly]),
 .chips.focus:not([readonly]),
 .input-field:not(.browser-default) .ql-container:not([readonly]) {
 	box-shadow: none !important;
-	background-image: linear-gradient(var(--blue), var(--blue)), linear-gradient(#d9d9d9, #d9d9d9);
+	/* background-image: linear-gradient(var(--blue), var(--blue)), linear-gradient(#d9d9d9, #d9d9d9); */
 	background-size: 100% 2px, 100% 1px;
 	outline: 0 none;
 	transition: background ease-in-out var(--webkit-transition);
@@ -390,33 +514,19 @@ textarea.materialize-textarea:focus:not([readonly]),
 
 
 input:not([type]):disabled,
-input:not([type])[readonly="readonly"],
 input[type=text]:not(.browser-default):disabled,
-input[type=text]:not(.browser-default)[readonly="readonly"],
 input[type=password]:not(.browser-default):disabled,
-input[type=password]:not(.browser-default)[readonly="readonly"],
 input[type=email]:not(.browser-default):disabled,
-input[type=email]:not(.browser-default)[readonly="readonly"],
 input[type=url]:not(.browser-default):disabled,
-input[type=url]:not(.browser-default)[readonly="readonly"],
 input[type=time]:not(.browser-default):disabled,
-input[type=time]:not(.browser-default)[readonly="readonly"],
 input[type=date]:not(.browser-default):disabled,
-input[type=date]:not(.browser-default)[readonly="readonly"],
 input[type=datetime]:not(.browser-default):disabled,
-input[type=datetime]:not(.browser-default)[readonly="readonly"],
 input[type=datetime-local]:not(.browser-default):disabled,
-input[type=datetime-local]:not(.browser-default)[readonly="readonly"],
 input[type=tel]:not(.browser-default):disabled,
-input[type=tel]:not(.browser-default)[readonly="readonly"],
 input[type=number]:not(.browser-default):disabled,
-input[type=number]:not(.browser-default)[readonly="readonly"],
 input[type=search]:not(.browser-default):disabled,
-input[type=search]:not(.browser-default)[readonly="readonly"],
 textarea.materialize-textarea:disabled,
-textarea.materialize-textarea[readonly="readonly"],
-.input-field:not(.browser-default) .ql-container:disabled,
-.input-field:not(.browser-default) .ql-container[readonly="readonly"] {
+.input-field:not(.browser-default) .ql-container:disabled {
 	/* color: rgba(255, 255, 255, 0.5) !important; */
 	color: #666 !important;
 	cursor: not-allowed;
@@ -424,7 +534,26 @@ textarea.materialize-textarea[readonly="readonly"],
 	background-color: rgba(0, 0, 0, 0);
 	background-position: center bottom, center calc(100% - 0px);
 	background-repeat: repeat-x;
-	background-image: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0.2) 1px, transparent 1px, transparent 1px), repeating-linear-gradient(to right, #fff 0, #fff 1px, rgba(0, 0, 0, 0.2) 1px, rgba(0, 0, 0, 0.2) 3px)
+	background-image: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0.2) 1px, transparent 1px, transparent 1px), repeating-linear-gradient(to right, #fff 0, #fff 1px, rgba(0, 0, 0, 0.2) 1px, rgba(0, 0, 0, 0.2) 3px);
+}
+
+input:not([type])[readonly],
+input[type=text][readonly]:not(.browser-default),
+input[type=password][readonly]:not(.browser-default),
+input[type=email][readonly]:not(.browser-default),
+input[type=url][readonly]:not(.browser-default),
+input[type=time][readonly]:not(.browser-default),
+input[type=date][readonly]:not(.browser-default),
+input[type=datetime][readonly]:not(.browser-default),
+input[type=datetime-local][readonly]:not(.browser-default),
+input[type=tel][readonly]:not(.browser-default),
+input[type=number][readonly]:not(.browser-default),
+input[type=search][readonly]:not(.browser-default),
+textarea.materialize-textarea[readonly],
+.input-field:not(.browser-default)[readonly] .ql-container[readonly="readonly"] {
+	/* background: transparent !important; */
+	color: inherit !important;
+	cursor: text;
 }
 
 input:not([type]):focus:not([readonly])+label,
@@ -562,6 +691,7 @@ input.no-border,
 	align-items: flex-start;
 	line-height: normal;
 	margin-top: 3px;
+	line-height: 2;
 }
 
 .input-field .prefix~.error {
@@ -570,7 +700,7 @@ input.no-border,
 }
 
 .input-field .error i {
-	line-height: normal;
+	line-height: 1.5;
 }
 
 .input-field.error input,
@@ -704,11 +834,11 @@ input.no-border,
 .input-field.bordered label.active::before {
 	content: '';
 	width: 100%;
-	height: 3px;
+	height: 18px;
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 50%;
+	top: 0px;
 	bottom: 50%;
 	z-index: -1;
 	padding: 0 80px;

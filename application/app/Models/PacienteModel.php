@@ -104,6 +104,14 @@ class PacienteModel extends Model
 
 	}
 
+	public function isBlocked($id)
+	{
+		return $this->getPacientes()
+			->where('id', $id)
+			->where('status', '0')
+			->first() ? true : false;
+	}
+
 	// public function searchPacientes(Request $request)
 	// {
 	//

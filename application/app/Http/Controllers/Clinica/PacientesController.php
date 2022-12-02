@@ -45,6 +45,29 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
+		public function agendar(Request $request, $id = null)
+		{
+
+			if ($this->paciente_model->isBlocked($request->id)) {
+
+				$status  = 'warn';
+				$title   = 'Paciente inativo!';
+				$message = 'Não é possível realizar o agendamento.';
+
+				return response()->json(['status' => $status, 'title' => $title, 'message' => $message]);
+
+			}
+
+			$dados['row']          = null;
+			$dados['paciente']     = $this->paciente_model->getPacienteById($request->id);
+			$dados['acomodacoes']  = $this->paciente_model->getAcomodacao();
+			$dados['etnias']       = $this->paciente_model->getEtnia();
+			$dados['convenios']    = $this->convenio_model->getConvenio();
+			$dados['estado_civil'] = $this->estadoCivil_model->getEstadoCivil();
+			return view('clinica.agendamentos.form', $dados);
+
+		}
+
 		public function create(Request $request)
 		{
 

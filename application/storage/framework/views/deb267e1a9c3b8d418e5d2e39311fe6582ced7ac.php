@@ -1,7 +1,7 @@
 <?php $__env->startSection('title', 'Departamentos'); ?>
 
 <?php $__env->startSection('search'); ?>
-<div class="input-field search bordered">
+<div class="input-field search bordered border-round z-depth-1">
 	<label for="">Pesquisar departamentos</label>
 	<input type="search" id="search-on-page" class="dataTable_search">
 </div>
@@ -9,7 +9,7 @@
 
 <?php $__env->startSection('btn-add-title','Adicionar departamento'); ?>
 <?php $__env->startSection('btn-add'); ?>
-<button class="modal-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-link="<?php echo e(route('clinica.departamentos.add')); ?>" data-target="modal_departamento" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-href="<?php echo $__env->yieldContent('btn-add-route'); ?>">
+<button class="modal-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-link="<?php echo e(route('clinica.departamentos.add')); ?>" data-target="modal_departamento" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-href="<?php echo $__env->yieldContent('btn-add-route'); ?>">
 	<i class="material-icons bolder">add</i>
 </button>
 <?php $__env->stopSection(); ?>

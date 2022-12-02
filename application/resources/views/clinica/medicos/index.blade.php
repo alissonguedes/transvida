@@ -3,7 +3,7 @@
 @section('title', 'Medicos')
 
 @section('search')
-<div class="input-field search bordered">
+<div class="input-field search bordered z-depth-1">
 	<label for="">Pesquisar medicos</label>
 	<input type="search" id="search-on-page" class="dataTable_search">
 </div>

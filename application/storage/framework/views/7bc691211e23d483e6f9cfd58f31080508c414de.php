@@ -72,11 +72,11 @@
 				<div class="col s12">
 					<div class="input-field">
 						<label for="departamento" class="active">Departamento</label>
-						<select name="departamento" id="departamento" disabled="disabled">
+						<select name="departamento" id="departamento" <?php if(empty($row)): ?> disabled="disabled" <?php endif; ?>>
 							<option value="" disabled selected>Informe o departamento</option>
 							<?php if(isset($departamentos)): ?>
 								<?php $__currentLoopData = $departamentos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $departamento): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<option value="<?php echo e($departamento->id); ?>" <?php echo e(isset($row) && $departamento->id==$row->id_funcao ? 'selected=selected' : null); ?>><?php echo e($departamento->titulo); ?></option>
+									<option value="<?php echo e($departamento->id); ?>" <?php echo e(isset($row) && $departamento->id==$row->id_departamento ? 'selected=selected' : null); ?>><?php echo e($departamento->titulo); ?></option>
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							<?php endif; ?>
 						</select>

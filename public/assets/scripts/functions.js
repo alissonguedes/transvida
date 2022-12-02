@@ -691,13 +691,11 @@ var App = {
 			var $val = typeof $(this).attr('data-value') !== 'undefined' && $(this).attr('data-value') != null ? $(this).attr('data-value') : '0,00';
 			var $class = typeof $(this).attr('data-align') !== 'undefined' && $(this).attr('data-align') != '' ? $(this).attr('data-align') : 'right';
 
-			$(this).val($val);
+			$(this).val($val).parents('.input-field').find('label').addClass('active');
 
 			var input = this;
-			//
-			//          $(window).load(function(e){
+
 			MascaraUtils.mascara(input, MascaraUtils.DECIMAL);
-			//          });
 
 			$(this).on('keydown', function(e) {
 
@@ -758,7 +756,7 @@ var App = {
 			var $val = typeof $(this).attr('data-value') !== 'undefined' && $(this).attr('data-value') != null ? $(this).attr('data-value') : '';
 			var $class = typeof $(this).attr('data-align') !== 'undefined' && $(this).attr('data-align') != '' ? $(this).attr('data-align') : 'right';
 
-			$(this).val($val);
+			$(this).val($val).parents('.input-field').find('label').addClass('active');
 
 			var input = this;
 			MascaraUtils.mascara(input, MascaraUtils.CRM);
@@ -821,6 +819,11 @@ var App = {
 
 			var input = this;
 			var placeholder = typeof $(this).attr('placeholder') !== 'undefined' ? $(this).attr('placeholder') : 'dd/mm/aaaa';
+			var $val = typeof $(this).attr('data-value') !== 'undefined' && $(this).attr('data-value') != null ? $(this).attr('data-value') : '';
+			var $class = typeof $(this).attr('data-align') !== 'undefined' && $(this).attr('data-align') != '' ? $(this).attr('data-align') : 'right';
+			var maxlength = 10;
+
+			$(this).val($val).parents('.input-field').find('label').addClass('active');
 
 			// insere o placMascaraUtils.mascara(input, MascaraUtils.INTERVAL_TIME);
 			$(this).keyup(function() {
@@ -839,96 +842,122 @@ var App = {
 			var $maxDate = typeof $(this).data('max-date') !== 'undefined' ? $(this).data('max-date').split('/') : null;
 			var $yearRange = $minDate != null ? [$minDate[2], curYear + 100] : $maxDate != null ? [1900, curYear - 0] : [curYear - 100, curYear + 100];
 
-			$minDate = $minDate != null ? new Date($minDate[2], $minDate[1], $minDate[0] - 30) : null;
+			$minDate = $minDate != null ? new Date($minDate[2], $minDate[1], $minDate[0] - 31) : null;
 			$maxDate = $maxDate != null ? new Date($maxDate[2], $maxDate[1], $maxDate[0] - 31) : null;
 			$fieldValue = $fieldValue != null ? (new Date($fieldValue[2], $fieldValue[1], $fieldValue[0] - 31)) : null;
 
 			$(this).on('keyup', function() {
-				MascaraUtils.mascara(this, MascaraUtils.DATA);
-			}).on('keypress', function() {
-				MascaraUtils.mascara(this, MascaraUtils.DATA);
-			}).attr('maxlength', 10).datepicker({
-				format: 'dd/mm/yyyy',
-				startView: 1,
-				autoClose: false,
-				setDefaultDate: true,
-				defaultDate: $fieldValue,
-				minDate: $minDate, // (new Date(curYear, curMonth)),
-				maxDate: $maxDate, // (new Date(curYear, curMonth, curDate - 30)),
-				yearRange: $yearRange,
-				i18n: {
-					months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], // Names of months for drop-down and formatting
-					monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], // For formatting
-					weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], // For formatting
-					weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], // For formatting
-					weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], // Column headings for days starting at Sunday
-					cancel: 'Cancelar',
-				},
-				showClearBtn: true
-			});
+					MascaraUtils.mascara(this, MascaraUtils.DATA);
+				}).on('keypress', function() {
+					MascaraUtils.mascara(this, MascaraUtils.DATA);
+				}).attr('maxlength', (typeof $(this).attr('maxlength') !== 'undefined' ? $(this).attr('maxlength') : maxlength)).attr('placeholder', placeholder)
+				.addClass('text-' + $class).focus(function() {
+					if ($(this).val().length == 0 || $(this).val() == 0)
+						$(this).val('');
+				})
+				.datepicker({
+					format: 'dd/mm/yyyy',
+					startView: 1,
+					autoClose: false,
+					setDefaultDate: true,
+					defaultDate: $fieldValue,
+					minDate: $minDate, // (new Date(curYear, curMonth)),
+					maxDate: $maxDate, // (new Date(curYear, curMonth, curDate - 30)),
+					yearRange: $yearRange,
+					i18n: {
+						months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], // Names of months for drop-down and formatting
+						monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], // For formatting
+						weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], // For formatting
+						weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], // For formatting
+						weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], // Column headings for days starting at Sunday
+						cancel: 'Cancelar',
+					},
+					showClearBtn: true
+				});
 
 			if ($(this).val() !== '')
 				MascaraUtils.mascara(this, MascaraUtils.DATA);
 
 		});
 
-		is_time.each(function() {
+		is_time.each(function(e) {
 
-			var mask = null;
+			var exp = /^[0-9]{2}\:[0-9]{2}$/;
+			// var exp = /^(([0-1][0-9])|([2][0-3]))\:([1-5][0-9])$/;
+			var $val = typeof $(this).attr('data-value') !== 'undefined' && $(this).attr('data-value') != null ? $(this).attr('data-value') : '00:00';
+			var $class = typeof $(this).attr('data-align') !== 'undefined' && $(this).attr('data-align') != '' ? $(this).attr('data-align') : 'right';
+
+			$(this).val($val).parents('.input-field').find('label').addClass('active');
 
 			var input = this;
 
-			if ($(this).hasClass('hora'))
-				mask = MascaraUtils.HORA;
-			else if ($(this).hasClass('minuto'))
-				mask = MascaraUtils.MINUTO;
-			else if ($(this).hasClass('segundo'))
-				mask = MascaraUtils.SEGUNDO;
-			else
-				mask = MascaraUtils.TIME;
+			MascaraUtils.mascara(input, MascaraUtils.TIME);
 
-			//          $(window).load(function(e){
-			MascaraUtils.mascara(input, mask);
-			//          });
+			$(this).on('keydown', function(e) {
 
-			$(this).on('focus', function() {
 
-				if ($(this).val() == '')
-					$('00' + $(this).val()).slice(-1);
+					if ($(this).val() == '' || $(this).val() == '00:00' || $(this).val() == '0') {
 
-				MascaraUtils.mascara(this, mask);
+						if (e.keyCode == 8) {
+							$(this).val('00:00');
+							e.preventDefault();
+							return false;
+						}
 
-				$(this).parent().addClass('focus');
+					}
 
-			}).on('blur', function() {
-				$(this).parent().removeClass('focus');
-			});
+					MascaraUtils.mascara(this, MascaraUtils.TIME);
 
-			$(this).on('keyup', function(e) {
+					if (MascaraUtils.Numerico(e.key)) {
 
-				MascaraUtils.mascara(this, mask);
+						var valor = parseFloat($(this).val().replace(':', '.'));
 
-			}).on('keypress', function() {
+						if (exp.test($(this).val())) {
 
-				MascaraUtils.mascara(this, mask);
+							if (valor < 3) {
+								$(this).val(($(this).val()).slice(-4));
+							}
 
-			}).attr('maxlength', 3).attr('placeholder', '00').css({
-				'color': '#000'
-			}).on('keydown', function(e) {
-				if (e.keyCode == 13 && $(this).val() != '') {
-					e.preventDefault();
-					$(this).blur();
-					$(this).next().next('input[type="text"]').focus();
-				}
-			});
+						}
 
-			if ($(this).val() > $(this).attr('maxlength') || $(this).val() == '') {
-				$(this).val('00');
-				$('00' + $(this).val()).slice(-1);
-			}
+					}
 
-			if ($(this).val() !== '')
-				MascaraUtils.mascara(this, mask);
+
+				}).on('keyup', function(e) {
+
+					if ($(this).val() == '' || $(this).val() == '00:00' || $(this).val() == '0')
+						if (e.keyCode == 8) {
+							$(this).val('00:00');
+							e.preventDefault();
+							return false;
+						}
+
+					var minuto = $(this).val().split(':').splice(1);
+					var exp_minuto = /^[0-5][0-9]$/;
+
+					$(this).parents('.input-field').removeClass('.error').find('.error').remove();
+
+					if (!exp_minuto.test(minuto)) {
+
+						$(this).parents('.input-field').addClass('.error').append($('<div/>', {
+							'class': 'error',
+							'html': 'Formato inválido <i class="material-icons-outlined sufix">error</i>'
+						}))
+
+					}
+
+
+				}).attr('maxlength', (typeof $(this).attr('maxlength') !== 'undefined' ? $(this).attr('maxlength') : 5)).attr('placeholder', '00:00').addClass('text-' + $class).focus(function() {
+					if ($(this).val().length == 0 || $(this).val() == 0)
+						$(this).val('00:00');
+				})
+				.timepicker({
+					'twelveHour': false
+				})
+				.on('blur', function() {
+					if ($(this).val().length == 0 || $(this).val() == 0)
+						$(this).val('00:00');
+				});
 
 		});
 
@@ -1162,12 +1191,38 @@ var MascaraUtils = {
 		v = v.replace(/(\d{2})(\d)/, '$1/$2');
 		return v;
 	},
+
+	// Time: function(v) {
+	// 	v = v.replace(/\D/g, '');
+	// 	v = v.replace(/(\d{2})(\d)/, '$1:$2');
+	// 	v = v.replace(/(\d{2})(\d)/, '$1:$2');
+	// 	return v;
+	// },
+
 	Time: function(v) {
-		v = v.replace(/\D/g, '');
-		v = v.replace(/(\d{2})(\d)/, '$1:$2');
-		v = v.replace(/(\d{2})(\d)/, '$1:$2');
-		return v;
+
+		var splitText = v.split('');
+		var revertText = splitText.reverse();
+		var v2 = revertText.join('');
+		var v2 = v2.replace(/\D/g, '');
+
+		if (v2.length <= 3) {
+			v2 = v2.replace(/(\d{2})(\d)/, '$1:$20');
+		}
+
+		for (var i = 0; i < v2.length; i++) {
+			v2 = v2.replace(/(\d{2})(\d)/, '$1:$2');
+		}
+
+		v2 = v2.split('');
+		revertText = v2.reverse();
+		v2 = revertText.join('');
+
+		return v2;
+
+
 	},
+
 	Hora: function(v) {
 		var exp = /^([0-1][0-9])|([2][0-3])$/;
 		var hora = true;
@@ -1177,6 +1232,7 @@ var MascaraUtils = {
 		}
 		return ('00' + v).slice(-2);
 	},
+
 	Minuto: function(v) {
 		var exp = /^([0-5][0-9])$/;
 		var min = true;
@@ -1382,5 +1438,33 @@ function create_element(id) {
 		})
 
 	});
+
+}
+
+function isJSON(str) {
+
+	if (typeof str !== 'string') {
+		return false;
+	}
+
+	try {
+		return (JSON.parse(str) && !!str);
+	} catch {
+		return false;
+	}
+
+}
+
+function alert(type = 'error', param) {
+
+	var m = $('#alerts');
+	$('#alerts').addClass(type).modal({
+		dismissible: false,
+		startingTop: '35%',
+		endingTop: '35%'
+	});
+	$('#alerts').find('.modal-content').find('.info').html(param.message);
+	$('#alerts').find('.modal-content').find('.title').html(param.title);
+	m.modal('open');
 
 }

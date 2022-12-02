@@ -1,9 +1,9 @@
 @extends('clinica.layouts.index')
 
-@section('title', 'Funcionarios')
+@section('title', 'Funcionários')
 
 @section('search')
-<div class="input-field search bordered">
+<div class="input-field search bordered border-round z-depth-1">
 	<label for="">Pesquisar funcionários</label>
 	<input type="search" id="search-on-page" class="dataTable_search">
 </div>
@@ -11,7 +11,7 @@
 
 @section('btn-add-title','Adicionar funcionário')
 @section('btn-add')
-<button class="modal-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-link="{{ route('clinica.funcionarios.add') }}" data-target="modal_funcionario" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')">
+<button class="modal-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-link="{{ route('clinica.funcionarios.add') }}" data-target="modal_funcionario" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')">
 	<i class="material-icons bolder">add</i>
 </button>
 @endsection

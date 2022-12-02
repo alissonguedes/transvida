@@ -89,6 +89,10 @@ var Form = {
 			},
 			beforeSend: (e) => {
 
+				// M.Toast.dismissAll();
+
+				$('.toast-action').click();
+
 				Form.__button__(label, true);
 
 				$('.editor').each(function() {
@@ -620,15 +624,20 @@ var Form = {
 
 	},
 
-	__button__: (label, block) => {
+	__button__: (label, block, button) => {
 
+		var button = typeof button !== 'undefined' && button != null ? button : _element.find(':button:submit');
 		var spinner = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
 
+		console.log('Buton: ')
+		console.log(button)
+		console.log('Labe: ' + label);
+
 		if (block) {
-			_element.find(':button:submit').attr('disabled', true)
+			button.attr('disabled', true)
 				.find('i').html(spinner);
 		} else {
-			_element.find(':button:submit').attr('disabled', false)
+			button.attr('disabled', false)
 				.find('i').html(label);
 		}
 

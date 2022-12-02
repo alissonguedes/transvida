@@ -34,6 +34,20 @@
 
 	</div>
 
+	<div class="row" style="position: fixed; z-index: 999999; top: 0;">
+		<div class="col s4">
+			<div id="alerts" class="modal">
+				<div class="modal-content">
+					<h5 class="title"></h5>
+					<p class="info"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn blue lighten-1 modal-close">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	@section('scripts')
 	@include('scripts')
 	@show

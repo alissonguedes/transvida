@@ -93,7 +93,7 @@
 	display: block;
 	position: relative;
 	overflow: hidden;
-	height: 60px;
+	height: 100px;
 }
 
 #input-login,
@@ -466,4 +466,20 @@
 .form-sidenav.open {
 	transform: translateX(0%);
 	animation-delay: 2000ms;
+}
+
+.form-sidenav.card {
+	width: 100%;
+}
+
+.form-sidenav.card .card-content .scroller {
+	height: calc(100vh - 135px);
+	overflow: auto;
+	padding: 15px 30px;
+}
+
+.form-sidenav.card .card-action {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }

@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Clinica{
 
+	use App\Models\AgendamentoModel;
 	use App\Models\ConvenioModel;
 	use App\Models\DepartamentoModel;
-	use App\Models\EmpresaModel;
 	use App\Models\EstadoCivilModel;
 	use Illuminate\Http\Request;
 	use Illuminate\Validation\Rule;
 
-	class EmpresasController extends Controller
+	class AgendamentosController extends Controller
 	{
 
 		public function __construct()
 		{
 
 			$this->convenio_model     = new ConvenioModel();
-			$this->empresa_model      = new EmpresaModel();
+			$this->agendamento_model  = new AgendamentoModel();
 			$this->departamento_model = new DepartamentoModel();
 			$this->estadoCivil_model  = new EstadoCivilModel();
 
@@ -25,30 +25,30 @@ namespace App\Http\Controllers\Clinica{
 		public function index(Request $request)
 		{
 
-			// Pesquisar empresas
+			// Pesquisar agendamentos
 			if ($request->ajax()) {
-				$dados['paginate'] = $this->empresa_model->getEmpresas($request);
-				return response(view('clinica.empresas.list', $dados), 200);
+				$dados['paginate'] = $this->agendamento_model->getAgendamentos($request);
+				return response(view('clinica.agendamentos.list', $dados), 200);
 			}
 
-			return response(view('clinica.empresas.index'), 200);
+			return response(view('clinica.agendamentos.index'), 200);
 
 		}
 
-		public function form(Request $request, $id = null)
+		public function form(Request $request, $id = null, $paciente = null)
 		{
 
-			$dados['row']           = $this->empresa_model->getEmpresaById($request->id);
+			$dados['row']           = $this->agendamento_model->getAgendamentoById($request->id);
 			$dados['departamentos'] = $this->departamento_model->getDepartamentos();
-			return view('clinica.empresas.form', $dados);
+			return view('clinica.agendamentos.form', $dados);
 
 		}
 
 		public function getDepartamentos(Request $request)
 		{
 
-			$dados['select'] = $this->empresa_model->getDepartamentos($request->clinica);
-			return view('clinica.empresas.select_departamentos', $dados);
+			$dados['select'] = $this->agendamento_model->getDepartamentos($request->clinica);
+			return view('clinica.agendamentos.select_departamentos', $dados);
 
 		}
 
@@ -61,11 +61,11 @@ namespace App\Http\Controllers\Clinica{
 				'cnpj'               => [
 					'required',
 					'regex:/[\d]{2}\.[\d]{3}\.[\d]{3}\/[\d]{4}\-[\d]{2}/i',
-					Rule::unique('tb_empresa', 'cnpj')->ignore($request->post('id'), 'id'),
+					Rule::unique('tb_agendamento', 'cnpj')->ignore($request->post('id'), 'id'),
 				],
 				'inscricao_estadual' => [
 					'nullable',
-					Rule::unique('tb_empresa', 'inscricao_estadual')->ignore($request->post('id'), 'id'),
+					Rule::unique('tb_agendamento', 'inscricao_estadual')->ignore($request->post('id'), 'id'),
 				],
 				'email'              => [
 					'nullable',
@@ -93,7 +93,7 @@ namespace App\Http\Controllers\Clinica{
 
 			$this->validateForm($request);
 
-			$id = $this->empresa_model->cadastraEmpresa($request);
+			$id = $this->agendamento_model->cadastraAgendamento($request);
 
 			$status = 'success';
 			$url    = url()->route('clinica.clinicas.index');
@@ -101,7 +101,7 @@ namespace App\Http\Controllers\Clinica{
 
 			return response()->json([
 				'status'  => $status,
-				'message' => 'Empresa cadastrada realizado com sucesso!',
+				'message' => 'Agendamento cadastrada realizado com sucesso!',
 				'type'    => $type,
 				'url'     => $url,
 			]);
@@ -115,13 +115,13 @@ namespace App\Http\Controllers\Clinica{
 
 			$id = $request->id;
 
-			if ($this->empresa_model->editaEmpresa($request, $id)) {
+			if ($this->agendamento_model->editaAgendamento($request, $id)) {
 				$status  = 'success';
 				$message = 'Cadastro alterado com sucesso!';
 			} else {
 				$status = 'error';
 				// $message = 'Não foi possível atualizar os dados.';
-				$message = $this->empresa_model->getErros();
+				$message = $this->agendamento_model->getErros();
 			}
 
 			$data['status']      = $status;
@@ -139,9 +139,9 @@ namespace App\Http\Controllers\Clinica{
 		{
 
 			$status  = 'error';
-			$message = 'Não foi possível atualizar a empresa.';
+			$message = 'Não foi possível atualizar a agendamento.';
 
-			if ($this->empresa_model->atualizaEmpresa($request->id, [$request->field => $request->value])) {
+			if ($this->agendamento_model->atualizaAgendamento($request->id, [$request->field => $request->value])) {
 
 				$status  = 'success';
 				$message = 'Clínica atualizada com sucesso!';
@@ -162,12 +162,12 @@ namespace App\Http\Controllers\Clinica{
 		public function delete(Request $request)
 		{
 
-			if ($this->empresa_model->removeEmpresa($request->id)) {
+			if ($this->agendamento_model->removeAgendamento($request->id)) {
 				$status  = 'success';
 				$message = 'Clínia removida com sucesso!';
 			} else {
 				$status  = 'error';
-				$message = $this->empresa_model->getErros();
+				$message = $this->agendamento_model->getErros();
 			}
 
 			$data['status']      = $status;

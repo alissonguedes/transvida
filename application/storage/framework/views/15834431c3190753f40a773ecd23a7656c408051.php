@@ -2,16 +2,16 @@
 
 <?php $__env->startSection('search'); ?>
 <div class="input-field search bordered border-round z-depth-1">
-	<label for="">Pesquisar clinicas</label>
+	<label for="">Pesquisar agendamentos</label>
 	<input type="search" id="search-on-page" class="dataTable_search">
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('btn-add-title','Adicionar clinica'); ?>
+<?php $__env->startSection('btn-add-title','Agendar paciente'); ?>
 <?php $__env->startSection('btn-add'); ?>
-<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-href="<?php echo e(route('clinica.clinicas.add')); ?>" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-position="left">
+<a href="#" data-target="agendamento" data-link="<?php echo e(route('clinica.agendamentos.add')); ?>" class="form-sidenav-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-tooltip="Agendar">
 	<i class="material-icons bolder">add</i>
-</button>
+</a>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('container'); ?>
@@ -49,4 +49,8 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('clinica.layouts.index', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/empresas/index.blade.php ENDPATH**/ ?>
+<?php $__env->startSection('form-sidenav'); ?>
+<?php echo $__env->make('clinica.agendamentos.form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('clinica.layouts.index', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/agendamentos/index.blade.php ENDPATH**/ ?>

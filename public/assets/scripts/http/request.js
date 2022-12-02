@@ -16,24 +16,19 @@ var Request = {
 
 		$('body').find(ln).on('click', function(e) {
 
+			var icon = $(this).find('.material-icons-outlined,.material-icons');
+			var icon = typeof icon !== 'undefined' && icon != '' ? icon.text() : null;
 			var link = $(this).data('href') || $(this).attr('href');
 			var target = $(this).attr('target') || false;
 
 			e.preventDefault();
+			Form.__button__(icon, true, $(this));
 
 			if (Request.isLink(link) && !target) {
 
-
-				// if (window.location.origin + link !== window.location.href) {
 				if (link !== window.location.href) {
 					$('.progress').show();
-					// animate($('#main>.container'), 'fadeOut slower', function() {
-					// 	$(this).hide();
-					// });
-					// setTimeout(function() {
 					Http.goTo(link);
-					// }, 500);
-
 				}
 
 			} else {
@@ -47,6 +42,8 @@ var Request = {
 						window.open(link, target);
 				}
 			}
+
+			Form.__button__(icon, false, $(this));
 
 		});
 

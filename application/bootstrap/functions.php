@@ -316,10 +316,16 @@ if (!function_exists('getMenus')) {
 				$ul = '<ul' . $params . '>';
 
 				foreach ($items as $item) {
-					//  $table = 'tb_' . $item->item_type . '_descricao';
-					$table = 'tb_acl_menu_item_descricao';
 
-					$label = $menu_model->from($table)
+					if ($item->divider) {
+						$ul .= '<li class="divider" style="margin: 10px 0;"></li>';
+					}
+
+					if ($item->item_type) {
+						$ul .= '<li class="menu-description"><h6 style="padding-left: 25px; color: var(--grey-accent-4); font-size: 10px; line-height: 3; text-transform: uppercase; font-weight: bold;">' . $item->item_type . '</h6></li>';
+					}
+
+					$label = $menu_model->from('tb_acl_menu_item_descricao')
 						->where('id_item', $item->id)
 						->where('id_idioma', function ($query) {
 							$query->select('id')
@@ -364,7 +370,7 @@ if (!function_exists('getMenus')) {
 					$ul .= '<a ' . (($submenus->count() > 0) ? 'class="collapsible-header waves-effect waves-cyan" href="javascript:void(0);" tabindex="0"' : 'href="' . (route($route->name) ?? null) . '"') . '>';
 					$ul .= $item->icon ? (preg_match('[^fa\-]', $item->icon) ? '<span class="fa-icon fa-solid ' . $item->icon . '"></span>' : '<span class="material-symbols-outlined">' . $item->icon . '</span>') : '<span class="material-symbols-outlined">radio_button_unchecked</span>';
 
-					$ul .= $label->titulo;
+					$ul .= '<span class="menu-title">' . $label->titulo . '</span>';
 					$ul .= '</a>';
 
 					if ($submenus->count() > 0) {

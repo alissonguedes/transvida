@@ -32,10 +32,6 @@ namespace App\Http\Controllers\Clinica{
 				return response(view('clinica.funcionarios.list', $dados), 200);
 			}
 
-			// $dados['funcionarios'] = $this->funcionario_model->getFuncionarios();
-			// $dados['funcoes']      = $this->funcoes_model->getFuncoes();
-			// $dados['clinicas']     = $this->empresa_model->getEmpresas();
-
 			return view('clinica.funcionarios.index');
 
 		}

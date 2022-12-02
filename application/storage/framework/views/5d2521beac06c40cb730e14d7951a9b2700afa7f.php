@@ -4,7 +4,7 @@
 	<div class="topbar-fixed topbar-color flex flex-auto z-depth-1">
 		<div class="flex flex-auto flex-center">
 			<div class="flex flex-auto flex-start flex-center" style="">
-				<button class="dropdown-trigger btn white black-text z-depth-1" data-target="dropdown-actions">
+				<button class="dropdown-trigger btn white black-text z-depth-3 border-round" data-target="dropdown-actions">
 					<i class="material-icons checkbox">check_box</i>
 					<i class="material-icons">keyboard_arrow_down</i>
 				</button>
@@ -27,10 +27,10 @@
 					</li>
 				</ul>
 				<?php $__env->startSection('search'); ?>
-				<div class="input-field search bordered">
+				<div class="input-field search bordered border-round z-depth-1">
 					<?php $__env->startSection('search-label', 'Pesquisar...'); ?>
 					<label for=""><?php echo $__env->yieldContent('search-label'); ?></label>
-					<input type="search" id="search-on-page" data-search="<?php echo $__env->yieldContent('data-search'); ?>">
+					<input type="search" id="search-on-page" data-search="<?php echo $__env->yieldContent('data-search'); ?>" >
 				</div>
 				<?php echo $__env->yieldSection(); ?>
 			</div>
@@ -39,7 +39,7 @@
 					<i class="material-icons">list</i>
 				</button>
 				<?php $__env->startSection('btn-add'); ?>
-				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-href="<?php echo $__env->yieldContent('btn-add-route'); ?>" data-position="">
+				<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-tooltip="<?php echo $__env->yieldContent('btn-add-title'); ?>" data-href="<?php echo $__env->yieldContent('btn-add-route'); ?>" data-position="">
 					<i class="material-icons"><?php echo $__env->yieldContent('btn-add-icon'); ?></i>
 				</button>
 				<?php echo $__env->yieldSection(); ?>

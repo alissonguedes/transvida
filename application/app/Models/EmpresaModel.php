@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\FuncionarioModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class EmpresaModel extends Model
+class EmpresaModel extends AppModel
 {
 
 	use HasFactory;
 
-	private $error = [];
-	private $path  = 'assets/clinica/img/empresas/';
+	private $path = 'assets/clinica/img/empresas/';
 
 	protected $table = 'tb_empresa';
 	protected $order = [
@@ -25,6 +24,11 @@ class EmpresaModel extends Model
 		'created_at',
 		'status',
 	];
+
+	public function __construct()
+	{
+		$this->funcionario_model = new FuncionarioModel();
+	}
 
 	public function getEmpresas($data = null)
 	{
@@ -364,10 +368,11 @@ class EmpresaModel extends Model
 
 		if ($isUpdated) {
 
-			$param         = [];
-			$remove_deptos = 0;
+			$param                     = [];
+			$remove_deptos             = 0;
+			$departamentos_cadastrados = 0;
+			$dpto                      = new DepartamentoModel();
 
-			$dpto            = new DepartamentoModel();
 			$p['id_empresa'] = $id_empresa;
 
 			if (!empty($post->departamento)) {
@@ -379,7 +384,10 @@ class EmpresaModel extends Model
 					// Adicionar o departamento à tabela `tb_departamento_empresa`;
 					if (!isset($issetDepartamento)) {
 
-						$param[] = ['id_empresa' => $id_empresa, 'id_departamento' => $id_departamento];
+						$param = ['id_empresa' => $id_empresa, 'id_departamento' => $id_departamento];
+						if ($this->cadastraDepartamento($param)) {
+							$departamentos_cadastrados++;
+						}
 
 					}
 
@@ -391,7 +399,9 @@ class EmpresaModel extends Model
 					return false;
 				}
 
-				return $this->cadastraDepartamento($param);
+				if ($departamentos_cadastrados > 0) {
+					return true;
+				}
 
 			} else {
 
@@ -401,7 +411,7 @@ class EmpresaModel extends Model
 
 		}
 
-		// return $id_empresa;
+		return $id_empresa;
 
 	}
 
@@ -411,11 +421,6 @@ class EmpresaModel extends Model
 		return $this->from('tb_departamento_empresa')
 			->insert($dados);
 
-	}
-
-	public function getErros()
-	{
-		return implode('<br>', $this->error);
 	}
 
 	public function removeDepartamento($dados = [])
@@ -430,7 +435,7 @@ class EmpresaModel extends Model
 			$id_empresa      = isset($dados['id_empresa']) ? $dados['id_empresa'] : false;
 			$id_departamento = isset($dados['id_departamento']) ? $dados['id_departamento'] : false;
 
-			$get = $this->select('id')
+			$get = $this->select('id', 'id_departamento', 'id_empresa')
 				->from('tb_departamento_empresa')
 				->where('id_empresa', $id_empresa);
 
@@ -444,22 +449,7 @@ class EmpresaModel extends Model
 
 				foreach ($issetDepartamentos as $depto) {
 
-					$funcionario = $this->select(
-						'id_empresa_departamento',
-						DB::raw('(SELECT titulo FROM tb_departamento WHERE tb_departamento.id = (SELECT id_departamento FROM tb_departamento_empresa WHERE tb_departamento.id = tb_departamento_empresa.id_departamento AND tb_funcionario.id_empresa_departamento = tb_departamento.id AND tb_departamento_empresa.id_departamento = ' . $depto->id . ' AND tb_departamento_empresa.id_empresa = ' . $id_empresa . ')) AS departamento'),
-						DB::raw('(SELECT id FROM tb_departamento_empresa WHERE tb_departamento_empresa.id = tb_funcionario.id_empresa_departamento AND tb_departamento_empresa.id_departamento = ' . $depto->id . ') AS id_departamento')
-					)
-						->from('tb_funcionario')
-						->distinct(true)
-						->whereIn('tb_funcionario.id_empresa_departamento', function ($query) use ($id_empresa, $depto) {
-							$query->select('tb_departamento_empresa.id')
-								->from('tb_departamento_empresa')
-								->whereColumn('tb_departamento_empresa.id', 'tb_funcionario.id_empresa_departamento')
-								->where('tb_departamento_empresa.id_empresa', $id_empresa)
-								->where('tb_departamento_empresa.id_departamento', $depto->id);
-						})
-						->get()
-						->first();
+					$funcionario = $this->funcionario_model->getFuncionariosDepartamento($depto->id);
 
 					if ($funcionario) {
 
@@ -509,10 +499,74 @@ class EmpresaModel extends Model
 
 	}
 
-	public function removeEmpresa($id)
+	public function removeEmpresa($id_empresa)
 	{
-		return $this->from('tb_empresa')
-			->whereIn('id', $id)
-			->delete();
+
+		$empresas_removidas     = [];
+		$empresas_nao_removidas = [];
+
+		foreach ($id_empresa as $ind => $id) {
+
+			$departamentos = $this->select('id')
+				->from('tb_departamento_empresa')
+				->where('id_empresa', $id)
+				->get();
+
+			if ($departamentos->count() > 0) {
+
+				foreach ($departamentos as $departamento) {
+
+					$issetFuncionarios = $this->funcionario_model->getFuncionariosDepartamento($departamento->id);
+
+					if ($issetFuncionarios) {
+
+						$empresas_nao_removidas[] = $issetFuncionarios->empresa;
+						array_splice($id_empresa, $ind, 1);
+
+					} else {
+
+						$empresas_removidas[] = $id;
+
+					}
+
+				}
+
+			} else {
+
+				$empresas_removidas['sem_departamentos'][] = $id;
+
+			}
+
+		}
+
+		if (!empty($id_empresa)) {
+
+			$removidas = $this->from('tb_empresa')
+				->whereIn('id', $id_empresa)
+				->delete();
+
+			if ($removidas) {
+
+				$s             = count($id_empresa) > 1 ? 's' : null;
+				$this->error[] = 'A' . $s . ' empresa' . $s . ' ' . (implode(', ', $id_empresa)) . ' ' . (count($id_empresa) > 1 ? ' foram ' : ' foi ') . ' removida' . $s;
+
+			} else {
+
+				$this->error[] = 'Não foi possível remover as empresas ' . (implode(', ', $id_empresa));
+
+			}
+		}
+
+		if (!empty($empresas_nao_removidas)) {
+			$s             = count($empresas_nao_removidas) > 1 ? 's' : null;
+			$this->error[] = 'A' . $s . ' empresa' . $s . ' <b>' . (implode(', ', $empresas_nao_removidas)) . '</b> não ' . (count($empresas_nao_removidas) > 1 ? ' podem ' : ' pode ') . ' ser removida enquanto existirem funcionários cadastrados nela.' . $s;
+		}
+
+		if (!empty($this->error)) {
+			return false;
+		}
+
+		return true;
+
 	}
 }
