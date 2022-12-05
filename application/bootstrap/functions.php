@@ -339,7 +339,7 @@ if (!function_exists('getMenus')) {
 
 					// Se não existir uma tradução válida para o Idioma selecionado, será obtido o Idioma padrão
 					if (!isset($label)) {
-						$label = $menu_model->from($table)
+						$label = $menu_model->from('tb_acl_menu_item_descricao')
 							->where('id_item', $item->id)
 							->where('id_idioma', function ($query) {
 								$query->select('id')

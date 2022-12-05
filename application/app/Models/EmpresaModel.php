@@ -77,7 +77,7 @@ class EmpresaModel extends AppModel
 			'status'
 		);
 
-		if (isset($data) && $search = $data['search']['value']) {
+		if (isset($data) && isset($data['search']) && $search = $data['search']['value']) {
 			$get->where(function ($query) use ($search) {
 				$query
 					->orWhere(DB::raw('REGEXP_REPLACE(cnpj, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
@@ -99,6 +99,24 @@ class EmpresaModel extends AppModel
 		}
 
 		return $get->paginate(isset($_GET['length']) ? $_GET['length'] : 50);
+
+	}
+
+	public function getClinicas($data = null)
+	{
+		$get = $this->select('id', 'nome_fantasia', 'cnpj')
+			->from('tb_empresa')
+			->where('status', '1');
+
+		if (isset($data['query'])) {
+			$get->where('nome_fantasia', 'like', $data['query'] . '%');
+		}
+
+		$get = $get
+			->limit($data->limit ?? 10)
+			->get();
+
+		return $get;
 
 	}
 

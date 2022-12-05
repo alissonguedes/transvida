@@ -34,14 +34,14 @@
 						<button type="button" id="btn-back" class="btn btn-small btn-floating z-depth-0 transparent" disabled="disabled">
 							<i class="material-icons grey-text text-darken-4">keyboard_arrow_left</i>
 						</button>
-						<h5 class="animated lightSpeedInRight slow delay-15">
+						<h5 class="animated lightSpeedInRight fast delay-15">
 							Bem-vindo!
 						</h5>
 					</div>
 
 					<div class="inputs">
 
-						<div id="input-login" class="slow">
+						<div id="input-login" class="animated fast">
 							<div class="input-field">
 								<input type="email" name="login" id="login" autofocus="autofocus">
 								<label for="login" class="">
@@ -50,7 +50,7 @@
 							</div>
 						</div>
 
-						<div id="input-pass" class="slow">
+						<div id="input-pass" class="animated fast">
 							<div class="input-field">
 								<input type="password" name="senha" id="senha" disabled="disabled" minlength="5">
 								<label for="pass" class="active">

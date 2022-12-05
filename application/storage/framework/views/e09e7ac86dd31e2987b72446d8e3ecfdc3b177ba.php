@@ -17,6 +17,7 @@
 
 <!-- scripts | Padrão -->
 <script src="<?php echo e(asset('assets/scripts/materializecss.js')); ?>"></script>
+<script src="<?php echo e(asset('assets/scripts/materializecss-select.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/scripts/datatables.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/scripts/storage.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/scripts/functions.js')); ?>"></script>

@@ -1,5 +1,5 @@
 <div class="row">
-	<div id="modal_departamento" class="modal col s12 m3 l3 offset-m1 offset-l2" data-dismissible="false">
+	<div id="modal_departamento" class="modal col s12 m4 l4 offset-m1 offset-l2" data-dismissible="false">
 		<form action="<?php echo e(route('clinica.departamentos.post')); ?>" method="post" enctype="multipart/form-data" autocomplete="off" novalidade>
 
 			<?php if(isset($row)): ?>
@@ -19,7 +19,7 @@
 					<div class="col s12">
 						<div class="input-field">
 							<label for="descricao" class="<?php echo e(isset($row) && $row->descricao ? 'active' : null); ?>">Descrição</label>
-							<textarea name="descricao" id="descricao" class="materialize-textarea"><?php echo e($row->descricao ?? null); ?></textarea>
+							<textarea name="descricao" id="descricao" class="materialize-textarea" style="min-height: 100px;"><?php echo e($row->descricao ?? null); ?></textarea>
 						</div>
 					</div>
 				</div>

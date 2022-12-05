@@ -73,7 +73,7 @@
 					<div class="input-field">
 						<label for="departamento" class="active">Departamento</label>
 						<select name="departamento" id="departamento" @empty($row) disabled="disabled" @endempty>
-							<option value="" disabled selected>Informe o departamento</option>
+							<option value="" disabled="disabled" selected>Informe o departamento</option>
 							@if(isset($departamentos))
 								@foreach($departamentos as $departamento)
 									<option value="{{ $departamento->id }}" {{ isset($row) && $departamento->id==$row->id_departamento ? 'selected=selected' : null }}>{{ $departamento->titulo }}</option>

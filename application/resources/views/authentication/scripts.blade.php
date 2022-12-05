@@ -17,6 +17,7 @@
 
 <!-- scripts | Padrão -->
 <script src="{{ asset('assets/scripts/materializecss.js') }}"></script>
+<script src="{{ asset('assets/scripts/materializecss-select.js') }}"></script>
 <script src="{{ asset('assets/scripts/datatables.js') }}"></script>
 <script src="{{ asset('assets/scripts/storage.js') }}"></script>
 <script src="{{ asset('assets/scripts/functions.js') }}"></script>

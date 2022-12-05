@@ -629,10 +629,6 @@ var Form = {
 		var button = typeof button !== 'undefined' && button != null ? button : _element.find(':button:submit');
 		var spinner = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
 
-		console.log('Buton: ')
-		console.log(button)
-		console.log('Labe: ' + label);
-
 		if (block) {
 			button.attr('disabled', true)
 				.find('i').html(spinner);

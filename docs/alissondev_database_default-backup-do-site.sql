@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 24-Nov-2022 às 19:37
+-- Tempo de geração: 02-Dez-2022 às 00:03
 -- Versão do servidor: 8.0.30
 -- versão do PHP: 7.4.30
 
@@ -500,7 +500,7 @@ CREATE TABLE `tb_acl_usuario_config` (
 --
 
 INSERT INTO `tb_acl_usuario_config` (`id_usuario`, `id_modulo`, `id_config`, `value`, `created_at`, `updated_at`) VALUES
-(1, 2, 3, 'collapsed', '2022-08-24 15:31:48', '2022-11-25 01:37:04');
+(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-11-25 02:15:19');
 
 -- --------------------------------------------------------
 
@@ -550,7 +550,8 @@ INSERT INTO `tb_acl_usuario_session` (`id`, `id_usuario`, `id_modulo`, `token`, 
 (4, 1, 6, '5cf13f21f10ec1aa845d0703fcb83ca46377ec703109d', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-18 23:34:56', NULL),
 (5, 1, 6, '97891d9a5d2b752121ca8da1c22f5782637f8b99527a8', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-24 18:19:53', NULL),
 (6, 1, 2, 'e738e021469821ed4b255ce146f1febd637921622eeb5', '127.0.0.1', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0', '2022-11-19 18:33:06', NULL),
-(7, 1, 6, '1ad010beffaf180f7892e50af0e90e1b637ff201416f0', '187.19.209.227', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-24 22:36:49', NULL);
+(7, 1, 6, '64474580f0bcd62fd371b7de63612667637ff6309cde0', '187.19.209.227', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-25 01:54:40', NULL),
+(8, 1, 6, 'efa2d0267ec5d20bf3469674eadc46d563896a93c685e', '187.19.208.179', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-02 03:01:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -2316,7 +2317,7 @@ ALTER TABLE `tb_acl_usuario_imagem`
 -- AUTO_INCREMENT de tabela `tb_acl_usuario_session`
 --
 ALTER TABLE `tb_acl_usuario_session`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acomodacao`
@@ -2406,7 +2407,7 @@ ALTER TABLE `tb_email`
 -- AUTO_INCREMENT de tabela `tb_empresa`
 --
 ALTER TABLE `tb_empresa`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela.', AUTO_INCREMENT=3;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela.', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `tb_especialidade`

@@ -44,6 +44,26 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
+		public function get_unidades(Request $request)
+		{
+
+			$clinicas = [];
+
+			$dados = $this->empresa_model->getClinicas($request);
+
+			foreach ($dados as $clinica) {
+				$clinicas[] = [
+					'label' => $clinica->nome_fantasia,
+					'name'  => 'clinica',
+					'value' => $clinica->id,
+					'icon'  => null,
+				];
+			}
+
+			return response($clinicas, 200);
+
+		}
+
 		public function getDepartamentos(Request $request)
 		{
 

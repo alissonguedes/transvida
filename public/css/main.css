@@ -335,7 +335,7 @@ tr.disabled td {
 }
 
 
-.dataTables_wrapper [type=checkbox].filled-in:checked+span:not(.lever):before {
+table [type=checkbox].filled-in:checked+span:not(.lever):before {
 	width: 5px;
 }
 

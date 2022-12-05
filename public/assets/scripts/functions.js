@@ -1455,16 +1455,130 @@ function isJSON(str) {
 
 }
 
-function alert(type = 'error', param) {
+function alert(message, type = 'error') {
 
 	var m = $('#alerts');
 	$('#alerts').addClass(type).modal({
 		dismissible: false,
+		inDuration: 100,
 		startingTop: '35%',
-		endingTop: '35%'
+		endingTop: '35%',
+		onCloseStart: () => {
+			$(m).removeClass(type);
+		}
 	});
-	$('#alerts').find('.modal-content').find('.info').html(param.message);
-	$('#alerts').find('.modal-content').find('.title').html(param.title);
+
+	if (typeof message === 'object') {
+		title = message.title;
+		message = message.message;
+	} else {
+		title = type;
+	}
+	$('#alerts').find('.modal-content').find('.title').html(title);
+	$('#alerts').find('.modal-content').find('.info').html(message);
 	m.modal('open');
+
+}
+
+function getData(autocomplete, url, query = null, limit = 10) {
+
+	if (url !== null) {
+
+		var autocomplete_instance = M.Autocomplete.getInstance(autocomplete);
+		var $data = {};
+
+		if (query !== null) var $data = {
+			query: query
+		};
+
+		Http.get(url, {
+			datatype: 'json',
+			data: $data
+		}, (response) => {
+
+			var data = {};
+
+			Object.keys(response).forEach((i) => {
+				var item = response[i];
+				data[item.label] = {
+					'label': item.label,
+					'icon': item.icon,
+					'value': item.value,
+					'name': item.name
+				};
+			});
+
+			autocomplete_instance.updateData(data);
+
+		});
+
+	}
+
+}
+
+function filling_form() {
+
+	$('body').find('form[autocomplete]').each(function() {
+		var autocomplete = 'do-not-autofill'; $(this).attr('autocomplete');
+		console.log(autocomplete);
+		$(this).find('input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea, textarea.materialize-textarea, .chips, .input-field .ql-container, .select-wrapper input.select-dropdown, select').attr('autocomplete', autocomplete);
+	});
+
+}
+
+function autocomplete() {
+
+	// Create element Autocomplete
+	$('body').find('input.autocomplete').each(function() {
+
+		var autocomplete = $(this);
+		var url = autocomplete.data('url') || null;
+		var limit = autocomplete.data('limit') || 10;
+		var input = null;
+
+		if (autocomplete.length === 0) return;
+
+		autocomplete.autocomplete({
+			minLength: 0,
+			limit: limit,
+			onAutocomplete: (name, value) => {
+				input = name;
+				autocomplete.parent().find(':hidden[name="' + name + '"]').remove();
+				autocomplete.parent().append($('<input>', {
+					type: 'hidden',
+					name: name,
+					value: value
+				}));
+			}
+		});
+
+		getData(autocomplete, url);
+
+		$(this).on('keyup', function(e) {
+
+			var key = e.keyCode;
+			var url = $(this).data('url') || null;
+
+			if (key === 8 || key === 46) {
+				getData($(this), url);
+			} else {
+				getData($(this), url, $(this).val());
+			}
+
+		}).on('keydown', function(e) {
+
+			var key = e.keyCode;
+			var hidden = $(this).parent().find(':hidden[name="' + input + '"]');
+
+			if (key === 8 || key === 46) {
+				$(this).val('');
+				if (hidden.length)
+					hidden.val('');
+				getData($(this), url, $(this).val());
+			}
+
+		});
+
+	});
 
 }

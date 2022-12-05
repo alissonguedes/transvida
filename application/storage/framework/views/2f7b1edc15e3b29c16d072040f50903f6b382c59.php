@@ -5,7 +5,7 @@
 <div class="container pt-1" style="width: 100%">
 	<div class="row">
 		<div class="col s12">
-			<form action="<?php echo e(route('clinica.clinicas.post')); ?>" method="post" enctype="multipart/form-data" autocomplete="off" novalidate>
+			<form action="<?php echo e(route('clinica.clinicas.post')); ?>" method="post" enctype="multipart/form-data" autocomplete="random-string" novalidate>
 
 				<?php if($row): ?>
 					<input type="hidden" name="id" value="<?php echo e($row->id); ?>">

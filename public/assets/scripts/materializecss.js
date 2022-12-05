@@ -583,4 +583,73 @@ function Materializecss() {
 
 	});
 
+	// function getData(autocomplete, url, query = null, limit = 10) {
+
+	// 	if (url !== null) {
+
+	// 		var $data = {};
+
+	// 		if (query !== null) var $data = {
+	// 			query: query
+	// 		};
+
+	// 		Http.get(url, {
+	// 			datatype: 'json',
+	// 			$data
+	// 		}, (response) => {
+	// 			autocomplete.updateData(response);
+	// 		});
+
+	// 	}
+
+	// }
+
+	// // Create element Autocomplete
+	// $('body').find('input.autocomplete').each(function() {
+
+	// 	// $(this).on('focus', function() {
+
+	// 	var autocomplete = $(this);
+	// 	var limit = autocomplete.data('limit') || 10;
+	// 	var url = autocomplete.data('url') || null;
+	// 	var input = null;
+
+	// 	if (autocomplete.length === 0) return;
+
+	// 	autocomplete.autocomplete({
+	// 		minLength: 0,
+	// 		limit: limit,
+	// 		onAutocomplete: (name, value) => {
+	// 			input = name;
+	// 			autocomplete.parent().find(':hidden[name="' + name + '"]').remove();
+	// 			autocomplete.parent().append($('<input>', {
+	// 				type: 'hidden',
+	// 				name: name,
+	// 				value: value
+	// 			}));
+	// 		}
+	// 	});
+
+
+	// 	autocomplete_instance = M.Autocomplete.getInstance($(this));
+	// 	getData(autocomplete_instance, url);
+	// 	// $(this).select();
+
+	// 	// })
+
+	// 	$(this).on('keydown', function(e) {
+	// 		var url = $(this).data('url') || null;
+	// 		var key = e.keyCode;
+	// 		var hidden = $(this).parent().find(':hidden[name="' + input + '"]');
+	// 		if (key === 8 || key === 46) {
+	// 			$(this).val('');
+	// 			if (hidden.length)
+	// 				hidden.val('');
+	// 		} else {
+	// 			getData($(this), url);
+	// 		}
+	// 	});
+
+	// });
+
 }

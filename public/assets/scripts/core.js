@@ -48,6 +48,8 @@ function core() {
 	App.aplicarMascaras();
 	preview_map();
 
+	filling_form();
+
 	$('.dd').nestable({
 		maxDepth: Infinity
 	});
@@ -173,7 +175,6 @@ function core() {
 		});
 	});
 
-
 	$('.form-sidenav-trigger').on('click', function() {
 
 		var link = typeof $(this).data('link') !== 'undefined' && $(this).data('link') != '' ? $(this).data('link') : null;
@@ -185,8 +186,6 @@ function core() {
 		var params = {
 			[name]: id
 		};
-
-		console.log(id);
 
 		Http.get(link, {
 			'datatype': 'html',
@@ -205,7 +204,7 @@ function core() {
 				});
 				$('.form-sidenav#' + target).find('.modal-close').click();
 
-				alert(errors.status, errors);
+				alert(errors, errors.status);
 
 				return false;
 
@@ -247,6 +246,8 @@ function core() {
 			});
 
 			App.aplicarMascaras();
+			autocomplete();
+			filling_form();
 
 		});
 
@@ -469,7 +470,6 @@ function core() {
 		var query = $(this).val();
 		var url = BASE_URL + $(this).data('search');
 
-		// if (query.length > 0) {
 		Http.get(url, {
 			'datatype': 'html',
 			data: {
@@ -479,12 +479,8 @@ function core() {
 			$('#index').hide();
 			$('#results').show().html(response);
 			$('.progress').hide();
+			core();
 		});
-		// } else {
-		// $('#index').show();
-		// // $('#results-search').empty().hide();
-		// $('.progress').hide();
-		// }
 
 	}, 500));
 
