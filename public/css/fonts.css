@@ -19,6 +19,13 @@
 }
 
 @font-face {
+	font-family: 'Muli';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Muli Regular'), local('Muli-Regular'), url('../fonts/muli/muli-regular.ttf') format('truetype');
+}
+
+@font-face {
 	font-family: 'Material Icons';
 	font-style: normal;
 	font-weight: 400;

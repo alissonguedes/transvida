@@ -53,7 +53,7 @@ namespace App\Http\Controllers\Clinica{
 
 			foreach ($dados as $clinica) {
 				$clinicas[] = [
-					'label' => $clinica->nome_fantasia,
+					'label' => $clinica->id . ' - ' . $clinica->nome_fantasia,
 					'name'  => 'clinica',
 					'value' => $clinica->id,
 					'icon'  => null,

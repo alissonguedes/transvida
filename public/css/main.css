@@ -26,6 +26,13 @@ small {
 	border-right: 1px solid #ebebeb !important;
 }
 
+.h-100vh {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	place-content: center;
+}
+
 /** Perfect Scrollbar */
 .ps__rail-y,
 .ps__rail-x {

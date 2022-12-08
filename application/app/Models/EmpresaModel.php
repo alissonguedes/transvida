@@ -112,8 +112,7 @@ class EmpresaModel extends AppModel
 			$get->where('nome_fantasia', 'like', $data['query'] . '%');
 		}
 
-		$get = $get
-			->limit($data->limit ?? 10)
+		$get = $get->limit($data->limit ?? 10)
 			->get();
 
 		return $get;

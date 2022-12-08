@@ -48,6 +48,7 @@ function core() {
 	App.aplicarMascaras();
 	preview_map();
 
+	fullcalendar_init();
 	filling_form();
 
 	$('.dd').nestable({

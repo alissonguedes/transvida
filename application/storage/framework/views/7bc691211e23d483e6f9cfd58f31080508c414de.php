@@ -16,23 +16,16 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col s12 m4 l4">
+				<div class="col s12 m6 l6">
 					<div class="input-field">
 						<label for="cpf" class="<?php echo e(isset($row) && $row->cpf ? 'active' : null); ?>">CPF</label>
 						<input type="tel" name="cpf" id="cpf" class="is_cpf" value="<?php echo e($row->cpf ?? null); ?>">
 					</div>
 				</div>
-				<div class="col s12 m4 l4">
+				<div class="col s12 m6 l6">
 					<div class="input-field">
 						<label for="rg" class="<?php echo e(isset($row) && $row->rg ? 'active' : null); ?>">RG</label>
 						<input type="tel" name="rg" id="rg" value="<?php echo e($row->rg ?? null); ?>">
-					</div>
-				</div>
-				<div class="col s12 m4 l4">
-					<div class="input-field">
-						<label for="crm" class="<?php echo e(isset($row) && $row->crm ? 'active' : null); ?>">CRM</label>
-						<input type="text" name="crm" id="crm" class="right-align" value="<?php echo e($row->crm ?? null); ?>">
-						
 					</div>
 				</div>
 			</div>
@@ -51,7 +44,33 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<?php
+					$crm = isset($row) && isset($medico) ? $medico->crm : null;
+					$especialidade = isset($row) && isset($medico) ? $medico->id_especialidade : null;
+				?>
 
+				<div class="col s12 m6">
+					<div class="input-field">
+						<label for="crm" class="<?php echo e(isset($row) && $crm ? 'active' : null); ?>">CRM</label>
+						<input type="text" name="crm" id="crm" value="<?php echo e($crm ?? null); ?>">
+					</div>
+				</div>
+
+				<div class="col s12 m6">
+					<div class="input-field">
+						<label for="especialidade" class="active">Especialidade</label>
+						<select name="especialidade" id="especialidade">
+							<option value="" disabled selected>Informe a especialidade</option>
+							<?php if(isset($especialidades)): ?>
+								<?php $__currentLoopData = $especialidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $espec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($espec->id); ?>" <?php echo e(isset($row) && isset($especialidade) && $espec->id==$especialidade ? 'selected=selected' : null); ?>><?php echo e($espec->especialidade); ?></option>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							<?php endif; ?>
+						</select>
+					</div>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col s12">
 					<div class="input-field">

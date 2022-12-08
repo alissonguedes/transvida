@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\MedicoModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -16,6 +17,11 @@ class FuncionarioModel extends Model
 	protected $order = [];
 
 	private $path = 'assets/clinica/img/funcionarios/';
+
+	public function __construct()
+	{
+		$this->medico_model = new MedicoModel();
+	}
 
 	public function getFuncionarios($data = null)
 	{
@@ -152,7 +158,7 @@ class FuncionarioModel extends Model
 
 	}
 
-	public function cadastraFuncionario($post)
+	public function cadastraFuncionario(Request $post)
 	{
 
 		$id_empresa              = $post->clinica;
@@ -189,11 +195,13 @@ class FuncionarioModel extends Model
 		$id = $this->from('tb_funcionario')
 			->insertGetId($data);
 
+		$this->medico_model->cadastraMedico($post, $id);
+
 		return $id;
 
 	}
 
-	public function editaFuncionario(Request $post, $id)
+	public function editaFuncionario(Request $post, $id_funcionario)
 	{
 
 		$id_empresa              = $post->clinica;
@@ -231,11 +239,29 @@ class FuncionarioModel extends Model
 			$data['imagem'] = $imagem;
 		}
 
-		$id = $this->from('tb_funcionario')
-			->where('id', $id)
+		$update = $this->from('tb_funcionario')
+			->where('id', $id_funcionario)
 			->update($data);
 
-		return $id;
+		$this->medico_model->cadastraMedico($post, $id_funcionario);
+
+		return $update;
+
+	}
+
+	public function updateColumn(Request $request)
+	{
+		$update_funcionario = $this->from('tb_funcionario')
+			->whereIn('id', $request->id)
+			->update([$request->field => $request->value]);
+
+		if ($update_funcionario) {
+			$this->from('tb_medico')
+				->whereIn('id_funcionario', $request->id)
+				->update([$request->field => $request->value]);
+		}
+
+		return $update_funcionario;
 
 	}
 

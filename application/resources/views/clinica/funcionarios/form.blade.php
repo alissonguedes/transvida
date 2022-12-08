@@ -16,23 +16,16 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col s12 m4 l4">
+				<div class="col s12 m6 l6">
 					<div class="input-field">
 						<label for="cpf" class="{{ isset($row) && $row->cpf ? 'active' : null }}">CPF</label>
 						<input type="tel" name="cpf" id="cpf" class="is_cpf" value="{{ $row->cpf ?? null }}">
 					</div>
 				</div>
-				<div class="col s12 m4 l4">
+				<div class="col s12 m6 l6">
 					<div class="input-field">
 						<label for="rg" class="{{ isset($row) && $row->rg ? 'active' : null }}">RG</label>
 						<input type="tel" name="rg" id="rg" value="{{ $row->rg ?? null }}">
-					</div>
-				</div>
-				<div class="col s12 m4 l4">
-					<div class="input-field">
-						<label for="crm" class="{{ isset($row) && $row->crm ? 'active' : null }}">CRM</label>
-						<input type="text" name="crm" id="crm" class="right-align" value="{{ $row->crm ?? null }}">
-						{{-- <textarea name="descricao" id="descricao" class="materialize-textarea">{{ $row->descricao ?? null }}</textarea> --}}
 					</div>
 				</div>
 			</div>
@@ -51,7 +44,33 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				@php
+					$crm = isset($row) && isset($medico) ? $medico->crm : null;
+					$especialidade = isset($row) && isset($medico) ? $medico->id_especialidade : null;
+				@endphp
 
+				<div class="col s12 m6">
+					<div class="input-field">
+						<label for="crm" class="{{ isset($row) && $crm ? 'active' : null }}">CRM</label>
+						<input type="text" name="crm" id="crm" value="{{ $crm ?? null }}">
+					</div>
+				</div>
+
+				<div class="col s12 m6">
+					<div class="input-field">
+						<label for="especialidade" class="active">Especialidade</label>
+						<select name="especialidade" id="especialidade">
+							<option value="" disabled selected>Informe a especialidade</option>
+							@if(isset($especialidades))
+								@foreach($especialidades as $espec)
+									<option value="{{ $espec->id }}" {{ isset($row) && isset($especialidade) && $espec->id==$especialidade ? 'selected=selected' : null }}>{{ $espec->especialidade }}</option>
+								@endforeach
+							@endif
+						</select>
+					</div>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col s12">
 					<div class="input-field">

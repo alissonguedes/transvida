@@ -138,7 +138,7 @@
 						<div class="col s12">
 							<div class="row">
 								<div class="col s2">
-									<div class="circle" style="width: 58px;">
+									<div class="circle" style="width: 58px; margin-top: 10px;">
 										<img src="{{ asset($row->imagem ?? 'img/avatar/icon.png') }}" alt="" style="width: inherit;{{ isset($row) && empty($row->imagem) ? 'opacity: 0.4;filter: grayscale(1);' : null }}">
 									</div>
 								</div>

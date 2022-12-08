@@ -1,4 +1,4 @@
-<?php $__env->startSection('title', 'Clínicas'); ?>
+<?php $__env->startSection('title', 'Agendamentos'); ?>
 
 <?php $__env->startSection('search'); ?>
 <div class="input-field search bordered border-round z-depth-1">
@@ -14,43 +14,30 @@
 </a>
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('container'); ?>
-
-<div class="row">
-	<div class="col s12">
-		<div class="card">
-			<div class="card-content scroller">
-				<div class="card-body responsive-table">
-					<table class="table dataTable no-footer dataTable-fixed" data-link="<?php echo e(url('clinica/unidades/id')); ?>">
-						<thead>
-							<tr>
-								<th data-disabled="true" data-orderable="false">
-									<label class="grey-text text-darken-2 font-14 left">
-										<input type="checkbox" name="check-all" id="check-all" class="filled-in">
-										<span></span>
-									</label>
-								</th>
-								<th class="center-align" width="20%">nome</th>
-								<th class="center-align" width="20%">cnpj</th>
-								<th class="center-align" width="15%">cidade</th>
-								<th class="center-align">estado</th>
-								<th class="center-align">Data de cadastro</th>
-								
-								<th class="center-align" data-disabled="true">status</th>
-								<th class="center-align" width="15%" data-disabled="true" data-orderable="false">Ações</th>
-							</tr>
-						</thead>
-					</table>
+<?php $__env->startSection('main'); ?>
+<a href="#" data-target="agendamento" data-link="<?php echo e(route('clinica.agendamentos.add')); ?>" class="form-sidenav-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3 hide" data-tooltip="Agendar">
+	<i class="material-icons bolder">add</i>
+</a>
+<div class="container pt-1 scroller" style="overflow: auto; height: calc(100vh - 65px)">
+	<div id="app-calendar">
+		<div class="row">
+			<div class="col s12">
+				<div class="card">
+					<div id="calendar" class="card-content calendar">
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<?php $__env->stopSection(); ?>
+<div id="modal_add_event_calendar" class="modal">
+	<div class="modal-content">modal_add_event_calendar</div>
+	<div class="modal-footer"></div>
+</div>
 
-<?php $__env->startSection('form-sidenav'); ?>
 <?php echo $__env->make('clinica.agendamentos.form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('clinica.layouts.index', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/agendamentos/index.blade.php ENDPATH**/ ?>

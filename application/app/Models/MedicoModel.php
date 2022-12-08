@@ -80,8 +80,11 @@ class MedicoModel extends Model
 	public function getMedicoById($id)
 	{
 
-		return $this->getMedicos()
-			->where('id', $id)
+		return $medico = $this->select('id', 'id_funcionario', 'id_especialidade', 'crm')
+			->where(function ($query) use ($id) {
+				$query->orWhere('id', $id)
+					->orWhere('id_funcionario', $id);
+			})
 			->first();
 
 	}
@@ -132,40 +135,60 @@ class MedicoModel extends Model
 
 	}
 
-	public function cadastraMedico($post)
+	public function cadastraMedico($post, $id_funcionario = null)
 	{
 
-		$id_especialidade = $post->especialidade;
-		$nome             = $post->nome;
-		$imagem           = $this->uploadImage($post);
-		// $data_nascimento      = $post->data_nascimento ? convert_to_date($post->data_nascimento, 'd/m/Y', 'Y-m-d') : null;
-		$cpf = $post->cpf;
-		$rg  = $post->rg;
-		$crm = $post->crm;
-		// $email                = $post->email;
-		// $telefone             = $post->telefone;
-		// $celular              = $post->celular;
-		$status = $post->status ?? '0';
+		$id_funcao     = $post->funcao;
+		$especialidade = $post->especialidade;
+		$crm           = $post->crm;
+		$status        = $post->status ?? '0';
 
-		$data = [
-			'id_especialidade' => $id_especialidade,
-			'nome'             => $nome,
-			// 'imagem'               => $imagem,
-			// 'sexo'                 => $sexo,
-			// 'data_nascimento'      => $data_nascimento,
-			'cpf'              => $cpf,
-			'rg'               => $rg,
-			'crm'              => $crm,
-			// 'email'                => $email,
-			// 'telefone'             => $telefone,
-			// 'celular'              => $celular,
-			'status'           => $status,
-		];
+		// Se a função for = 'Médico', inserir funcionário na tabela de médicos (tb_medico)
+		$funcao = $this->select('codigo')
+			->from('tb_funcao')
+			->where('id', $id_funcao)
+			->first();
 
-		$id = $this->from('tb_medico')
-			->insertGetId($data);
+		if ($funcao->codigo === 2) {
+			$medico = $this->select('id', 'id_funcionario', 'id_especialidade', 'crm')
+				->from('tb_medico')
+				->where('id_funcionario', $id_funcionario)
+				->first();
+			if (!isset($medico)) {
+				// Cadastrar o médico
+				$this->from('tb_medico')
+					->insert([
+						'id_funcionario'   => $id_funcionario,
+						'id_especialidade' => $especialidade,
+						'crm'              => $crm,
+						'status'           => $status,
+					]);
+			} else {
+				// editar o médico
+				$this->from('tb_medico')
+					->where('id', $medico->id)
+					->where('id_funcionario', $id_funcionario)
+					->update([
+						'id_especialidade' => $post->especialidade,
+						'crm'              => $post->crm,
+						'status'           => $status,
+					]);
+			}
+		} else {
 
-		return $id;
+			/**
+			 * Se a função for alterada para outro que não seja médico,
+			 * remover o médico da tabela `tb_medico`
+			 */
+			$medico = $this->select('id', 'id_funcionario')
+				->from('tb_medico')
+				->where('id_funcionario', $id_funcionario)
+				->first();
+			if (isset($medico)) {
+				$this->where('id', $medico->id)
+					->delete();
+			}
+		}
 
 	}
 

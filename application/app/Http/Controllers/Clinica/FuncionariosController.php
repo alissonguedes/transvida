@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Clinica{
 
 	use App\Models\DepartamentoModel;
 	use App\Models\EmpresaModel;
+	use App\Models\EspecialidadeModel;
 	use App\Models\EstadoCivilModel;
 	use App\Models\FuncaoModel;
 	use App\Models\FuncionarioModel;
+	use App\Models\MedicoModel;
 	use Illuminate\Http\Request;
 	use Illuminate\Validation\Rule;
 
@@ -16,11 +18,13 @@ namespace App\Http\Controllers\Clinica{
 		public function __construct()
 		{
 
-			$this->departamento_model = new DepartamentoModel();
-			$this->funcoes_model      = new FuncaoModel();
-			$this->empresa_model      = new EmpresaModel();
-			$this->funcionario_model  = new FuncionarioModel();
-			$this->estadoCivil_model  = new EstadoCivilModel();
+			$this->departamento_model  = new DepartamentoModel();
+			$this->estadoCivil_model   = new EstadoCivilModel();
+			$this->especialidade_model = new EspecialidadeModel();
+			$this->empresa_model       = new EmpresaModel();
+			$this->funcoes_model       = new FuncaoModel();
+			$this->funcionario_model   = new FuncionarioModel();
+			$this->medico_model        = new MedicoModel();
 
 		}
 
@@ -39,12 +43,14 @@ namespace App\Http\Controllers\Clinica{
 		public function form(Request $request, $id = null)
 		{
 
-			$dados['row']           = $this->funcionario_model->getFuncionarioById($id);
-			$dados['departamentos'] = $this->departamento_model->getDepartamentos();
-			$dados['etnias']        = $this->funcionario_model->getEtnia();
-			$dados['estado_civil']  = $this->estadoCivil_model->getEstadoCivil();
-			$dados['funcoes']       = $this->funcoes_model->getFuncoes();
-			$dados['clinicas']      = $this->empresa_model->getEmpresasComDepartamento();
+			$dados['row']            = $this->funcionario_model->getFuncionarioById($id);
+			$dados['departamentos']  = $this->departamento_model->getDepartamentos();
+			$dados['etnias']         = $this->funcionario_model->getEtnia();
+			$dados['estado_civil']   = $this->estadoCivil_model->getEstadoCivil();
+			$dados['funcoes']        = $this->funcoes_model->getFuncoes();
+			$dados['clinicas']       = $this->empresa_model->getEmpresasComDepartamento();
+			$dados['medico']         = $this->medico_model->getMedicoById($id);
+			$dados['especialidades'] = $this->especialidade_model->getEspecialidades();
 			// $dados['clinicas']      = $this->empresa_model->getEmpresas();
 
 			return view('clinica.funcionarios.form', $dados);
@@ -54,20 +60,29 @@ namespace App\Http\Controllers\Clinica{
 		public function formValidate(Request $request)
 		{
 			return $request->validate([
-				'nome'   => 'required',
-				'email'  => [
+				'clinica'       => 'required',
+				'departamento'  => 'required',
+				'nome'          => 'required',
+				'email'         => [
 					'nullable|email|required_if:receber_notificacoes,on',
 					Rule::unique('tb_funcionario', 'email')->ignore($request->post('id'), 'id'),
 				],
-				'cpf'    => [
+				'cpf'           => [
 					'required',
 					Rule::unique('tb_funcionario', 'cpf')->ignore($request->post('id'), 'id'),
 				],
-				'rg'     => [
+				'rg'            => [
 					'required',
 					Rule::unique('tb_funcionario', 'rg')->ignore($request->post('id'), 'id'),
 				],
-				'funcao' => 'required',
+				'funcao'        => 'required',
+				'crm'           => [
+					'required_if:funcao,2',
+					Rule::unique('tb_medico', 'crm')->ignore($request->post('id'), 'id_funcionario'),
+				],
+				'especialidade' => [
+					'required_if:funcao,2',
+				],
 
 			]);
 		}
@@ -116,9 +131,7 @@ namespace App\Http\Controllers\Clinica{
 		public function patch(Request $request)
 		{
 
-			$this->funcionario_model->from('tb_funcionario')
-				->whereIn('id', $request->id)
-				->update([$request->field => $request->value]);
+			$this->funcionario_model->updateColumn($request);
 
 			return response()->json([
 				'message' => 'Médico atualizado com sucesso!',

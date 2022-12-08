@@ -1,8 +1,8 @@
 <link href="<?php echo e(asset('plugins/material-icons/material-icons.css')); ?>" rel="stylesheet">
 <link href="<?php echo e(asset('plugins/font-awesome/6.2.0/css/all.css')); ?>" rel="stylesheet">
 
-<link href="<?php echo e(asset('plugins/materializecss/materialize.min.css')); ?>" rel="stylesheet">
-<link href="<?php echo e(asset('plugins/materializecss/materialize.css')); ?>" rel="stylesheet">
+<link href="<?php echo e(asset('assets/styles/site/materialize.min.css')); ?>" rel="stylesheet">
+<link href="<?php echo e(asset('assets/styles/site/materialize.css')); ?>" rel="stylesheet">
 
 <link href="<?php echo e(asset('css/fonts.css')); ?>" rel="stylesheet">
 <link href="<?php echo e(asset('css/animate.css')); ?>" rel="stylesheet">
