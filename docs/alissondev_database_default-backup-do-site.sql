@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 02-Dez-2022 às 00:03
+-- Tempo de geração: 08-Dez-2022 às 00:36
 -- Versão do servidor: 8.0.30
 -- versão do PHP: 7.4.30
 
@@ -80,12 +80,12 @@ INSERT INTO `tb_acl_menu` (`id`, `id_modulo`, `created_at`, `updated_at`, `edita
 CREATE TABLE `tb_acl_menu_descricao` (
   `id_menu` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) DEFAULT NULL,
-  `meta_title` varchar(255) DEFAULT NULL,
-  `meta_keywords` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_acl_menu_descricao`
@@ -112,7 +112,7 @@ CREATE TABLE `tb_acl_menu_item` (
   `id_item` int UNSIGNED NOT NULL COMMENT 'Referencia a tabela (tb_acl_modulo_controller ou tb_acl_modulo_post) para a qual aponta o menu',
   `id_parent` int UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Campo para hierarquia do menu',
   `descricao` varchar(50) DEFAULT NULL,
-  `item_type` enum('acl_modulo_controller','post','link') NOT NULL DEFAULT 'link' COMMENT 'É o nome da tabela referenciada. Seria a tb_acl_modulo_controller (controller) ou tb_acl_modulo_post (post)',
+  `item_type` varchar(50) DEFAULT NULL COMMENT 'É o nome da tabela referenciada. Seria a tb_acl_modulo_controller (controller) ou tb_acl_modulo_post (post)',
   `link` varchar(255) DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
   `target` varchar(20) DEFAULT NULL,
@@ -120,6 +120,7 @@ CREATE TABLE `tb_acl_menu_item` (
   `permissao` smallint(4) UNSIGNED ZEROFILL NOT NULL DEFAULT '1111',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `divider` tinyint(1) NOT NULL DEFAULT '0',
   `editavel` enum('0','1') NOT NULL DEFAULT '1',
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de itens do menus';
@@ -128,30 +129,33 @@ CREATE TABLE `tb_acl_menu_item` (
 -- Extraindo dados da tabela `tb_acl_menu_item`
 --
 
-INSERT INTO `tb_acl_menu_item` (`id`, `id_menu`, `id_item`, `id_parent`, `descricao`, `item_type`, `link`, `icon`, `target`, `ordem`, `permissao`, `created_at`, `updated_at`, `editavel`, `status`) VALUES
-(1, 1, 3, 0, 'Página inicial da área Administrativa', 'acl_modulo_controller', NULL, 'dashboard', NULL, 1, 0001, '2022-08-21 02:14:27', NULL, '1', '1'),
-(2, 1, 4, 0, 'Página de menus da área Administrativa', 'acl_modulo_controller', NULL, 'list', NULL, 3, 0001, '2022-08-21 02:14:55', NULL, '1', '1'),
-(3, 1, 4, 2, 'Página de menus da área Administrativa', 'acl_modulo_controller', NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-08-21 02:14:27', NULL, '1', '1'),
-(4, 1, 12, 0, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'group', NULL, 1, 0001, '2022-08-21 02:14:27', NULL, '1', '1'),
-(5, 2, 12, 0, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'dashboard', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(6, 2, 12, 0, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'calendar_month', NULL, 4, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(7, 2, 12, 6, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(8, 2, 12, 6, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(9, 2, 12, 6, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(10, 2, 12, 6, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(11, 2, 12, 6, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(12, 2, 12, 0, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'troubleshoot', NULL, 5, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(13, 2, 12, 12, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'biotech', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(14, 2, 12, 12, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'monitor_heart', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(15, 2, 12, 12, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(16, 2, 12, 0, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', NULL, 'medical_services', NULL, 6, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(17, 2, 12, 16, 'Página inicial do módulo ClinicCloud', 'acl_modulo_controller', 'Atendimentos', 'fa-clipboard-user', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(18, 2, 19, 0, 'Página de pacientes', 'acl_modulo_controller', NULL, 'group', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(19, 2, 21, 22, 'Página de médicos', 'acl_modulo_controller', NULL, NULL, NULL, 4, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(20, 2, 22, 22, 'Página de especialidades', 'acl_modulo_controller', NULL, 'favorite_border', NULL, 3, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(21, 2, 12, 0, 'Gerenciamento', 'acl_modulo_controller', NULL, 'construction', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(22, 2, 12, 21, 'Cadastros', 'acl_modulo_controller', NULL, 'manage_accounts', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, '1', '1'),
-(23, 2, 23, 22, 'Empresas', 'acl_modulo_controller', NULL, 'local_convenience_store', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, '1', '1');
+INSERT INTO `tb_acl_menu_item` (`id`, `id_menu`, `id_item`, `id_parent`, `descricao`, `item_type`, `link`, `icon`, `target`, `ordem`, `permissao`, `created_at`, `updated_at`, `divider`, `editavel`, `status`) VALUES
+(1, 1, 3, 0, 'Página inicial da área Administrativa', 'Menu Principal', NULL, 'dashboard', NULL, 1, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
+(2, 1, 4, 0, 'Página de menus da área Administrativa', NULL, NULL, 'list', NULL, 3, 0001, '2022-08-21 02:14:55', NULL, 0, '1', '1'),
+(3, 1, 4, 2, 'Página de menus da área Administrativa', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
+(4, 1, 12, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'group', NULL, 1, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
+(5, 2, 12, 0, 'Página inicial do módulo ClinicCloud', 'Menu Principal', NULL, 'dashboard', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(6, 2, 27, 0, 'Agendamentos', NULL, NULL, 'calendar_month', NULL, 4, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(7, 2, 27, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(8, 2, 12, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(9, 2, 12, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(10, 2, 12, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(11, 2, 12, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(12, 2, 12, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'vaccines', NULL, 5, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(13, 2, 12, 12, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'biotech', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(14, 2, 12, 12, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'monitor_heart', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(15, 2, 12, 12, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(16, 2, 12, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'medical_services', NULL, 6, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(17, 2, 12, 16, 'Página inicial do módulo ClinicCloud', NULL, 'Atendimentos', 'fa-clipboard-user', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(18, 2, 19, 0, 'Página de pacientes', NULL, NULL, 'group', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(19, 2, 21, 22, 'Página de médicos', NULL, NULL, NULL, NULL, 4, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '0'),
+(20, 2, 22, 25, 'Página de especialidades', NULL, NULL, 'favorite_border', NULL, 3, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(21, 2, 12, 0, 'Gerenciamento', 'Sistema', NULL, 'construction', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(22, 2, 12, 21, 'Cadastros', NULL, NULL, 'manage_accounts', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(23, 2, 23, 22, 'Empresas', NULL, NULL, 'local_convenience_store', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(24, 2, 25, 25, 'Departamentos', NULL, NULL, 'account_tree', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(25, 2, 12, 21, 'Tabelas', NULL, NULL, 'view_column', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(26, 2, 26, 22, 'Funcionários', NULL, NULL, 'supervisor_account', NULL, 4, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1');
 
 -- --------------------------------------------------------
 
@@ -162,12 +166,12 @@ INSERT INTO `tb_acl_menu_item` (`id`, `id_menu`, `id_item`, `id_parent`, `descri
 CREATE TABLE `tb_acl_menu_item_descricao` (
   `id_item` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) DEFAULT NULL,
-  `meta_title` varchar(255) DEFAULT NULL,
-  `meta_keywords` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_acl_menu_item_descricao`
@@ -192,11 +196,13 @@ INSERT INTO `tb_acl_menu_item_descricao` (`id_item`, `id_idioma`, `titulo`, `des
 (16, 1, 'Recursos médicos', 'Recursos médicos', 'Recursos médicos', 'Recursos médicos', 'Recursos médicos'),
 (17, 1, 'Atendimentos', 'Atendimentos', 'Atendimentos', 'Atendimentos', 'Atendimentos'),
 (18, 1, 'Pacientes', 'Pacientes', 'Pacientes', 'Pacientes', 'Pacientes'),
-(19, 1, 'Médicos', 'Médicos', 'Médicos', 'Médicos', 'Médicos'),
 (20, 1, 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades'),
 (21, 1, 'Gerenciar', 'Gerenciar', 'Gerenciar', 'Gerenciar', 'Gerenciar'),
 (22, 1, 'Cadastros', 'Cadastros', 'Cadastros', 'Cadastros', 'Cadastros'),
 (23, 1, 'Clínicas', 'Clínicas', 'Clínicas', 'Clínicas', 'Clínicas'),
+(24, 1, 'Departamentos', 'Departamentos', 'Departamentos', 'Departamentos', 'Departamentos'),
+(25, 1, 'Tabelas', 'Tabelas', 'Tabelas', 'Tabelas', 'Tabelas'),
+(26, 1, 'Funcionários', 'Funcionários', 'Funcionários', 'Funcionários', 'Funcionários'),
 (1, 2, 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard', 'Dashboard'),
 (2, 2, 'Menus', 'Menus', 'Menus', 'Menus', 'Menus'),
 (4, 2, 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários', 'Grupo de usuários'),
@@ -255,13 +261,13 @@ INSERT INTO `tb_acl_modulo` (`id`, `modulo`, `path`, `namespace`, `permissao`, `
 CREATE TABLE `tb_acl_modulo_controller` (
   `id` int UNSIGNED NOT NULL,
   `id_modulo` int UNSIGNED NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `controller` varchar(100) NOT NULL,
-  `use_as` varchar(100) DEFAULT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `controller` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `use_as` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `permissao` smallint(4) UNSIGNED ZEROFILL NOT NULL DEFAULT '1111',
-  `restrict` enum('yes','no') NOT NULL DEFAULT 'no',
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `restrict` enum('yes','no') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'no',
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_acl_modulo_controller`
@@ -287,7 +293,10 @@ INSERT INTO `tb_acl_modulo_controller` (`id`, `id_modulo`, `descricao`, `control
 (21, 6, 'Médicos', 'MedicosController', 'C_Medicos', 1111, 'yes', '1'),
 (22, 6, 'Especialidades', 'EspecialidadesController', 'C_Especialidades', 1111, 'yes', '1'),
 (23, 6, 'Empresas', 'EmpresasController', 'C_Empresas', 1111, 'yes', '1'),
-(24, 1, 'Main Serviços', 'ServicesController', 'ServicesController', 1111, 'no', '1');
+(24, 1, 'Main Serviços', 'ServicesController', 'ServicesController', 1111, 'no', '1'),
+(25, 6, 'Departamentos', 'DepartamentosController', 'C_Departamentos', 1111, 'yes', '1'),
+(26, 6, 'Funcionários', 'FuncionariosController', 'C_Funcionarios', 1111, 'yes', '1'),
+(27, 6, 'Agendamentos', 'AgendamentosController', 'C_Agendamentos', 1111, 'yes', '1');
 
 -- --------------------------------------------------------
 
@@ -298,12 +307,12 @@ INSERT INTO `tb_acl_modulo_controller` (`id`, `id_modulo`, `descricao`, `control
 CREATE TABLE `tb_acl_modulo_controller_descricao` (
   `id_controller` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_acl_modulo_controller_descricao`
@@ -315,6 +324,9 @@ INSERT INTO `tb_acl_modulo_controller_descricao` (`id_controller`, `id_idioma`, 
 (21, 1, 'Médicos', 'Médicos', '', '', ''),
 (22, 1, 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades', ''),
 (23, 1, 'Empresas', 'Página de cadastro de empresas/clínicas', 'Página de cadastro de empresas/clínicas', 'Página de cadastro de empresas/clínicas', 'Página de cadastro de empresas/clínicas'),
+(25, 1, 'Departamentos', 'Departamentos', 'Departamentos', 'Especialidades', ''),
+(26, 1, 'Funcionários', 'Funcionários', 'Funcionários', 'Funcionários', 'Funcionários'),
+(27, 1, 'Agendamentos', 'Agendamentos', 'Agendamentos', 'Agendamentos', 'Agendamentos'),
 (3, 2, 'Dashboard - en', 'Dashboard - en', '', '', ''),
 (4, 2, 'Menu - en', 'Menu - en', '', '', ''),
 (11, 2, 'Usuários', 'Usuários', '', '', ''),
@@ -419,14 +431,14 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (53, 20, 48, 'patch', '/{id}', 'patch', 'clinica.prontuarios.patch', NULL, 1111, 'inherit', '1'),
 (54, 20, 48, 'delete', '/', 'delete', 'clinica.prontuarios.delete', NULL, 1111, 'inherit', '1'),
 (55, 20, 48, 'put', '/', 'edit', 'clinica.prontuarios.put', NULL, 1111, 'inherit', '1'),
-(56, 21, 0, 'any', '/medicos', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
-(57, 21, 56, 'any', '/', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
-(58, 21, 56, 'any', '/cadastro', 'form', 'clinica.medicos.add', NULL, 1111, 'inherit', '1'),
-(59, 21, 56, 'post', '/', 'create', 'clinica.medicos.post', NULL, 1111, 'inherit', '1'),
-(60, 21, 56, 'get', '/{id}', 'form', 'clinica.medicos.edit', NULL, 1111, 'inherit', '1'),
-(61, 21, 56, 'patch', '/{id}', 'patch', 'clinica.medicos.patch', NULL, 1111, 'inherit', '1'),
-(62, 21, 56, 'delete', '/', 'delete', 'clinica.medicos.delete', NULL, 1111, 'inherit', '1'),
-(63, 21, 56, 'put', '/', 'edit', 'clinica.medicos.put', NULL, 1111, 'inherit', '1'),
+(56, 26, 0, 'any', '/funcionarios', 'index', 'clinica.funcionarios.index', NULL, 1111, 'inherit', '1'),
+(57, 26, 56, 'any', '/', 'index', 'clinica.funcionarios.index', NULL, 1111, 'inherit', '1'),
+(58, 26, 56, 'any', '/cadastro', 'form', 'clinica.funcionarios.add', NULL, 1111, 'inherit', '1'),
+(59, 26, 56, 'post', '/', 'create', 'clinica.funcionarios.post', NULL, 1111, 'inherit', '1'),
+(60, 26, 56, 'get', '/{id}', 'form', 'clinica.funcionarios.edit', NULL, 1111, 'inherit', '1'),
+(61, 26, 56, 'patch', '/{id}', 'patch', 'clinica.funcionarios.patch', NULL, 1111, 'inherit', '1'),
+(62, 26, 56, 'delete', '/', 'delete', 'clinica.funcionarios.delete', NULL, 1111, 'inherit', '1'),
+(63, 26, 56, 'put', '/', 'edit', 'clinica.funcionarios.put', NULL, 1111, 'inherit', '1'),
 (64, 22, 0, 'any', '/especialidades', 'index', 'clinica.especialidades.index', NULL, 1111, 'inherit', '1'),
 (65, 22, 64, 'any', '/', 'index', 'clinica.especialidades.index', NULL, 1111, 'inherit', '1'),
 (66, 22, 64, 'get', '/cadastro', 'form', 'clinica.especialidades.add', NULL, 1111, 'inherit', '1'),
@@ -438,7 +450,7 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (72, 23, 0, 'any', '/unidades', 'index', 'clinica.clinicas.index', NULL, 1111, 'inherit', '1'),
 (73, 23, 72, 'any', '/', 'index', 'clinica.clinicas.index', NULL, 1111, 'inherit', '1'),
 (74, 23, 72, 'post', '/', 'create', 'clinica.clinicas.post', NULL, 1111, 'inherit', '1'),
-(75, 23, 72, 'get', '/{id}', 'form', 'clinica.clinicas.edit', NULL, 1111, 'inherit', '1'),
+(75, 23, 72, 'get', '/id/{id}', 'form', 'clinica.clinicas.edit', NULL, 1111, 'inherit', '1'),
 (76, 23, 72, 'any', '/cadastro', 'form', 'clinica.clinicas.add', NULL, 1111, 'inherit', '1'),
 (77, 23, 72, 'patch', '/{id}', 'patch', 'clinica.clinicas.patch', NULL, 1111, 'inherit', '1'),
 (78, 23, 72, 'delete', '/', 'delete', 'clinica.clinicas.delete', NULL, 1111, 'inherit', '1'),
@@ -449,7 +461,26 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (83, 24, 34, 'any', '/commercial', 'comercial', 'main.services.comercial', NULL, 1111, 'inherit', '1'),
 (84, 24, 34, 'any', '/removal', 'remocao', 'main.services.remocao', NULL, 1111, 'inherit', '1'),
 (85, 24, 34, 'any', '/protected-area', 'area_protegida', 'main.services.area_protegida', NULL, 1111, 'inherit', '1'),
-(86, 1, 0, 'post', '/contact', 'send_mail', 'main.contact', NULL, 1111, 'inherit', '1');
+(86, 1, 0, 'post', '/contact', 'send_mail', 'main.contact', NULL, 1111, 'inherit', '1'),
+(87, 25, 0, 'any', '/departamentos', 'index', 'clinica.departamentos.index', NULL, 1111, 'inherit', '1'),
+(88, 25, 87, 'any', '/', 'index', 'clinica.departamentos.index', NULL, 1111, 'inherit', '1'),
+(89, 25, 87, 'get', '/cadastro', 'form', 'clinica.departamentos.add', NULL, 1111, 'inherit', '1'),
+(90, 25, 87, 'post', '/', 'create', 'clinica.departamentos.post', NULL, 1111, 'inherit', '1'),
+(91, 25, 87, 'get', '/{id}', 'form', 'clinica.departamentos.edit', NULL, 1111, 'inherit', '1'),
+(92, 25, 87, 'patch', '/{id}', 'patch', 'clinica.departamentos.patch', NULL, 1111, 'inherit', '1'),
+(93, 25, 87, 'delete', '/', 'delete', 'clinica.departamentos.delete', NULL, 1111, 'inherit', '1'),
+(94, 25, 87, 'put', '/', 'edit', 'clinica.departamentos.put', NULL, 1111, 'inherit', '1'),
+(95, 23, 72, 'get', '/departamentos', 'getDepartamentos', 'clinica.clinicas.departamentos', NULL, 1111, 'inherit', '1'),
+(96, 27, 0, 'any', '/agendamentos', 'index', 'clinica.agendamentos.index', NULL, 1111, 'inherit', '1'),
+(97, 27, 96, 'any', '/', 'index', 'clinica.agendamentos.index', NULL, 1111, 'inherit', '1'),
+(98, 27, 96, 'get', '/new', 'form', 'clinica.agendamentos.add', NULL, 1111, 'inherit', '1'),
+(99, 27, 96, 'post', '/', 'create', 'clinica.agendamentos.post', NULL, 1111, 'inherit', '1'),
+(100, 27, 96, 'get', '/{id}', 'form', 'clinica.agendamentos.edit', NULL, 1111, 'inherit', '1'),
+(101, 27, 96, 'patch', '/{id}', 'patch', 'clinica.agendamentos.patch', NULL, 1111, 'inherit', '1'),
+(102, 27, 96, 'delete', '/', 'delete', 'clinica.agendamentos.delete', NULL, 1111, 'inherit', '1'),
+(103, 27, 96, 'put', '/', 'edit', 'clinica.agendamentos.put', NULL, 1111, 'inherit', '1'),
+(104, 27, 96, 'any', '/consultas', 'getConsultas', 'clinica.agendamentos.consultas.index', NULL, 1111, 'inherit', '1'),
+(105, 19, 40, 'any', '/{id}/agendamento', 'agendar', 'clinica.pacientes.{id}.agendamento', NULL, 1111, 'inherit', '1');
 
 -- --------------------------------------------------------
 
@@ -500,7 +531,7 @@ CREATE TABLE `tb_acl_usuario_config` (
 --
 
 INSERT INTO `tb_acl_usuario_config` (`id_usuario`, `id_modulo`, `id_config`, `value`, `created_at`, `updated_at`) VALUES
-(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-11-25 02:15:19');
+(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-12-02 05:27:05');
 
 -- --------------------------------------------------------
 
@@ -511,16 +542,16 @@ INSERT INTO `tb_acl_usuario_config` (`id_usuario`, `id_modulo`, `id_config`, `va
 CREATE TABLE `tb_acl_usuario_imagem` (
   `id` int UNSIGNED NOT NULL,
   `id_usuario` int UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `descricao` varchar(500) NOT NULL,
-  `filename` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `filename` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `filesize` int UNSIGNED NOT NULL,
-  `path` varchar(255) NOT NULL,
+  `path` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `privada` enum('0','1') NOT NULL DEFAULT '0',
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `privada` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0',
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -532,12 +563,12 @@ CREATE TABLE `tb_acl_usuario_session` (
   `id` int UNSIGNED NOT NULL,
   `id_usuario` int UNSIGNED NOT NULL,
   `id_modulo` int UNSIGNED NOT NULL,
-  `token` varchar(60) DEFAULT NULL,
-  `ip` varchar(39) NOT NULL,
-  `user_agent` varchar(255) NOT NULL,
+  `token` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ip` varchar(39) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_agent` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `started_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `expired_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_acl_usuario_session`
@@ -548,10 +579,15 @@ INSERT INTO `tb_acl_usuario_session` (`id`, `id_usuario`, `id_modulo`, `token`, 
 (2, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-15 04:59:13', '2022-11-15 05:13:22'),
 (3, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-15 02:20:18', '2022-11-15 05:24:30'),
 (4, 1, 6, '5cf13f21f10ec1aa845d0703fcb83ca46377ec703109d', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-18 23:34:56', NULL),
-(5, 1, 6, '97891d9a5d2b752121ca8da1c22f5782637f8b99527a8', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-24 18:19:53', NULL),
+(5, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-28 21:54:08', '2022-11-29 05:06:30'),
 (6, 1, 2, 'e738e021469821ed4b255ce146f1febd637921622eeb5', '127.0.0.1', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0', '2022-11-19 18:33:06', NULL),
-(7, 1, 6, '64474580f0bcd62fd371b7de63612667637ff6309cde0', '187.19.209.227', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-25 01:54:40', NULL),
-(8, 1, 6, 'efa2d0267ec5d20bf3469674eadc46d563896a93c685e', '187.19.208.179', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-02 03:01:39', NULL);
+(7, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-29 02:06:37', '2022-11-29 05:07:01'),
+(8, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-30 23:46:36', '2022-12-01 02:53:25'),
+(9, 1, 6, '2819e723fdd70e695b783675a140e55d6389626b95ee2', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-02 05:26:51', NULL),
+(10, 1, 6, '3cf804144e9e41dd4e40b8487f8d2a4e63896ec449b88', '177.79.34.204', 'Mozilla/5.0 (Linux; Android 10; Redmi Note 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36', '2022-12-02 03:19:32', NULL),
+(11, 1, 6, 'fc62decfaee35ab24c66e7239a6e3edb638f553628a12', '177.79.45.190', 'Mozilla/5.0 (Linux; Android 10; Redmi Note 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36', '2022-12-06 14:44:06', NULL),
+(12, 1, 6, '6f514314370d577be3a1f34c3fa6da61638f8552c82a0', '187.64.89.75', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', '2022-12-06 18:09:22', NULL),
+(13, 1, 6, 'cf7295169b9cdd59941d08599b676ef563915b6c93419', '187.19.209.11', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-08 06:35:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -614,7 +650,8 @@ CREATE TABLE `tb_atendimento` (
   `hora_inicial` time NOT NULL DEFAULT '00:00:00',
   `hora_final` time NOT NULL DEFAULT '00:00:00',
   `recorrencia` enum('on','off') NOT NULL DEFAULT 'off',
-  `periodo` int UNSIGNED NOT NULL DEFAULT '0',
+  `recorrencia_periodo` int UNSIGNED NOT NULL DEFAULT '0',
+  `recorrencia_limite` date DEFAULT NULL,
   `cor` varchar(25) DEFAULT NULL,
   `criador` int UNSIGNED NOT NULL,
   `lembrete` enum('on','off') NOT NULL DEFAULT 'off',
@@ -624,13 +661,6 @@ CREATE TABLE `tb_atendimento` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela de cadastro de agendamentos de eventos médicos';
-
---
--- Extraindo dados da tabela `tb_atendimento`
---
-
-INSERT INTO `tb_atendimento` (`id`, `titulo`, `descricao`, `id_parent`, `id_tipo`, `id_medico`, `id_paciente`, `id_categoria`, `data`, `hora_agendada`, `hora_inicial`, `hora_final`, `recorrencia`, `periodo`, `cor`, `criador`, `lembrete`, `tempo_lembrete`, `periodo_lembrete`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Teste', NULL, 0, 1, 1, 19, 1, '2022-11-18', '17:00:00', '00:00:00', '00:00:00', 'off', 0, '#fffffff', 1, 'off', 0, 0, '2022-11-18 19:51:51', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -698,12 +728,12 @@ CREATE TABLE `tb_banner` (
 CREATE TABLE `tb_banner_descricao` (
   `id_banner` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -715,12 +745,12 @@ CREATE TABLE `tb_banner_imagem` (
   `id_banner` int UNSIGNED NOT NULL,
   `id_midia` int UNSIGNED NOT NULL,
   `clicks` int UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Quantidade de clicks/visualizações do banner',
-  `url` varchar(255) DEFAULT NULL COMMENT 'Link para artigo',
+  `url` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Link para artigo',
   `ordem` int UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Ordem para listagem do banner',
   `publish_up` date DEFAULT NULL COMMENT 'Data para exibição do banner',
   `publish_down` date DEFAULT NULL COMMENT 'Data para parar exibição do banner',
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -732,12 +762,12 @@ CREATE TABLE `tb_banner_imagem_descricao` (
   `id_banner` int UNSIGNED NOT NULL,
   `id_midia` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -748,13 +778,13 @@ CREATE TABLE `tb_banner_imagem_descricao` (
 CREATE TABLE `tb_categoria` (
   `id` int UNSIGNED NOT NULL,
   `id_parent` int UNSIGNED NOT NULL DEFAULT '0',
-  `imagem` varchar(255) DEFAULT NULL,
-  `cor` varchar(20) NOT NULL,
+  `imagem` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cor` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `ordem` int UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_categoria`
@@ -778,12 +808,12 @@ INSERT INTO `tb_categoria` (`id`, `id_parent`, `imagem`, `cor`, `ordem`, `create
 CREATE TABLE `tb_categoria_descricao` (
   `id_categoria` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_categoria_descricao`
@@ -806,17 +836,17 @@ INSERT INTO `tb_categoria_descricao` (`id_categoria`, `id_idioma`, `titulo`, `de
 
 CREATE TABLE `tb_cliente` (
   `id` int UNSIGNED NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `rua` varchar(100) NOT NULL,
-  `cep` varchar(9) NOT NULL,
-  `bairro` varchar(100) NOT NULL,
-  `cidade` varchar(100) NOT NULL,
-  `uf` varchar(3) NOT NULL,
-  `complemento` varchar(100) DEFAULT NULL,
+  `nome` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `rua` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `cep` varchar(9) COLLATE utf8mb4_general_ci NOT NULL,
+  `bairro` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `cidade` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `uf` varchar(3) COLLATE utf8mb4_general_ci NOT NULL,
+  `complemento` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -826,8 +856,8 @@ CREATE TABLE `tb_cliente` (
 
 CREATE TABLE `tb_cliente_email` (
   `id_cliente` int UNSIGNED NOT NULL,
-  `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -837,8 +867,8 @@ CREATE TABLE `tb_cliente_email` (
 
 CREATE TABLE `tb_cliente_telefone` (
   `id_cliente` int UNSIGNED NOT NULL,
-  `telefone` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `telefone` varchar(16) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -848,15 +878,15 @@ CREATE TABLE `tb_cliente_telefone` (
 
 CREATE TABLE `tb_comentario` (
   `id` int UNSIGNED NOT NULL,
-  `autor` varchar(100) NOT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
-  `profissao` varchar(100) DEFAULT NULL,
+  `autor` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `imagem` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `profissao` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `estrelas` int NOT NULL DEFAULT '5',
-  `texto` varchar(1000) NOT NULL,
+  `texto` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data de criação do comentário',
   `updated_at` timestamp NULL DEFAULT NULL COMMENT 'Data a última modificação do comentário',
-  `status` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -901,8 +931,9 @@ CREATE TABLE `tb_departamento` (
 --
 
 INSERT INTO `tb_departamento` (`id`, `titulo`, `descricao`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Recepção', 'Departamento médico', '2022-11-22 21:56:27', NULL, '1'),
-(2, 'Pediatria', 'Departamento médico', '2022-11-22 21:56:27', NULL, '1');
+(8, 'Recepção', NULL, '2022-11-29 04:06:40', NULL, '1'),
+(9, 'Pediatria', NULL, '2022-11-29 04:06:50', NULL, '1'),
+(10, 'Bloco cirúrgico', NULL, '2022-11-29 04:07:07', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -914,16 +945,17 @@ CREATE TABLE `tb_departamento_empresa` (
   `id` int UNSIGNED NOT NULL,
   `id_departamento` int UNSIGNED NOT NULL,
   `id_empresa` int UNSIGNED NOT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_departamento_empresa`
 --
 
 INSERT INTO `tb_departamento_empresa` (`id`, `id_departamento`, `id_empresa`, `status`) VALUES
-(1, 1, 1, '1'),
-(2, 2, 1, '1');
+(97, 10, 12, '1'),
+(98, 9, 12, '1'),
+(99, 8, 12, '1');
 
 -- --------------------------------------------------------
 
@@ -933,19 +965,19 @@ INSERT INTO `tb_departamento_empresa` (`id`, `id_departamento`, `id_empresa`, `s
 
 CREATE TABLE `tb_distribuidor` (
   `id` int UNSIGNED NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `telefone` varchar(16) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `rua` varchar(100) NOT NULL,
-  `cep` varchar(9) NOT NULL,
-  `bairro` varchar(100) NOT NULL,
-  `cidade` varchar(100) NOT NULL,
-  `uf` varchar(3) NOT NULL,
-  `complemento` varchar(100) DEFAULT NULL,
+  `nome` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `telefone` varchar(16) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `rua` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `cep` varchar(9) COLLATE utf8mb4_general_ci NOT NULL,
+  `bairro` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `cidade` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `uf` varchar(3) COLLATE utf8mb4_general_ci NOT NULL,
+  `complemento` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -955,8 +987,8 @@ CREATE TABLE `tb_distribuidor` (
 
 CREATE TABLE `tb_distribuidor_email` (
   `id_distribuidor` int UNSIGNED NOT NULL,
-  `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -966,8 +998,8 @@ CREATE TABLE `tb_distribuidor_email` (
 
 CREATE TABLE `tb_distribuidor_telefone` (
   `id_distribuidor` int UNSIGNED NOT NULL,
-  `telefone` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `telefone` varchar(16) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -978,14 +1010,14 @@ CREATE TABLE `tb_distribuidor_telefone` (
 CREATE TABLE `tb_email` (
   `id` int UNSIGNED NOT NULL,
   `id_reply` int UNSIGNED NOT NULL DEFAULT '0',
-  `nome` varchar(50) DEFAULT NULL,
-  `email` varchar(100) NOT NULL,
-  `telefone` varchar(16) NOT NULL,
-  `assunto` varchar(100) NOT NULL,
-  `mensagem` text NOT NULL,
+  `nome` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `telefone` varchar(16) COLLATE utf8mb4_general_ci NOT NULL,
+  `assunto` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `mensagem` text COLLATE utf8mb4_general_ci NOT NULL,
   `datahora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1043,8 +1075,7 @@ CREATE TABLE `tb_empresa` (
 --
 
 INSERT INTO `tb_empresa` (`id`, `nome_fantasia`, `razao_social`, `cnpj`, `inscricao_estadual`, `inscricao_municipal`, `cep`, `logradouro`, `numero`, `bairro`, `complemento`, `cidade`, `uf`, `pais`, `quem_somos`, `quem_somos_imagem`, `distribuidor_imagem`, `contato_imagem`, `telefone`, `celular`, `email`, `facebook`, `instagram`, `youtube`, `linkedin`, `github`, `gmaps`, `aliquota_imposto`, `tributacao`, `certificado`, `senha_certificado`, `ambiente`, `sequence_nfe`, `sequence_nfce`, `serie_nfe`, `serie_nfce`, `tokencsc`, `csc`, `matriz`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Empresa 2', 'Medicus 24h', '12.341.235/6546-54', '123456789', '123456789', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', '405', 'Malvinas', NULL, 'Campina Grande', 'PB', 'Brasil', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-11-18 17:17:06', '2022-11-23 08:41:33', '1'),
-(2, 'Medicus 24h', 'Empresa', '19.929.299/9288-29', '1234', '23111', '58076-410', 'Rua Governador Mário Covas', '1234', 'João Paulo II', '1234', 'João Pessoa', 'PB', 'Brasil', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-11-19 19:42:01', '2022-11-23 02:46:35', '1');
+(12, 'Medicus24h', 'Medicus24h', '06.054.321/0001-07', '123', '1123', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', '100', 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-11-29 04:06:04', '2022-12-02 06:29:04', '1');
 
 -- --------------------------------------------------------
 
@@ -1067,7 +1098,7 @@ CREATE TABLE `tb_especialidade` (
 
 INSERT INTO `tb_especialidade` (`id`, `especialidade`, `descricao`, `created_at`, `updated_at`, `status`) VALUES
 (1, 'Otorrino', 'Médico especializado em tratamento de saúde de nariz, ouvido e garganta.', '2022-11-16 03:29:01', NULL, '1'),
-(2, 'Cardiologista', 'Cardiologista', '2022-11-16 03:29:01', '2022-11-19 23:20:30', '1'),
+(2, 'Cardiologista', 'Médico que cuida do coração.', '2022-11-16 03:29:01', '2022-11-25 03:33:20', '1'),
 (3, 'Neurologista', 'Médico especializado em tratamento de saúde da cabeça e do sistema nervoso.', '2022-11-16 03:29:01', NULL, '1'),
 (4, 'Pneumulogista', 'Médico especializado em tratamento de saúde do sistema respiratório.', '2022-11-16 03:29:01', NULL, '1'),
 (5, 'Ortopedista', 'Médico especializado em problemas de ossos.', '2022-11-16 04:06:05', NULL, '1'),
@@ -1087,7 +1118,7 @@ INSERT INTO `tb_especialidade` (`id`, `especialidade`, `descricao`, `created_at`
 (20, 'Cirurgia geral', NULL, '2022-11-16 07:03:34', NULL, '1'),
 (21, 'Cirurgia plástica', NULL, '2022-11-16 07:03:41', NULL, '1'),
 (22, 'Ortopedia', NULL, '2022-11-16 07:03:55', NULL, '1'),
-(23, 'Anestesiologia', 'Médico responsável por aplicação de anestesias.', '2022-11-16 07:04:01', '2022-11-19 23:05:15', '1');
+(23, 'Anestesiologia', 'Médico responsável por aplicação de anestesias.', '2022-11-16 07:04:01', '2022-11-27 06:44:04', '1');
 
 -- --------------------------------------------------------
 
@@ -1119,8 +1150,8 @@ INSERT INTO `tb_estado_civil` (`id`, `descricao`) VALUES
 
 CREATE TABLE `tb_etnia` (
   `id` int UNSIGNED NOT NULL,
-  `descricao` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `descricao` varchar(20) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_etnia`
@@ -1181,11 +1212,7 @@ CREATE TABLE `tb_funcionario` (
 --
 
 INSERT INTO `tb_funcionario` (`id`, `id_empresa_departamento`, `id_funcao`, `nome`, `cpf`, `rg`, `created_at`, `updated_at`, `status`) VALUES
-(1, 1, 2, 'Marcos', '123.456.789-10', '1234123412', '2022-11-16 18:41:45', '2022-11-20 02:13:23', '1'),
-(2, 1, 2, 'Antônio', '123.412.341-22', '123412345', '2022-11-16 18:51:55', '2022-11-20 02:05:28', '1'),
-(3, 1, 2, 'Alisson Guedes', '069.422.924-51', '3177241', '2022-11-16 19:16:38', NULL, '1'),
-(4, 1, 2, 'Flávio', '123.411.111-44', '14444111', '2022-11-19 23:17:41', NULL, '1'),
-(5, 1, 2, 'Antônio', '939.393.939-33', '399393', '2022-11-19 23:18:03', NULL, '1');
+(20, 97, 2, 'Alisson', '069.422.924-51', '3177241', '2022-11-29 04:08:22', '2022-11-29 07:13:33', '1');
 
 -- --------------------------------------------------------
 
@@ -1195,13 +1222,13 @@ INSERT INTO `tb_funcionario` (`id`, `id_empresa_departamento`, `id_funcao`, `nom
 
 CREATE TABLE `tb_galeria` (
   `id` int UNSIGNED NOT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
+  `imagem` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `publish_up` date NOT NULL COMMENT 'Data para exibição do banner',
   `publish_down` date NOT NULL COMMENT 'Data para parar exibição do banner',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1212,12 +1239,12 @@ CREATE TABLE `tb_galeria` (
 CREATE TABLE `tb_galeria_descricao` (
   `id_galeria` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1247,7 +1274,7 @@ CREATE TABLE `tb_lead` (
   `id_produto` int UNSIGNED NOT NULL,
   `id_cliente` int UNSIGNED NOT NULL,
   `datahora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1284,10 +1311,10 @@ INSERT INTO `tb_link` (`id`, `titulo`, `descricao`, `slug`, `link`, `target`, `i
 CREATE TABLE `tb_link_descricao` (
   `id_link` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `url` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1304,17 +1331,6 @@ CREATE TABLE `tb_medico` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para cadastro de atendimentos realizados.';
-
---
--- Extraindo dados da tabela `tb_medico`
---
-
-INSERT INTO `tb_medico` (`id`, `id_funcionario`, `id_especialidade`, `crm`, `created_at`, `updated_at`, `status`) VALUES
-(1, 1, 1, '12341234', '2022-11-16 15:41:45', '2022-11-22 23:08:38', '1'),
-(6, 2, 14, '123412345', '2022-11-16 15:51:55', '2022-11-22 23:08:38', '1'),
-(7, 3, 23, '589284-01', '2022-11-16 16:16:38', '2022-11-22 23:08:38', '1'),
-(9, 4, 23, '12341444444441', '2022-11-19 20:17:41', '2022-11-22 23:08:38', '1'),
-(10, 5, 17, '39392931', '2022-11-19 20:18:03', '2022-11-22 23:08:38', '1');
 
 -- --------------------------------------------------------
 
@@ -1337,13 +1353,6 @@ CREATE TABLE `tb_medico_agenda` (
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela de cadastro de dias de atendimentos da agenda médica';
 
---
--- Extraindo dados da tabela `tb_medico_agenda`
---
-
-INSERT INTO `tb_medico_agenda` (`id`, `id_medico_clinica`, `dia`, `semana`, `mes`, `ano`, `titulo`, `observacao`, `created_at`, `updated_at`, `atende`, `status`) VALUES
-(1, 1, 1, 0, 00, 0000, NULL, NULL, '2022-11-18 17:22:15', NULL, 'S', '1');
-
 -- --------------------------------------------------------
 
 --
@@ -1356,13 +1365,6 @@ CREATE TABLE `tb_medico_agenda_horario` (
   `hora_final` time NOT NULL DEFAULT '00:00:00',
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela de cadastro de horários de atendimentos da agenda médica';
-
---
--- Extraindo dados da tabela `tb_medico_agenda_horario`
---
-
-INSERT INTO `tb_medico_agenda_horario` (`id_agenda`, `hora_inicial`, `hora_final`, `status`) VALUES
-(1, '07:00:00', '11:00:00', '1');
 
 -- --------------------------------------------------------
 
@@ -1378,13 +1380,6 @@ CREATE TABLE `tb_medico_clinica` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Tabela para vincular médico a várias clínica';
-
---
--- Extraindo dados da tabela `tb_medico_clinica`
---
-
-INSERT INTO `tb_medico_clinica` (`id`, `id_medico`, `id_empresa_departamento`, `created_at`, `updated_at`, `status`) VALUES
-(1, 7, 1, '2022-11-18 17:19:40', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -1421,12 +1416,12 @@ CREATE TABLE `tb_midia` (
 CREATE TABLE `tb_midia_descricao` (
   `id_midia` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1483,19 +1478,19 @@ INSERT INTO `tb_paciente` (`id`, `nome`, `imagem`, `codigo`, `id_convenio`, `mat
 (19, 'Alisson Guedes Pereira', NULL, 'P-598909', 4, NULL, NULL, 2, 2, 2, 'M', '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4800', '(83) 9 8811.2444', '2022-11-12 18:22:00', '2022-11-16 03:42:36', 'off', 'off', 'off', '0', '1'),
 (20, 'Alisson Guedes Pereira', NULL, 'P-233594', 2, NULL, NULL, 3, 1, 2, 'M', '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4801', '(83) 9 8811.2444', '2022-11-12 18:23:18', '2022-11-13 06:24:16', 'off', 'off', 'off', '0', '1'),
 (21, 'Alisson Guedes Pereira', NULL, 'P-921710', 1, NULL, NULL, 3, 1, 2, NULL, '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4802', '(83) 9 8811.2444', '2022-11-12 18:24:23', '2022-11-13 06:15:19', 'off', 'off', 'off', '0', '1'),
-(26, 'alisson', NULL, 'P-924140', 1, '1234', '2022-11-30', 3, 2, 3, 'M', '2022-11-11', '123.412.341-23', '1234123', '1234123421', 'teste', 'teste', NULL, 'teste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'alissonguedes87@gmail.com', '(83) 9881.1124', '(12) 3 4123.4123', '2022-11-13 05:52:45', NULL, 'off', 'off', 'off', '0', '1'),
+(26, 'alisson', NULL, 'P-924140', 1, '1234', NULL, 3, 2, 3, 'M', NULL, '123.412.341-23', '1234123', '1234123421', 'teste', 'teste', NULL, 'teste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'alissonguedes87@gmail.com', '(83) 9881.1124', '(12) 3 4123.4123', '2022-11-13 05:52:45', '2022-12-02 05:42:37', 'off', 'off', 'off', '0', '1'),
 (27, 'teste1234', NULL, 'P-803633', 1, '1234', '2022-11-22', 3, 1, 1, 'M', '2022-11-13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 05:55:35', NULL, 'off', 'off', 'off', '0', '0'),
 (28, 'Chris', NULL, 'P-312079', 1, '1234', '2022-11-20', 3, 1, 1, 'F', '2022-11-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 05:56:21', '2022-11-14 10:01:45', 'off', 'off', 'off', '0', '1'),
 (29, 'teste', NULL, 'P-984646', 1, NULL, NULL, 1, 1, 1, NULL, '2022-11-09', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:03:39', NULL, 'off', 'off', 'off', '0', '1'),
 (30, 'Teste 1', NULL, 'P-733972', 1, NULL, NULL, 1, 1, 1, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:04:34', '2022-11-14 10:02:46', 'off', 'off', 'off', '0', '1'),
-(31, 'Alane', 'assets/clinica/img/pacientes/0f21269a0d97473fc20baca1b1611859297e94e1.png', 'P-225483', 1, NULL, NULL, 1, 1, 1, 'M', '1943-02-15', '123.456.789-12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:05:47', '2022-11-19 14:47:32', 'off', 'off', 'off', '0', '0'),
+(31, 'Alane', 'assets/clinica/img/pacientes/0f21269a0d97473fc20baca1b1611859297e94e1.png', 'P-225483', 1, NULL, NULL, 1, 1, 1, 'M', '1943-02-12', '123.456.789-12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:05:47', '2022-12-01 02:52:21', 'off', 'off', 'off', '0', '0'),
 (32, 'teste', 'assets/clinica/img/pacientes/0f21269a0d97473fc20baca1b1611859297e94e1.png', 'P-937843', 1, NULL, NULL, 1, 1, 1, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:20:54', '2022-11-14 09:37:16', 'off', 'off', 'off', '0', '1'),
 (33, 'Benjamin', 'assets/clinica/img/pacientes/53f80ff7e7f9cec85406d4605912c3f94367be9b.jpg', 'P-991190', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:23:40', '2022-11-18 06:08:26', 'off', 'off', 'off', '0', '0'),
 (34, 'teste', NULL, 'P-779749', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 21:22:28', NULL, 'off', 'off', 'off', '0', '1'),
 (35, 'Novo cliente', NULL, 'P-421395', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 22:41:52', NULL, 'off', 'off', 'off', '0', '1'),
 (36, 'Teste 2', NULL, 'P-910774', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 03:58:55', '2022-11-14 09:04:03', 'off', 'off', 'off', '0', '1'),
-(37, 'Aline', NULL, 'P-946492', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, '123456789', NULL, NULL, NULL, NULL, NULL, 'Rua Corretor José Carlos Fonseca de Oliveira', '123', NULL, '58432-581', 'Campina Grande', 'Malvinas', 'PB', NULL, NULL, NULL, NULL, '2022-11-14 05:54:37', '2022-11-24 19:17:54', 'off', 'off', 'off', '0', '0'),
-(38, 'Maria da Penha', NULL, 'P-733005', 1, NULL, NULL, 1, 2, 1, 'F', '1969-11-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 23:29:07', '2022-11-15 02:29:25', 'off', 'off', 'off', '0', '1');
+(37, 'Aline', NULL, 'P-946492', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, '123456789', NULL, NULL, NULL, NULL, NULL, 'Rua Corretor José Carlos Fonseca de Oliveira', '123', NULL, '58432-581', 'Campina Grande', 'Malvinas', 'PB', NULL, NULL, NULL, NULL, '2022-11-14 05:54:37', '2022-12-06 17:46:05', 'off', 'off', 'off', '0', '0'),
+(38, 'Maria da Penha', NULL, 'P-733005', 1, NULL, NULL, 1, 2, 1, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 23:29:07', '2022-12-02 06:06:50', 'off', 'off', 'off', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -1523,14 +1518,14 @@ CREATE TABLE `tb_post` (
   `id_controller` int UNSIGNED NOT NULL,
   `id_parent` int UNSIGNED DEFAULT '0',
   `permissao` smallint UNSIGNED NOT NULL DEFAULT '1111',
-  `tipo` varchar(20) NOT NULL DEFAULT 'post' COMMENT 'Informa o tipo de página: Página simples ou galeria de fotos',
-  `autor` varchar(45) DEFAULT NULL,
-  `arquivo` varchar(255) DEFAULT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
+  `tipo` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'post' COMMENT 'Informa o tipo de página: Página simples ou galeria de fotos',
+  `autor` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `arquivo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `imagem` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_post`
@@ -1549,13 +1544,13 @@ CREATE TABLE `tb_post_descricao` (
   `id_post` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
   `titulo` int NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `subtitulo` varchar(45) DEFAULT NULL,
-  `texto` varchar(45) DEFAULT NULL,
-  `meta_description` varchar(45) DEFAULT NULL,
-  `meta_keywords` varchar(45) DEFAULT NULL,
-  `meta_title` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `slug` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `subtitulo` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `texto` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `meta_description` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `meta_title` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1577,7 +1572,7 @@ CREATE TABLE `tb_post_link` (
 CREATE TABLE `tb_post_midia` (
   `id_pagina` int UNSIGNED NOT NULL,
   `id_midia` int UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1588,15 +1583,15 @@ CREATE TABLE `tb_post_midia` (
 CREATE TABLE `tb_produto` (
   `id` int UNSIGNED NOT NULL,
   `id_distribuidor` int UNSIGNED NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `descricao` text NOT NULL,
-  `modo_uso` text NOT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
+  `nome` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` text COLLATE utf8mb4_general_ci NOT NULL,
+  `modo_uso` text COLLATE utf8mb4_general_ci NOT NULL,
+  `imagem` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `valor` decimal(10,3) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1618,12 +1613,12 @@ CREATE TABLE `tb_produto_categoria` (
 CREATE TABLE `tb_produto_descricao` (
   `id_produto` int UNSIGNED NOT NULL,
   `id_idioma` int UNSIGNED NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_keywords` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `meta_keywords` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1634,8 +1629,8 @@ CREATE TABLE `tb_produto_descricao` (
 CREATE TABLE `tb_produto_imagem` (
   `id_produto` int UNSIGNED NOT NULL,
   `id_midia` int UNSIGNED NOT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1686,9 +1681,9 @@ INSERT INTO `tb_sys_config` (`id`, `id_modulo`, `config`, `value`, `created_at`,
 
 CREATE TABLE `tb_sys_dicionario` (
   `id` int UNSIGNED NOT NULL,
-  `palavra` text NOT NULL,
-  `definicao` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `palavra` text COLLATE utf8mb4_general_ci NOT NULL,
+  `definicao` text COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1698,14 +1693,14 @@ CREATE TABLE `tb_sys_dicionario` (
 
 CREATE TABLE `tb_sys_idioma` (
   `id` int UNSIGNED NOT NULL,
-  `descricao` varchar(100) NOT NULL,
-  `sigla` varchar(7) NOT NULL,
-  `label` varchar(50) DEFAULT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
+  `descricao` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `sigla` varchar(7) COLLATE utf8mb4_general_ci NOT NULL,
+  `label` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `imagem` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `status` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `tb_sys_idioma`
@@ -1724,8 +1719,8 @@ INSERT INTO `tb_sys_idioma` (`id`, `descricao`, `sigla`, `label`, `imagem`, `cre
 CREATE TABLE `tb_sys_idioma_dicionario` (
   `id_idioma` int UNSIGNED NOT NULL,
   `id_palavra` int UNSIGNED NOT NULL,
-  `traducao` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `traducao` text COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tabelas despejadas
@@ -1866,10 +1861,10 @@ ALTER TABLE `tb_agenda`
 --
 ALTER TABLE `tb_atendimento`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_tb_agendamento_id_tipo` (`id_tipo`),
-  ADD KEY `fk_tb_agendamento_id_medico` (`id_medico`),
   ADD KEY `fk_tb_agendamento_id_categoria` (`id_categoria`),
+  ADD KEY `fk_tb_agendamento_id_medico` (`id_medico`),
   ADD KEY `fk_tb_agendamento_id_paciente` (`id_paciente`),
+  ADD KEY `fk_tb_agendamento_id_tipo` (`id_tipo`),
   ADD KEY `fk_tb_agendamento_id_usuario` (`criador`);
 
 --
@@ -2275,7 +2270,7 @@ ALTER TABLE `tb_acl_menu`
 -- AUTO_INCREMENT de tabela `tb_acl_menu_item`
 --
 ALTER TABLE `tb_acl_menu_item`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_menu_secao`
@@ -2293,13 +2288,13 @@ ALTER TABLE `tb_acl_modulo`
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_controller`
 --
 ALTER TABLE `tb_acl_modulo_controller`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_routes`
 --
 ALTER TABLE `tb_acl_modulo_routes`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_usuario`
@@ -2317,7 +2312,7 @@ ALTER TABLE `tb_acl_usuario_imagem`
 -- AUTO_INCREMENT de tabela `tb_acl_usuario_session`
 --
 ALTER TABLE `tb_acl_usuario_session`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acomodacao`
@@ -2383,13 +2378,13 @@ ALTER TABLE `tb_convenio`
 -- AUTO_INCREMENT de tabela `tb_departamento`
 --
 ALTER TABLE `tb_departamento`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `tb_departamento_empresa`
 --
 ALTER TABLE `tb_departamento_empresa`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT de tabela `tb_distribuidor`
@@ -2407,7 +2402,7 @@ ALTER TABLE `tb_email`
 -- AUTO_INCREMENT de tabela `tb_empresa`
 --
 ALTER TABLE `tb_empresa`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela.', AUTO_INCREMENT=4;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela.', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `tb_especialidade`
@@ -2437,7 +2432,7 @@ ALTER TABLE `tb_funcao`
 -- AUTO_INCREMENT de tabela `tb_funcionario`
 --
 ALTER TABLE `tb_funcionario`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `tb_galeria`
@@ -2623,11 +2618,11 @@ ALTER TABLE `tb_agenda`
 -- Limitadores para a tabela `tb_atendimento`
 --
 ALTER TABLE `tb_atendimento`
-  ADD CONSTRAINT `fk_tb_agendamento_id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `tb_categoria` (`id`),
-  ADD CONSTRAINT `fk_tb_agendamento_id_medico` FOREIGN KEY (`id_medico`) REFERENCES `tb_medico_clinica` (`id`),
-  ADD CONSTRAINT `fk_tb_agendamento_id_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tb_paciente` (`id`),
-  ADD CONSTRAINT `fk_tb_agendamento_id_tipo` FOREIGN KEY (`id_tipo`) REFERENCES `tb_atendimento_tipo` (`id`),
-  ADD CONSTRAINT `fk_tb_agendamento_id_usuario` FOREIGN KEY (`criador`) REFERENCES `tb_acl_usuario` (`id`);
+  ADD CONSTRAINT `fk_tb_agendamento_id_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `tb_categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_agendamento_id_medico` FOREIGN KEY (`id_medico`) REFERENCES `tb_medico_clinica` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_agendamento_id_paciente` FOREIGN KEY (`id_paciente`) REFERENCES `tb_paciente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_agendamento_id_tipo` FOREIGN KEY (`id_tipo`) REFERENCES `tb_atendimento_tipo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_agendamento_id_usuario` FOREIGN KEY (`criador`) REFERENCES `tb_acl_usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_atendimento_notas`
@@ -2681,8 +2676,8 @@ ALTER TABLE `tb_cliente_telefone`
 -- Limitadores para a tabela `tb_departamento_empresa`
 --
 ALTER TABLE `tb_departamento_empresa`
-  ADD CONSTRAINT `fk_tb_departamento_id_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `tb_departamento` (`id`),
-  ADD CONSTRAINT `fk_tb_departamento_id_empresa` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id`);
+  ADD CONSTRAINT `fk_tb_departamento_id_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `tb_departamento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_departamento_id_empresa` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_distribuidor_email`
@@ -2735,27 +2730,27 @@ ALTER TABLE `tb_link_descricao`
 -- Limitadores para a tabela `tb_medico`
 --
 ALTER TABLE `tb_medico`
-  ADD CONSTRAINT `fk_tb_medico_id_especialidade` FOREIGN KEY (`id_especialidade`) REFERENCES `tb_especialidade` (`id`),
+  ADD CONSTRAINT `fk_tb_medico_id_especialidade` FOREIGN KEY (`id_especialidade`) REFERENCES `tb_especialidade` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tb_medico_id_funcionario` FOREIGN KEY (`id_funcionario`) REFERENCES `tb_funcionario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_medico_agenda`
 --
 ALTER TABLE `tb_medico_agenda`
-  ADD CONSTRAINT `fk_tb_medico_agenda_id_medico_clinica` FOREIGN KEY (`id_medico_clinica`) REFERENCES `tb_medico_clinica` (`id`);
+  ADD CONSTRAINT `fk_tb_medico_agenda_id_medico_clinica` FOREIGN KEY (`id_medico_clinica`) REFERENCES `tb_medico_clinica` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_medico_agenda_horario`
 --
 ALTER TABLE `tb_medico_agenda_horario`
-  ADD CONSTRAINT `fk_tb_medico_agenda_horario_id_agenda` FOREIGN KEY (`id_agenda`) REFERENCES `tb_medico_agenda` (`id`);
+  ADD CONSTRAINT `fk_tb_medico_agenda_horario_id_agenda` FOREIGN KEY (`id_agenda`) REFERENCES `tb_medico_agenda` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_medico_clinica`
 --
 ALTER TABLE `tb_medico_clinica`
-  ADD CONSTRAINT `fk_tb_medico_clinica_id_empresa_departamento` FOREIGN KEY (`id_empresa_departamento`) REFERENCES `tb_departamento_empresa` (`id`),
-  ADD CONSTRAINT `fk_tb_medico_clinica_id_medico` FOREIGN KEY (`id_medico`) REFERENCES `tb_medico` (`id`);
+  ADD CONSTRAINT `fk_tb_medico_clinica_id_empresa_departamento` FOREIGN KEY (`id_empresa_departamento`) REFERENCES `tb_departamento_empresa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_medico_clinica_id_medico` FOREIGN KEY (`id_medico`) REFERENCES `tb_medico` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_midia_descricao`

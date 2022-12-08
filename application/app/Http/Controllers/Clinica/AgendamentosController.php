@@ -91,20 +91,20 @@ namespace App\Http\Controllers\Clinica{
 		public function create(Request $request)
 		{
 
-			$this->validateForm($request);
+			// $this->validateForm($request);
+			// $id = $this->agendamento_model->cadastraAgendamento($request);
 
-			$id = $this->agendamento_model->cadastraAgendamento($request);
+			$status  = 'success';
+			$message = 'Agendamento cadastrada realizado com sucesso!';
+			$close   = true;
 
-			$status = 'success';
-			$url    = url()->route('clinica.clinicas.index');
-			$type   = 'send';
+			$data['status']      = $status;
+			$data['type']        = 'null';
+			$data['close_modal'] = $close;
+			$data['url']         = url()->route('clinica.agendamentos.index');
+			$data['message']     = $message;
 
-			return response()->json([
-				'status'  => $status,
-				'message' => 'Agendamento cadastrada realizado com sucesso!',
-				'type'    => $type,
-				'url'     => $url,
-			]);
+			return response()->json($data);
 
 		}
 

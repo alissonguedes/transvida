@@ -23,7 +23,7 @@
 						<div class="col s12">
 							<div class="input-field">
 								<label for="localidade">Local</label>
-								<input type="text" name="localidade" class="autocomplete" data-url="<?php echo e(route('clinica.clinicas.get_unidades')); ?>" value="<?php echo e(isset($row) && $row->clinica ? $row->clinica : null); ?>" autocomplete="false">
+								<input type="text" name="localidade" class="autocomplete" data-url="<?php echo e(route('clinica.clinicas.get_unidades')); ?>" value="<?php echo e(isset($row) && $row->clinica ? $row->clinica : null); ?>" autocomplete="random-string">
 							</div>
 						</div>
 					</div>
@@ -31,7 +31,7 @@
 						<div class="col s12">
 							<div class="input-field">
 								<label for="medico">Médico</label>
-								<input type="text" name="medico" value="<?php echo e(isset($row) && $row->medico ? $row->medico : null); ?>">
+								<input type="text" name="medico" class="autocomplete" data-url="<?php echo e(route('clinica.clinicas.get_unidades')); ?>" value="<?php echo e(isset($row) && $row->medico ? $row->medico : null); ?>" autocomplete="random-string">
 							</div>
 						</div>
 					</div>
@@ -147,7 +147,7 @@
 										<div class="col s12">
 											<div class="input-field">
 												<label for="nome" class="grey-text text-accent-1 <?php echo e(isset($paciente) && !empty($paciente->nome) ? 'active' : null); ?>">Paciente</label>
-												<input type="text" name="nome" id="nome" class="grey-text text-darken-4" value="<?php echo e($paciente->nome ?? null); ?>" <?php if(isset($paciente)): ?> readonly="readonly" <?php endif; ?>>
+												<input type="text" name="nome" id="nome" class="autocomplete grey-text text-darken-4" data-url="<?php echo e(route('clinica.pacientes.autocomplete')); ?>" value="<?php echo e(isset($paciente) && $paciente->nome ? $paciente->nome : null); ?>" value="<?php echo e($paciente->nome ?? null); ?>" <?php if(isset($paciente)): ?> readonly="readonly" <?php endif; ?> autocomplete="random-string">
 											</div>
 										</div>
 									</div>
@@ -224,7 +224,7 @@
 								<label for="enviar_email" class="grey-text text-accent-1">Enviar e-mail para o paciente?</label>
 								<div class="switch">
 									<label>
-										<input type="checkbox" name="enviar_email" id="enviar_email" value="1">
+										<input type="checkbox" name="enviar_email" id="enviar_email" value="1" checked="checked">
 										<span class="lever no-margin"></span>
 									</label>
 								</div>

@@ -24,6 +24,24 @@
 			<div class="col s12">
 				<div class="card">
 					<div id="calendar" class="card-content calendar">
+						<div style="display: flex; align-items: center;">
+							<div class="preloader-wrapper small active" style="margin-right: 20px;">
+								<div class="spinner-layer spinner-green-only">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+							<p class="calendar-loading">
+								Carregando o calendário...
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>

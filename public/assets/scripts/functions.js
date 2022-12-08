@@ -1520,6 +1520,14 @@ function getData(autocomplete, url, query = null, limit = 10) {
 
 function autocomplete() {
 
+	// 	var input = typeof form !== undefined ? $(form).find('input.autocomplete') : $('body').find('form').find('input.autocomplete');
+
+	// if (input.length === 0) return;
+
+	// // Create element Autocomplete
+	// input.each(function() {
+
+
 	// Create element Autocomplete
 	$('body').find('input.autocomplete').each(function() {
 
@@ -1553,11 +1561,11 @@ function autocomplete() {
 
 			if (key === 8 || key === 46) {
 				console.log(url);
-				getData($(this), url);
+				getData(autocomplete, url);
 			} else {}
 
-			console.log($(this).val())
-			getData($(this), url, $(this).val());
+			// console.log($(this).val())
+			getData(autocomplete, url, autocomplete.val());
 
 
 		}).on('keydown', function(e) {
@@ -1569,10 +1577,10 @@ function autocomplete() {
 				$(this).val('');
 				if (hidden.length)
 					hidden.val('');
-				getData($(this), url);
+				getData(autocomplete, url);
 			} else {}
 
-			getData($(this), url, $(this).val());
+			// getData($(this), url, $(this).val());
 
 		});
 
@@ -1580,18 +1588,10 @@ function autocomplete() {
 
 }
 
-function filling_form() {
-
-	$('body').find('form[autocomplete]').each(function() {
-		var autocomplete = 'do-not-autofill';
-		$(this).attr('autocomplete');
-		console.log(autocomplete);
-		$(this).find('input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea, textarea.materialize-textarea, .chips, .input-field .ql-container, .select-wrapper input.select-dropdown, select').attr('autocomplete', autocomplete);
-	});
-
-}
-
 function fullcalendar_init() {
+
+	// Para remover a classe caso não possua itens de calendário na página
+	$('body').removeClass('main-full');
 
 	// var calendarEl = document.getElementById('calendar');
 	var calendarEl = document.querySelector('.calendar');
@@ -1599,34 +1599,88 @@ function fullcalendar_init() {
 	if (calendarEl === null) return;
 
 	var calendar = new FullCalendar.Calendar(calendarEl, {
-		// height: $(calendarEl).parents().parent().outerHeight(),
+		// height: $(calendarEl).closest('#main').outerHeight() - 60,
 		headerToolbar: {
-			left: 'prev,next today',
+			left: 'dayGridMonth,timeGridWeek,timeGridDay',
 			center: 'title',
-			right: 'dayGridMonth,timeGridWeek,timeGridDay'
+			right: 'today prev,next',
 		},
 		titleFormat: {
 			month: 'long',
 			year: 'numeric',
+			day: 'numeric',
+			weekday: 'long'
 		},
+		// titleFormat: {
+		// 	month: 'long',
+		// 	year: 'numeric',
+		// 	day: 'numeric'
+		// },
 		timeZone: 'America/Sao_Paulo',
 		locale: 'pt-br',
+		buttonText: {
+			today: 'Hoje',
+			month: 'Mês',
+			week: 'Semana',
+			day: 'Dia',
+			list: 'Lista'
+		},
 		// initialDate: '2022-12-07',
 		// navLinks: true, // can click day/week names to navigate views
 		selectable: false,
 		selectAllow: true,
 		selectMirror: true,
+
+		eventDragStop: function(e, a, i) {
+			console.log(e);
+		},
+
+		// eventAdd: function(a, e, i, o, u) {
+		// 	console.log(a, e, i, o, u);
+		// },
+
+		eventResize: function(a, b, c, d, e, f, g) {
+			console.log(a, b, c, d, e, f, g);
+		},
+
+		eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc) {
+
+			// alert(
+			// 	event.title + " was moved " +
+			// 	dayDelta + " days and " +
+			// 	minuteDelta + " minutes."
+			// );
+
+			// if (allDay) {
+			// 	alert("Event is now all-day");
+			// } else {
+			// 	alert("Event has a time-of-day");
+			// }
+
+			// if (!confirm("Are you sure about this change?")) {
+			// 	revertFunc();
+			// }
+			console.log(event, dayDelta, minuteDelta, allDay, revertFunc);
+
+		},
+
 		dateClick: function(arg) {
 
-			console.log(arg);
+			var timestamp = arg.dateStr.split('T');
+			var date = timestamp.slice(0, 1).toString();
+			var hour = timestamp.length == 2 ? timestamp.splice(-1).toString().split(':') : null;
 
-			var date = arg.dateStr.split('-');
+			date = date.split('-');
+			var d = date.splice(-1);
+			var m = date.splice(1);
+			var a = date.splice(0);
 
-			d = date.splice(-1);
-			m = date.splice(1);
-			a = date.splice(0);
+			var h = hour !== null ? hour.splice(0, 1) : '00';
+			var i = hour !== null ? hour.splice(1) : '00';
+			var s = hour !== null ? hour.splice(-1) : '00';
 
-			dateFormat = d + '/' + m + '/' + a;
+			var dateFormat = d + '/' + m + '/' + a;
+			var hourFormat = h + ':' + i;
 
 			var form = $('.form-sidenav-trigger');
 
@@ -1635,16 +1689,24 @@ function fullcalendar_init() {
 			setTimeout(function() {
 
 				$('#agendamento').find('form').find('input[name="data"]').val(dateFormat);
-				$('#agendamento').find('form').find(':submit').on('click', function() {
+				$('#agendamento').find('form').find('input[name="hora"]').val(hourFormat);
+
+				Form.submit($('#agendamento').find('form'), function(e) {
+
 					calendar.addEvent({
 						title: 'Teste',
 						start: arg.dateStr,
 						end: arg.dateStr,
-						allDay: arg.allDay
-					})
+						allDay: false
+					});
+
+					calendar.unselect();
+
+					console.log(e);
+
 				});
 
-			}, 1000);
+			}, 300);
 
 
 			// var modal_add_event = $('#modal_add_event_calendar');
@@ -1698,10 +1760,18 @@ function fullcalendar_init() {
 		events: '/teste.php',
 	});
 
-	calendar.render();
-
 	$('.fc-button.fc-prev-button,.fc-button.fc-next-button,.fc-button.fc-today-button').each(function() {
 		$(this).addClass('waves-effect');
-	})
+	});
+
+	$('body').addClass('main-full').removeClass('active').find('.sidenav-main').find('.active').removeClass('active');
+	$('.sidenav-main').removeClass('nav-expanded nav-lock').addClass('nav-collapsed').find('.collapsible-body').hide();
+	$('#main').addClass('main-full')
+
+
+	setTimeout(function() {
+		calendar.render();
+		$('#calendar').find('.calendar-loading').remove();
+	}, 500)
 
 }

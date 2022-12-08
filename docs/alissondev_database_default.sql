@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 02/12/2022 às 00:00
+-- Tempo de geração: 08/12/2022 às 00:36
 -- Versão do servidor: 10.6.11-MariaDB-0ubuntu0.22.04.1
 -- Versão do PHP: 8.1.2-1ubuntu2.8
 
@@ -479,7 +479,8 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (102, 27, 96, 'delete', '/', 'delete', 'clinica.agendamentos.delete', NULL, 1111, 'inherit', '1'),
 (103, 27, 96, 'put', '/', 'edit', 'clinica.agendamentos.put', NULL, 1111, 'inherit', '1'),
 (104, 27, 96, 'any', '/consultas', 'getConsultas', 'clinica.agendamentos.consultas.index', NULL, 1111, 'inherit', '1'),
-(105, 19, 40, 'any', '/{id}/agendamento', 'agendar', 'clinica.pacientes.{id}.agendamento', NULL, 1111, 'inherit', '1');
+(105, 19, 40, 'any', '/{id}/agendamento', 'agendar', 'clinica.pacientes.{id}.agendamento', NULL, 1111, 'inherit', '1'),
+(106, 23, 72, 'get', '/clinicas', 'get_unidades', 'clinica.clinicas.get_unidades', NULL, 1111, 'inherit', '1');
 
 -- --------------------------------------------------------
 
@@ -530,7 +531,7 @@ CREATE TABLE `tb_acl_usuario_config` (
 --
 
 INSERT INTO `tb_acl_usuario_config` (`id_usuario`, `id_modulo`, `id_config`, `value`, `created_at`, `updated_at`) VALUES
-(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-12-02 05:27:05');
+(1, 2, 3, 'expanded', '2022-08-24 15:31:48', '2022-12-07 07:11:56');
 
 -- --------------------------------------------------------
 
@@ -579,10 +580,12 @@ INSERT INTO `tb_acl_usuario_session` (`id`, `id_usuario`, `id_modulo`, `token`, 
 (3, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-15 02:20:18', '2022-11-15 05:24:30'),
 (4, 1, 6, '5cf13f21f10ec1aa845d0703fcb83ca46377ec703109d', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36', '2022-11-18 23:34:56', NULL),
 (5, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-28 21:54:08', '2022-11-29 05:06:30'),
-(6, 1, 2, 'e738e021469821ed4b255ce146f1febd637921622eeb5', '127.0.0.1', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0', '2022-11-19 18:33:06', NULL),
+(6, 1, 6, 'cf924dcc3648551981423906d4e13744638d53c847f8e', '127.0.0.1', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0', '2022-12-05 05:13:28', NULL),
 (7, 1, 2, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-29 02:06:37', '2022-11-29 05:07:01'),
 (8, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-11-30 23:46:36', '2022-12-01 02:53:25'),
-(9, 1, 6, '2819e723fdd70e695b783675a140e55d6389626b95ee2', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-02 05:26:51', NULL);
+(9, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-03 04:21:50', '2022-12-03 04:21:58'),
+(10, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-03 04:23:14', '2022-12-03 04:23:21'),
+(11, 1, 6, '42bedcac6175d3d1c67a5358c51fb51c63910d3d24fb2', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-08 01:01:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -635,6 +638,7 @@ CREATE TABLE `tb_atendimento` (
   `id` int(11) UNSIGNED NOT NULL,
   `titulo` varchar(100) DEFAULT NULL,
   `descricao` text DEFAULT NULL,
+  `observacao` text DEFAULT NULL,
   `id_parent` int(11) UNSIGNED DEFAULT 0,
   `id_tipo` int(11) UNSIGNED NOT NULL COMMENT 'Pode ser uma primeira consulta ou um retorno, etc.',
   `id_medico` int(11) UNSIGNED NOT NULL,
@@ -950,7 +954,10 @@ CREATE TABLE `tb_departamento_empresa` (
 INSERT INTO `tb_departamento_empresa` (`id`, `id_departamento`, `id_empresa`, `status`) VALUES
 (97, 10, 12, '1'),
 (98, 9, 12, '1'),
-(99, 8, 12, '1');
+(99, 8, 12, '1'),
+(100, 10, 13, '1'),
+(101, 10, 14, '1'),
+(102, 8, 14, '1');
 
 -- --------------------------------------------------------
 
@@ -1070,7 +1077,9 @@ CREATE TABLE `tb_empresa` (
 --
 
 INSERT INTO `tb_empresa` (`id`, `nome_fantasia`, `razao_social`, `cnpj`, `inscricao_estadual`, `inscricao_municipal`, `cep`, `logradouro`, `numero`, `bairro`, `complemento`, `cidade`, `uf`, `pais`, `quem_somos`, `quem_somos_imagem`, `distribuidor_imagem`, `contato_imagem`, `telefone`, `celular`, `email`, `facebook`, `instagram`, `youtube`, `linkedin`, `github`, `gmaps`, `aliquota_imposto`, `tributacao`, `certificado`, `senha_certificado`, `ambiente`, `sequence_nfe`, `sequence_nfce`, `serie_nfe`, `serie_nfce`, `tokencsc`, `csc`, `matriz`, `created_at`, `updated_at`, `status`) VALUES
-(12, 'Medicus24h', 'Medicus24h', '06.054.321/0001-07', '123', '1123', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', '100', 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-11-29 04:06:04', '2022-11-29 07:15:11', '1');
+(12, 'Medicus24h', 'Medicus24h', '06.054.321/0001-07', '123', '1123', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', '100', 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-11-29 04:06:04', '2022-11-29 07:15:11', '1'),
+(13, 'Teste', 'teste', '12.393.828/1230-12', '19138', '2831', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', NULL, 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-12-03 10:27:49', '2022-12-05 06:28:19', '1'),
+(14, 'Teste 2', 'teste2', '23.434.343/4343-32', '9192', '1921', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', NULL, 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-12-05 05:43:22', '2022-12-06 21:39:15', '1');
 
 -- --------------------------------------------------------
 
@@ -1207,7 +1216,10 @@ CREATE TABLE `tb_funcionario` (
 --
 
 INSERT INTO `tb_funcionario` (`id`, `id_empresa_departamento`, `id_funcao`, `nome`, `cpf`, `rg`, `created_at`, `updated_at`, `status`) VALUES
-(20, 97, 2, 'Alisson', '069.422.924-51', '3177241', '2022-11-29 04:08:22', '2022-11-29 07:13:33', '1');
+(20, 99, 1, 'Tito', '393.838.283-23', '338383', '2022-11-29 04:08:22', '2022-12-06 21:38:29', '1'),
+(21, 99, 2, 'Efésios', '065.468.694-70', '312341', '2022-12-06 18:15:44', '2022-12-06 21:37:19', '1'),
+(22, 100, 2, 'Filipenses', '938.382.838-28', '918141', '2022-12-06 18:18:03', '2022-12-06 21:37:28', '1'),
+(25, 99, 1, 'João', '888.888.888-88', '87877', '2022-12-06 18:38:14', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -1326,6 +1338,14 @@ CREATE TABLE `tb_medico` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci COMMENT='Tabela para cadastro de atendimentos realizados.';
+
+--
+-- Despejando dados para a tabela `tb_medico`
+--
+
+INSERT INTO `tb_medico` (`id`, `id_funcionario`, `id_especialidade`, `crm`, `created_at`, `updated_at`, `status`) VALUES
+(14, 21, 2, '5', '2022-12-06 18:17:26', '2022-12-06 21:37:19', '1'),
+(17, 22, 2, '66', '2022-12-06 18:36:54', '2022-12-06 21:37:28', '1');
 
 -- --------------------------------------------------------
 
@@ -2289,7 +2309,7 @@ ALTER TABLE `tb_acl_modulo_controller`
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_routes`
 --
 ALTER TABLE `tb_acl_modulo_routes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_usuario`
@@ -2307,7 +2327,7 @@ ALTER TABLE `tb_acl_usuario_imagem`
 -- AUTO_INCREMENT de tabela `tb_acl_usuario_session`
 --
 ALTER TABLE `tb_acl_usuario_session`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acomodacao`
@@ -2379,7 +2399,7 @@ ALTER TABLE `tb_departamento`
 -- AUTO_INCREMENT de tabela `tb_departamento_empresa`
 --
 ALTER TABLE `tb_departamento_empresa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT de tabela `tb_distribuidor`
@@ -2397,7 +2417,7 @@ ALTER TABLE `tb_email`
 -- AUTO_INCREMENT de tabela `tb_empresa`
 --
 ALTER TABLE `tb_empresa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela.', AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela.', AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `tb_especialidade`
@@ -2427,7 +2447,7 @@ ALTER TABLE `tb_funcao`
 -- AUTO_INCREMENT de tabela `tb_funcionario`
 --
 ALTER TABLE `tb_funcionario`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de tabela `tb_galeria`
@@ -2451,7 +2471,7 @@ ALTER TABLE `tb_link`
 -- AUTO_INCREMENT de tabela `tb_medico`
 --
 ALTER TABLE `tb_medico`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de tabela `tb_medico_agenda`

@@ -49,7 +49,6 @@ function core() {
 	preview_map();
 
 	fullcalendar_init();
-	filling_form();
 
 	$('.dd').nestable({
 		maxDepth: Infinity
@@ -248,7 +247,11 @@ function core() {
 
 			App.aplicarMascaras();
 			autocomplete();
-			filling_form();
+			// $('.form-sidenav#' + target).find('input.autocomplete').each(
+			// 	delay(function() {
+			// 		autocomplete($(this))
+			// 	}, 500)
+			// );
 
 		});
 

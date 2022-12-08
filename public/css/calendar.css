@@ -76,7 +76,7 @@
 
 .fc .fc-button.fc-button-active,
 .fc .fc-button.fc-button-active:active {
-	background-color: var(--green-lighten-4) !important;
+	background-color: var(--blue-lighten-3) !important;
 }
 
 /* .fc .fc-button-primary:not(:disabled):active,

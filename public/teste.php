@@ -2,9 +2,11 @@
 
 $json = array(
 	[
-		'title' => 'All Day Event',
-		'start' => '2022-12-01',
-		'end'   => '2022-12-03',
+		'title'           => 'All Day Event',
+		'start'           => '2022-12-01',
+		'end'             => '2022-12-03',
+		'backgroundColor' => '#ff0000',
+		'borderColor'     => '#ff0000',
 	],
 	[
 		'title' => 'teste',

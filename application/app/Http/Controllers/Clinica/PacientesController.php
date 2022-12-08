@@ -45,6 +45,26 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
+		public function autocomplete(Request $request)
+		{
+
+			$clinicas = [];
+
+			$dados = $this->paciente_model->getPacientes($request);
+
+			foreach ($dados as $clinica) {
+				$clinicas[] = [
+					'label' => $clinica->id . ' - ' . $clinica->nome,
+					'name'  => 'paciente',
+					'value' => $clinica->id,
+					'icon'  => null,
+				];
+			}
+
+			return response($clinicas, 200);
+
+		}
+
 		public function agendar(Request $request, $id = null)
 		{
 

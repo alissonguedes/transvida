@@ -23,7 +23,7 @@
 						<div class="col s12">
 							<div class="input-field">
 								<label for="localidade">Local</label>
-								<input type="text" name="localidade" class="autocomplete" data-url="{{ route('clinica.clinicas.get_unidades') }}" value="{{ isset($row) && $row->clinica ? $row->clinica : null; }}" autocomplete="false">
+								<input type="text" name="localidade" class="autocomplete" data-url="{{ route('clinica.clinicas.get_unidades') }}" value="{{ isset($row) && $row->clinica ? $row->clinica : null; }}" autocomplete="random-string">
 							</div>
 						</div>
 					</div>
@@ -31,7 +31,7 @@
 						<div class="col s12">
 							<div class="input-field">
 								<label for="medico">Médico</label>
-								<input type="text" name="medico" value="{{ isset($row) && $row->medico ? $row->medico : null; }}">
+								<input type="text" name="medico" class="autocomplete" data-url="{{ route('clinica.clinicas.get_unidades') }}" value="{{ isset($row) && $row->medico ? $row->medico : null; }}" autocomplete="random-string">
 							</div>
 						</div>
 					</div>
@@ -147,7 +147,7 @@
 										<div class="col s12">
 											<div class="input-field">
 												<label for="nome" class="grey-text text-accent-1 {{ isset($paciente) && !empty($paciente->nome) ? 'active' : null }}">Paciente</label>
-												<input type="text" name="nome" id="nome" class="grey-text text-darken-4" value="{{ $paciente->nome ?? null; }}" @if(isset($paciente)) readonly="readonly" @endif>
+												<input type="text" name="nome" id="nome" class="autocomplete grey-text text-darken-4" data-url="{{ route('clinica.pacientes.autocomplete') }}" value="{{ isset($paciente) && $paciente->nome ? $paciente->nome : null; }}" value="{{ $paciente->nome ?? null; }}" @if(isset($paciente)) readonly="readonly" @endif autocomplete="random-string">
 											</div>
 										</div>
 									</div>
@@ -224,7 +224,7 @@
 								<label for="enviar_email" class="grey-text text-accent-1">Enviar e-mail para o paciente?</label>
 								<div class="switch">
 									<label>
-										<input type="checkbox" name="enviar_email" id="enviar_email" value="1">
+										<input type="checkbox" name="enviar_email" id="enviar_email" value="1" checked="checked">
 										<span class="lever no-margin"></span>
 									</label>
 								</div>

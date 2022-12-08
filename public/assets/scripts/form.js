@@ -73,14 +73,22 @@ var Form = {
 
 	},
 
-	send: () => {
+	submit: (el, callback) => {
+		$(el).find(':button:submit').on('click', function() {
+			Form.send(el, callback);
+		});
+	},
+
+	send: (el, callback) => {
+
+		var form = typeof el !== 'undefined' ? $(el) : $(_element);
 
 		var success = Boolean;
-		var label = _element.find(':button:submit').find('i').html();
-		var method = _element.attr('method');
-		var action = _element.attr('action');
+		var label = form.find(':button:submit').find('i').html();
+		var method = form.attr('method');
+		var action = form.attr('action');
 
-		$(_element).ajaxSubmit({
+		$(form).ajaxSubmit({
 
 			method: method, // method
 			action: action, // url
@@ -89,17 +97,13 @@ var Form = {
 			},
 			beforeSend: (e) => {
 
-				// M.Toast.dismissAll();
-
 				$('.toast-action').click();
 
 				Form.__button__(label, true);
 
 				$('.editor').each(function() {
-
 					var id = $(this).attr('id');
 					var input = $(this).parent().find('input[name="' + id + '"]');
-
 				})
 
 			},
@@ -112,7 +116,7 @@ var Form = {
 
 					var $response = typeof response === 'string' ? JSON.parse(response) : response;
 
-					if (_element.attr('id') === 'frm-login') {
+					if (form.attr('id') === 'frm-login') {
 
 						Form.login($response, label);
 
@@ -123,6 +127,8 @@ var Form = {
 							if ($response.message) {
 								Form.showMessage($response.message, null, 'Ok');
 							}
+
+							success = true;
 
 						} else {
 
@@ -136,6 +142,12 @@ var Form = {
 						}
 
 						Form.refreshPage($response);
+
+						if (success) {
+							if (typeof callback === 'function') {
+								return callback($response);
+							}
+						}
 
 					}
 
