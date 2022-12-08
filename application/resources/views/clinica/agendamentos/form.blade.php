@@ -147,7 +147,17 @@
 										<div class="col s12">
 											<div class="input-field">
 												<label for="nome" class="grey-text text-accent-1 {{ isset($paciente) && !empty($paciente->nome) ? 'active' : null }}">Paciente</label>
-												<input type="text" name="nome" id="nome" class="autocomplete grey-text text-darken-4" data-url="{{ route('clinica.pacientes.autocomplete') }}" value="{{ isset($paciente) && $paciente->nome ? $paciente->nome : null; }}" value="{{ $paciente->nome ?? null; }}" @if(isset($paciente)) readonly="readonly" @endif autocomplete="random-string">
+												@php
+													$class= null;
+													$data_url = null;
+													$readonly = 'readonly=readonly';
+													if(!isset($paciente)):
+													$class= 'autocomplete';
+													$data_url = 'data-url=' . route('clinica.pacientes.autocomplete');
+													$readonly = null;
+													endif;
+												@endphp
+												<input type="text" name="nome" id="nome" class="{{ $class }} grey-text text-darken-4" {{ $data_url }} value="{{ isset($paciente) && $paciente->nome ? $paciente->nome : null; }}" {{ $readonly }} autocomplete="random-string">
 											</div>
 										</div>
 									</div>
