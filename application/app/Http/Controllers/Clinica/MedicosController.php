@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Clinica{
 
 	use App\Models\ConvenioModel;
+	use App\Models\DepartamentoModel;
+	use App\Models\EmpresaModel;
 	use App\Models\EspecialidadeModel;
 	use App\Models\EstadoCivilModel;
 	use App\Models\MedicoModel;
@@ -19,6 +21,8 @@ namespace App\Http\Controllers\Clinica{
 			$this->especialidade_model = new EspecialidadeModel();
 			$this->medico_model        = new MedicoModel();
 			$this->estadoCivil_model   = new EstadoCivilModel();
+			$this->departamento_model  = new DepartamentoModel();
+			$this->empresa_model       = new EmpresaModel();
 
 		}
 
@@ -30,22 +34,23 @@ namespace App\Http\Controllers\Clinica{
 				return response(view('clinica.medicos.list', $dados), 200);
 			}
 
-			$dados['medicos']        = $this->medico_model->getMedicos();
-			$dados['especialidades'] = $this->especialidade_model->getEspecialidades();
-
-			return view('clinica.medicos.index', $dados);
+			return view('clinica.medicos.index');
 
 		}
 
 		public function form(Request $request, $id = null)
 		{
 
-			$dados['row']            = $this->medico_model->getMedicoById($id);
-			$dados['acomodacoes']    = $this->medico_model->getAcomodacao();
-			$dados['etnias']         = $this->medico_model->getEtnia();
-			$dados['convenios']      = $this->convenio_model->getConvenio();
-			$dados['estado_civil']   = $this->estadoCivil_model->getEstadoCivil();
-			$dados['especialidades'] = $this->especialidade_model->getEspecialidades();
+			$medico                      = $this->medico_model->getMedicoById($id);
+			$dados['row']                = $medico;
+			$dados['acomodacoes']        = $this->medico_model->getAcomodacao();
+			$dados['etnias']             = $this->medico_model->getEtnia();
+			$dados['issetMedicoClinica'] = $this->medico_model;
+			$dados['convenios']          = $this->convenio_model->getConvenio();
+			$dados['estado_civil']       = $this->estadoCivil_model->getEstadoCivil();
+			$dados['especialidades']     = $this->especialidade_model->getEspecialidades();
+			$dados['departamentos']      = $this->departamento_model->getDepartamentos();
+			$dados['empresas']           = $this->empresa_model->getEmpresasByDepartamentos($medico->id_departamento);
 
 			return view('clinica.medicos.form', $dados);
 
@@ -54,19 +59,19 @@ namespace App\Http\Controllers\Clinica{
 		public function formValidate(Request $request)
 		{
 			return $request->validate([
-				'nome'          => 'required',
-				'email'         => [
-					'nullable|email|required_if:receber_notificacoes,on',
-					Rule::unique('tb_medico', 'email')->ignore($request->post('id'), 'id'),
-				],
-				'cpf'           => [
-					'required',
-					Rule::unique('tb_medico', 'cpf')->ignore($request->post('id'), 'id'),
-				],
-				'rg'            => [
-					'required',
-					Rule::unique('tb_medico', 'rg')->ignore($request->post('id'), 'id'),
-				],
+				// 'nome'          => 'required',
+				// 'email'         => [
+				// 	'nullable|email|required_if:receber_notificacoes,on',
+				// 	Rule::unique('tb_medico', 'email')->ignore($request->post('id'), 'id'),
+				// ],
+				// 'cpf'           => [
+				// 	'required',
+				// 	Rule::unique('tb_medico', 'cpf')->ignore($request->post('id'), 'id'),
+				// ],
+				// 'rg'            => [
+				// 	'required',
+				// 	Rule::unique('tb_medico', 'rg')->ignore($request->post('id'), 'id'),
+				// ],
 				'crm'           => [
 					'required',
 					Rule::unique('tb_medico', 'crm')->ignore($request->post('id'), 'id'),
@@ -85,14 +90,13 @@ namespace App\Http\Controllers\Clinica{
 
 			$status = 'success';
 			$url    = url()->route('clinica.medicos.index');
-			$type   = 'send';
 
 			$data['status']      = 'success';
 			$data['type']        = 'refresh';
 			$data['clean_form']  = true;
 			$data['close_modal'] = true;
-			$data['url']         = url()->route('clinica.especialidades.index');
-			$data['message']     = 'Especialidade cadastrada com sucesso!';
+			$data['url']         = url()->route('clinica.medicos.index');
+			$data['message']     = 'Registro inserido com sucesso!';
 
 			return response()->json($data);
 
@@ -104,14 +108,15 @@ namespace App\Http\Controllers\Clinica{
 			$this->formValidate($request);
 
 			$id = $request->id;
+
 			$this->medico_model->editaMedico($request, $id);
 
 			$data['status']      = 'success';
 			$data['type']        = 'refresh';
 			$data['clean_form']  = true;
 			$data['close_modal'] = true;
-			$data['url']         = url()->route('clinica.especialidades.index');
-			$data['message']     = 'Especialidade cadastrada com sucesso!';
+			$data['url']         = url()->route('clinica.medicos.index');
+			$data['message']     = 'Registro atualizado com sucesso!';
 
 			return response()->json($data);
 

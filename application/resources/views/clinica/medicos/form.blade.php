@@ -7,44 +7,48 @@
 		@endif
 
 		<div class="modal-content">
+
 			<div class="row">
 				<div class="col s12">
 					<div class="input-field">
 						<label for="nome" class="{{ isset($row) && $row->nome ? 'active' : null }}">Médico</label>
-						<input type="text" name="nome" id="nome" value="{{ $row->nome ?? null }}">
+						<input type="text" name="nome" id="nome" value="{{ $row->nome ?? null }}" readonly="readonly">
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col s12 m4 l4">
 					<div class="input-field">
 						<label for="cpf" class="{{ isset($row) && $row->crm ? 'active' : null }}">CPF</label>
-						<input type="tel" name="cpf" id="cpf" class="is_cpf" value="{{ $row->cpf ?? null }}">
+						<input type="tel" name="cpf" id="cpf" class="is_cpf" value="{{ $row->cpf ?? null }}" readonly="readonly">
 					</div>
 				</div>
 				<div class="col s12 m4 l4">
 					<div class="input-field">
 						<label for="rg" class="{{ isset($row) && $row->crm ? 'active' : null }}">RG</label>
-						<input type="tel" name="rg" id="rg" value="{{ $row->rg ?? null }}">
+						<input type="tel" name="rg" id="rg" value="{{ $row->rg ?? null }}" readonly="readonly">
 					</div>
 				</div>
 				<div class="col s12 m4 l4">
 					<div class="input-field">
 						<label for="crm" class="{{ isset($row) && $row->crm ? 'active' : null }}">CRM</label>
-						<input type="text" name="crm" id="crm" class="right-align" value="{{ $row->crm ?? null }}">
-						{{-- <textarea name="descricao" id="descricao" class="materialize-textarea">{{ $row->descricao ?? null }}</textarea> --}}
+						<input type="text" name="crm" id="crm" value="{{ $row->crm ?? null }}">
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col s12">
 					<div class="input-field">
 						<label for="especialidade" class="active">Especialidade</label>
 						<select name="especialidade" id="especialidade">
-							<option value="" disabled selected>Informe o convênio</option>
-							@foreach($especialidades as $especialidade)
-								<option value="{{ $especialidade->id }}" {{ isset($row) && $especialidade->id==$row->id_especialidade ? 'selected=selected' : null }}>{{ $especialidade->especialidade }}</option>
-							@endforeach
+							<option value="" disabled selected>Informe a especialidade</option>
+							@isset($especialidades)
+								@foreach($especialidades as $especialidade)
+									<option value="{{ $especialidade->id }}" {{ isset($row) && $especialidade->id==$row->id_especialidade ? 'selected=selected' : null }}>{{ $especialidade->especialidade }}</option>
+								@endforeach
+							@endisset
 						</select>
 					</div>
 				</div>
@@ -63,6 +67,64 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="col s12 mt-4 mb-4">
+					<h5>Clínicas de atendimento</h5>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12 m12 l12">
+					<div class="input-field">
+
+						@if(isset($empresas) )
+							<table class="table dataTable" data-ajax="false">
+								<thead>
+									<tr data-disabled="true">
+										<th class="sorting_disabled">
+											<label class="grey-text text-darken-2 font-14 left">
+												<input type="checkbox" name="check-all" id="check-all" class="filled-in">
+												<span></span>
+											</label>
+										</th>
+										<th class="sorting_disabled">Nome</th>
+										<th class="sorting_disabled">CNPJ</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									@foreach($empresas as $empresa)
+										@if(isset($row))
+											@php
+												$checked = isset($row) && $empresa->id === $row->id_empresa ? 'checked=checked' : null;
+											@endphp
+										@endif
+										<tr class="sorting_disabled" style="{{ $checked != null ? 'color: rgba(0, 0, 0, 0.4);' : null }}">
+											<td class="sorting_disabled">
+												<label>
+													@php
+														$getMedicoClinica = $issetMedicoClinica->getMedicoClinica($row->id, $empresa->id_empresa_departamento) ?? null;
+														$getMedicoClinica = !is_null($getMedicoClinica) ? $empresa->id_empresa_departamento === $getMedicoClinica->id_empresa : null;
+													@endphp
+													<input type="checkbox" name="empresa[]" class="filled-in" value="{{ $empresa->id_empresa_departamento }}" data-status="{{ $empresa->status }}" {{ $checked ?? (!is_null($getMedicoClinica) ? 'checked=checked' : null ) }} {{ $checked != null ? 'disabled' : null }}>
+													<span></span>
+													@if($checked) <input type="hidden" name="empresa[]" value="{{ $empresa->id_empresa_departamento }}"> @endif
+												</label>
+											</td>
+											<td class="sorting_disabled">{{ $empresa->titulo }}</td>
+											<td class="sorting_disabled">{{ $empresa->cnpj }}</td>
+										</tr>
+									@endforeach
+
+								</tbody>
+							</table>
+						@endif
+
+					</div>
+				</div>
+			</div>
+
 		</div>
 		<div class="modal-footer">
 			<button type="reset" class="btn modal-close white waves-effect mr-2" data-toggle="Voltar">

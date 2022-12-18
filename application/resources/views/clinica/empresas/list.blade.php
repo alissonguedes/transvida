@@ -21,7 +21,10 @@
 				</label>
 			</td>
 			<td>
-				{{ $row->nome_fantasia }}
+				{{ $row->razao_social }}
+			</td>
+			<td>
+				{{ $row->titulo }}
 			</td>
 			<td>
 				{{ $row->cnpj }}

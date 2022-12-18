@@ -34,8 +34,8 @@
 							</div>
 							<h6 class="white-text">{{ $paciente->nome }}</h6>
 							<p>
-								<a href="#"><i class="material-icons-outlined">cake</i>{{ $paciente->data_nascimento ?? 'Não informado' }}</a>
-								<a href="#"><i class="material-icons-outlined">credit_card</i>{{ $paciente->cpf ?? 'Não informado' }}</a>
+								<a href="#"><i class="material-icons-outlined left">cake</i>{{ $paciente->data_nascimento ?? 'Não informado' }}</a>
+								<a href="#"><i class="material-icons-outlined left">credit_card</i>{{ $paciente->cpf ?? 'Não informado' }}</a>
 							</p>
 							<div class="clear"></div>
 						</div>

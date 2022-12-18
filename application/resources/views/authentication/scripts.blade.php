@@ -10,8 +10,8 @@
 <script src="{{ asset('assets/plugins/fullcalendar/moment.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/fullcalendar/fullcalendar.js') }}"></script>
 {{-- <script src="{{ asset('assets/plugins/fullcalendar/daygrid.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/fullcalendar/timegrid.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/fullcalendar/interaction.min.js') }}"></script> --}}
+<script src="{{ asset('assets/plugins/fullcalendar/timegrid.min.js') }}"></script> --}}
+<script src="{{ asset('assets/plugins/fullcalendar/interaction.min.js') }}"></script>
 
 <script src="{{ asset('assets/plugins/isotope/js/isotope.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>

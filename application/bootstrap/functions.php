@@ -367,7 +367,9 @@ if (!function_exists('getMenus')) {
 						->where('id_controller', $item->id_item)
 						->first();
 
-					$ul .= '<a ' . (($submenus->count() > 0) ? 'class="collapsible-header waves-effect waves-cyan" href="javascript:void(0);" tabindex="0"' : 'href="' . (route($route->name) ?? null) . '"') . '>';
+					$target = 'target="' . $item->target . '"' ?? null;
+
+					$ul .= '<a ' . (($submenus->count() > 0) ? 'class="collapsible-header waves-effect waves-cyan" href="javascript:void(0);" tabindex="0"' : 'href="' . (route($route->name) ?? null) . '"') . ' ' . $target . '>';
 					$ul .= $item->icon ? (preg_match('[^fa\-]', $item->icon) ? '<span class="fa-icon fa-solid ' . $item->icon . '"></span>' : '<span class="material-symbols-outlined">' . $item->icon . '</span>') : '<span class="material-symbols-outlined">radio_button_unchecked</span>';
 
 					$ul .= '<span class="menu-title">' . $label->titulo . '</span>';

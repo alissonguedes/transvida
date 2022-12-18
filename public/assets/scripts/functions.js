@@ -872,7 +872,7 @@ var App = {
 						weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], // Column headings for days starting at Sunday
 						cancel: 'Cancelar',
 					},
-					showClearBtn: true
+					showClearBtn: false
 				});
 
 			if ($(this).val() !== '')
@@ -1609,13 +1609,8 @@ function fullcalendar_init() {
 			month: 'long',
 			year: 'numeric',
 			day: 'numeric',
-			weekday: 'long'
+			// weekday: 'long'
 		},
-		// titleFormat: {
-		// 	month: 'long',
-		// 	year: 'numeric',
-		// 	day: 'numeric'
-		// },
 		timeZone: 'America/Sao_Paulo',
 		locale: 'pt-br',
 		buttonText: {
@@ -1760,18 +1755,16 @@ function fullcalendar_init() {
 		events: '/teste.php',
 	});
 
-	$('.fc-button.fc-prev-button,.fc-button.fc-next-button,.fc-button.fc-today-button').each(function() {
-		$(this).addClass('waves-effect');
-	});
-
 	$('body').addClass('main-full').removeClass('active').find('.sidenav-main').find('.active').removeClass('active');
 	$('.sidenav-main').removeClass('nav-expanded nav-lock').addClass('nav-collapsed').find('.collapsible-body').hide();
 	$('#main').addClass('main-full')
 
-
 	setTimeout(function() {
 		calendar.render();
 		$('#calendar').find('.calendar-loading').remove();
+		$('.fc-button.fc-prev-button,.fc-button.fc-next-button,.fc-button.fc-today-button').each(function() {
+			$(this).addClass('waves-effect waves-light');
+		});
 	}, 500)
 
 }

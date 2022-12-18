@@ -1,6 +1,15 @@
 /** Logo */
+.brand-sidebar .logo-wrapper {
+	line-height: unset !important;
+	white-space: nowrap;
+	margin-left: 70px;
+	top: 0;
+	display: flex;
+	align-items: center;
+}
 
-nav .brand-logo, .logo a {
+nav .brand-logo,
+.logo a {
 	text-decoration: none;
 }
 
@@ -36,4 +45,80 @@ nav .brand-logo,
 
 .brand-logo.white-text {
 	color: #fff;
+}
+
+/** Clinic Cloud **/
+
+.text-logo {
+	margin-left: 50px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	font-size: 6rem;
+	max-width: 50%;
+}
+
+.text-logo::before {
+	content: '\e2bd';
+	font-family: 'Material Icons Outlined';
+	position: relative;
+	/* font-size: 120%; */
+	margin-right: -15%;
+	bottom: 0px;
+}
+
+.text-logo.white-text::before {
+	content: '\e2bd';
+	font-family: 'Material Icons';
+}
+
+.text-logo h5,
+.text-logo h2 {
+	font-family: 'Montserrat' !important;
+	margin: 0;
+	line-height: 1;
+	color: inherit;
+}
+
+/* .text-logo h5,
+.text-logo h2,
+.text-logo::before {
+	text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.8),
+		0px 0px 1px rgba(255, 255, 255, 0.8),
+		0px 0px 1px rgba(255, 255, 255, 0.8),
+		0px 0px 2px rgba(255, 255, 255, 0.8),
+		0px 0px 3px rgba(255, 255, 255, 1);
+} */
+
+.text-logo h5 {
+	font-size: 30%;
+	position: relative;
+	margin-top: -15%;
+	top: 0;
+	left: 40%;
+	display: inline;
+}
+
+.text-logo h2 {
+	font-size: 100%;
+	display: inline;
+	top: 0px;
+	position: relative;
+}
+
+.logo-wrapper .text-logo {
+	font-size: 2rem !important;
+}
+
+.logo-wrapper .text-logo::before {
+	margin-right: -30%;
+}
+
+.logo-wrapper .text-logo h5 {
+	font-size: 30%;
+	position: relative;
+	margin-top: -30%;
+	top: 0;
+	left: 76%;
+	display: inline;
 }

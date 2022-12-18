@@ -37,26 +37,41 @@ class FuncionarioModel extends Model
 			'nome',
 			'cpf',
 			'rg',
+			DB::raw('(SELECT crm FROM tb_medico WHERE id_funcionario = tb_funcionario.id) AS crm'),
+			DB::raw('(SELECT id_especialidade FROM tb_medico WHERE id_funcionario = tb_funcionario.id) AS especialidade'),
 			DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") AS data_cadastro'),
 			DB::raw('DATE_FORMAT(updated_at, "%d/%m/%Y") AS data_atualizacao'),
 			'status',
 		);
 
 		if (isset($data) && $search = $data['search']['value']) {
-			$get->where(function ($query) use ($search) {
-				$query
-					->orWhere('id', 'like', $search . '%')
-					->orWhere(DB::raw('REGEXP_REPLACE(crm, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
-					->orWhere('nome', 'like', $search . '%')
-					->orWhere(DB::raw('REGEXP_REPLACE(cpf, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
-					->orWhere(DB::raw('REGEXP_REPLACE(rg, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
-					->orWhere('id_funcao', function ($query) use ($search) {
-						$query->select('id')
-							->from('tb_funcao')
-							->where('funcao', 'like', $search . '%')
-							->whereColumn('id', 'id_funcao');
-					});
-			});
+			$get->orWhere('id', 'like', $search . '%')
+				->orWhere('nome', 'like', $search . '%')
+				->orWhere(DB::raw('REGEXP_REPLACE(cpf, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
+				->orWhere(DB::raw('REGEXP_REPLACE(rg, "[^\\x20-\\x7E]", "")'), 'like', limpa_string($search, '') . '%')
+				->orWhere('id_funcao', function ($query) use ($search) {
+					$query->select('id')
+						->from('tb_funcao')
+						->where('funcao', 'like', $search . '%')
+						->whereColumn('id', 'id_funcao');
+				})
+				->orWhere('id', function ($query) use ($search) {
+					$query->select('id_funcionario')
+						->from('tb_medico')
+						->whereColumn('tb_medico.id_funcionario', 'tb_funcionario.id')
+						->where(DB::raw('REGEXP_REPLACE(crm, "[^\\x20-\\x7e]", "")'), 'like', limpa_string($search, '') . '%');
+				})
+				->orWhere('id', function ($query) use ($search) {
+					$query->select('id_funcionario')
+						->from('tb_medico')
+						->whereColumn('tb_medico.id_funcionario', 'tb_funcionario.id')
+						->where('id_especialidade', function ($query) use ($search) {
+							$query->select('id')
+								->from('tb_especialidade')
+								->whereColumn('tb_especialidade.id', 'tb_medico.id_especialidade')
+								->where('especialidade', 'like', $search . '%');
+						});
+				});
 		}
 
 		$this->order = [

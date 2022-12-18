@@ -71,23 +71,21 @@ var Request = {
 	// Alterado para expandir o menu a partir de qualquer link no sistema.
 	menu: () => {
 
-		$('#slide-out').removeClass('active').find('.active').removeClass('active');
+		var url = [];
+		var local = window.location.href.split(BASE_URL).splice(1);
 
-		if ($('aside').hasClass('nav-expanded')) {
+		if (local.length > 0 && typeof local[0].split(/\W+/) !== 'undefined' && local[0].split(/\W+/).length > 1) {
+			local = local[0].split(/\W+/).splice(0, 1);
+		}
 
-			var url = [];
+		if (typeof local[0] !== 'undefined') {
 
-			var local = window.location.href.split(BASE_URL).splice(1);
-
-			if (local.length > 0 && typeof local[0].split(/\W+/) !== 'undefined' && local[0].split(/\W+/).length > 1) {
-				local = local[0].split(/\W+/).splice(0, 1);
-			}
-
+			var link = local[0].split('/');
 			var $default = link === window.location.href ? 'default' : 'pointer';
 
-			if (typeof local[0] !== 'undefined') {
+			if ($('aside').hasClass('nav-expanded')) {
 
-				var link = local[0].split('/');
+				$('#slide-out').removeClass('active').find('.active').removeClass('active');
 
 				for (var i in link) {
 
@@ -100,17 +98,25 @@ var Request = {
 
 					} else {
 
-						// $('#slide-out li').find('a').first().addClass('active').parents().addClass('active').show();
-						// break;
+						$('#slide-out li').find('a').first().addClass('active').parents().addClass('active').show();
+						break;
 
 					}
 				}
 
 			} else {
 
-				$('#slide-out li').find('a').first().addClass('active').parents().addClass('active').show();
+				// $('#slide-out li').find('a[href="' + BASE_URL + link.join('/') + '"]')
+				// 	// .addClass('active')
+				// 	// .css('cursor', $default)
+				// 	.parents('#slide-out li > a')
+				// 	.addClass('active');
 
 			}
+
+		} else {
+
+			$('#slide-out li').find('a').first().addClass('active').parents().addClass('active').show();
 
 		}
 

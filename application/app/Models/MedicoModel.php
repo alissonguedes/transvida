@@ -22,6 +22,16 @@ class MedicoModel extends Model
 
 		$get = $this->select(
 			'id',
+			DB::raw('(
+				SELECT id_departamento FROM tb_departamento_empresa AS DE WHERE DE.id = (
+					SELECT id_empresa_departamento FROM tb_funcionario AS F WHERE F.id = tb_medico.id_funcionario
+				)
+			) AS id_departamento'),
+			DB::raw('(
+				SELECT id_empresa FROM tb_departamento_empresa AS DE WHERE DE.id = (
+					SELECT id_empresa_departamento FROM tb_funcionario AS F WHERE F.id = tb_medico.id_funcionario
+				)
+			) AS id_empresa'),
 			'id_especialidade',
 			'crm',
 			'status',
@@ -80,25 +90,11 @@ class MedicoModel extends Model
 	public function getMedicoById($id)
 	{
 
-		return $medico = $this->select('id', 'id_funcionario', 'id_especialidade', 'crm')
-			->where(function ($query) use ($id) {
-				$query->orWhere('id', $id)
-					->orWhere('id_funcionario', $id);
-			})
+		return $medico = $this->getMedicos()
+			->where('id', $id)
 			->first();
 
 	}
-
-	// public function searchMedicos(Request $request)
-	// {
-	//
-	// $query = $request->get('query');
-	//
-	// return $this->getMedicos()
-	// 	->where('nome', 'like', '%' . $query . '%')
-	// 	->paginate(isset($_GET['length']) ? $_GET['length'] : 50);
-	//
-	// }
 
 	public function getEtnia()
 	{
@@ -188,6 +184,7 @@ class MedicoModel extends Model
 				$this->where('id', $medico->id)
 					->delete();
 			}
+
 		}
 
 	}
@@ -209,12 +206,12 @@ class MedicoModel extends Model
 
 		$data = [
 			'id_especialidade' => $id_especialidade,
-			'nome'             => $nome,
+			// 'nome'             => $nome,
 			// 'imagem'               => $imagem,
 			// 'sexo'                 => $sexo,
 			// 'data_nascimento'      => $data_nascimento,
-			'cpf'              => $cpf,
-			'rg'               => $rg,
+			// 'cpf'              => $cpf,
+			// 'rg'               => $rg,
 			'crm'              => $crm,
 			// 'email'                => $email,
 			// 'telefone'             => $telefone,
@@ -230,7 +227,59 @@ class MedicoModel extends Model
 			->where('id', $id)
 			->update($data);
 
+		if ($id) {
+
+			$this->cadastraMedicoClinica($post->id, $post->empresa);
+
+		}
+
 		return $id;
+
+	}
+
+	public function cadastraMedicoClinica($id_medico, $id_empresa)
+	{
+
+		if (isset($id_empresa)) {
+
+			foreach ($id_empresa as $empresa) {
+
+				$issetMedico = $this->select('id', 'id_medico', 'id_empresa_departamento')
+					->from('tb_medico_clinica')
+					->where('id_empresa_departamento', $empresa)
+					->where('id_medico', $id_medico)
+					->first();
+
+				if (!isset($issetMedico)) {
+					$this->from('tb_medico_clinica')
+						->insert(['id_medico' => $id_medico, 'id_empresa_departamento' => $empresa]);
+				}
+
+			}
+
+			$this->from('tb_medico_clinica')
+				->whereNotIn('id_empresa_departamento', $id_empresa)
+				->where('id_medico', $id_medico)
+				->delete();
+
+		} else {
+
+			$this->from('tb_medico_clinica')
+				->where('id_medico', $id_medico)
+				->delete();
+
+		}
+
+	}
+
+	public function getMedicoClinica($id_medico, $id_empresa)
+	{
+
+		return $this->select('id_medico', 'id_empresa_departamento AS id_empresa')
+			->from('tb_medico_clinica')
+			->where('id_medico', $id_medico)
+			->where('id_empresa_departamento', $id_empresa)
+			->first();
 
 	}
 

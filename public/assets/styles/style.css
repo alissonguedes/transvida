@@ -230,7 +230,6 @@ textarea {
 	position: fixed;
 	overflow: hidden;
 	height: inherit;
-	padding-right: 35px;
 }
 
 .brand-sidebar .logo-wrapper img {
@@ -2210,7 +2209,7 @@ label.divider:after {
 }
 
 .dataTables_wrapper .dataTables_info {
-	right: 120px;
+	right: 145px;
 	padding: 0;
 	display: flex;
 	align-items: center;
@@ -2221,6 +2220,7 @@ label.divider:after {
 	font-weight: normal;
 	font-size: 15px;
 	text-transform: inherit;
+	padding: 0 15px;
 }
 
 .responsive-table {

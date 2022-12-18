@@ -34,7 +34,7 @@ function core() {
 	Request.addEvent();
 	Form.init();
 
-	checkAll();
+	// checkAll();
 	// resizeBody();
 	// buttonActions(table.find(':button[data-link]:not([data-target])'));
 	// btnModalForms(table.find('[data-target]'));

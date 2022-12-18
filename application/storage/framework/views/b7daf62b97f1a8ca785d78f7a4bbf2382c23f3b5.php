@@ -22,6 +22,14 @@
 					<div class="row mt-2">
 						<div class="col s12">
 							<div class="input-field">
+								<label for="especialidade">Local</label>
+								<input type="text" name="especialidade" class="autocomplete" data-url="<?php echo e(route('clinica.clinicas.get_especialidades')); ?>" value="<?php echo e(isset($row) && $row->especialidade ? $row->especialidade : null); ?>" autocomplete="random-string">
+							</div>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col s12">
+							<div class="input-field">
 								<label for="localidade">Local</label>
 								<input type="text" name="localidade" class="autocomplete" data-url="<?php echo e(route('clinica.clinicas.get_unidades')); ?>" value="<?php echo e(isset($row) && $row->clinica ? $row->clinica : null); ?>" autocomplete="random-string">
 							</div>
@@ -31,7 +39,7 @@
 						<div class="col s12">
 							<div class="input-field">
 								<label for="medico">Médico</label>
-								<input type="text" name="medico" class="autocomplete" data-url="<?php echo e(route('clinica.clinicas.get_unidades')); ?>" value="<?php echo e(isset($row) && $row->medico ? $row->medico : null); ?>" autocomplete="random-string">
+								<input type="text" name="medico" class="autocomplete" data-url="<?php echo e(route('clinica.clinicas.get_medicos')); ?>" value="<?php echo e(isset($row) && $row->medico ? $row->medico : null); ?>" autocomplete="random-string">
 							</div>
 						</div>
 					</div>

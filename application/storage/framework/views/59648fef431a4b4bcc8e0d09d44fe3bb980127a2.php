@@ -34,8 +34,8 @@
 							</div>
 							<h6 class="white-text"><?php echo e($paciente->nome); ?></h6>
 							<p>
-								<a href="#"><i class="material-icons-outlined">cake</i><?php echo e($paciente->data_nascimento ?? 'Não informado'); ?></a>
-								<a href="#"><i class="material-icons-outlined">credit_card</i><?php echo e($paciente->cpf ?? 'Não informado'); ?></a>
+								<a href="#"><i class="material-icons-outlined left">cake</i><?php echo e($paciente->data_nascimento ?? 'Não informado'); ?></a>
+								<a href="#"><i class="material-icons-outlined left">credit_card</i><?php echo e($paciente->cpf ?? 'Não informado'); ?></a>
 							</p>
 							<div class="clear"></div>
 						</div>

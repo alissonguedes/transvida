@@ -132,31 +132,33 @@ $.extend($.fn.dataTableExt.oPagination, {
 	}
 });
 
-var checkAll = () => {
+var checkAll = (table) => {
 
-	$('table.table')
-		.find('thead')
+	var table = typeof table !== 'undefined' ? $(table) : $('body').find('table.table');
+
+	table.find('thead')
 		.find(':input:checkbox:checked')
 		.prop('checked', false)
 		.change();
 
 	// Ativar preenchimento de checkboxes nas tabelas
-	$('body').find('table.table').each(function() {
+	table.each(function() {
 
 		var status = 0;
 		var btn_status = $(this).parents('.responsive-table').find(':button.update_resources, :button.update');
 
 		var checked;
 		var dataTables_wrapper = $(this);
+		var checkAll = dataTables_wrapper.find('thead').find(':input:checkbox');
 
 		if (dataTables_wrapper.find('tbody').find(':input:checkbox').length === 0) {
-			$('#check-all').attr('disabled', true);
+			checkAll.attr('disabled', true)
 			return false;
 		} else {
-			$('#check-all').attr('disabled', false);
+			checkAll.attr('disabled', false)
 		}
 
-		$('#check-all').on('change', function() {
+		dataTables_wrapper.find('thead').find(':input:checkbox').on('change', function() {
 
 			$(this).parents('table.table')
 				.find('tbody').find('tr')
@@ -164,14 +166,13 @@ var checkAll = () => {
 
 			if ($(this).prop('checked')) {
 				$(this).parents('table.table')
-					// .find('.dataTables_wrapper')
 					.find('tbody')
-					.find(':checkbox')
+					.find(':checkbox:not(:disabled)')
 					.prop('checked', true);
 			} else {
 				$(this).parents('table.table')
 					.find('tbody')
-					.find(':checkbox')
+					.find(':checkbox:not(:disabled)')
 					.prop('checked', false);
 			}
 
@@ -179,10 +180,9 @@ var checkAll = () => {
 
 		dataTables_wrapper.find(':input:checkbox').on('change', function() {
 
-			var checkeds = $(this).parents('table.table').find('tbody').find(':input:checkbox:checked').length;
-			var countCheckbox = $(this).parents('table.table').find('tbody').find(':input:checkbox').length;
-			var checkAll = $(this).parents('table.table').find('#check-all').attr('id');
-			var indeterminateCheckbox = document.getElementById(checkAll);
+			var checkeds = $(this).parents('table.table').find('tbody').find(':input:checkbox:checked:not(:disabled)').length;
+			var countCheckbox = $(this).parents('table.table').find('tbody').find(':input:checkbox:not(:disabled)').length;
+			var indeterminateCheckbox = document.getElementById(checkAll.attr('id'));
 			var selecteds_label = checkeds > 1 ? checkeds + ' itens selecionados' : checkeds + ' item selecionado';
 			var chkStatusLength = $(this).parents('table.table').find('tbody').find(':checkbox[data-status="0"]:checked').length;
 
@@ -202,6 +202,7 @@ var checkAll = () => {
 					.find('button').attr('disabled', false).parents('.action-btns')
 					.find('.hide-buttons')
 					.find('.selecteds-label').html(selecteds_label);
+
 				$(this).parents('table.table').find('.show-buttons').hide();
 
 				$('#btn-delete').attr('disabled', false);
@@ -220,6 +221,7 @@ var checkAll = () => {
 					.find('button').attr('disabled', true)
 					.parents('.action-btns')
 					.find('.selecteds-label').empty();
+
 				$(this).parents('table.table').find('.show-buttons').css('display', 'flex');
 
 				$('#btn-delete').attr('disabled', true);
@@ -230,7 +232,7 @@ var checkAll = () => {
 			}
 
 			$(this).parents('table.table').find('#check-all').prop('checked', checked);
-			$(this).parents('table.table').find('tbody').find(':input:checkbox:checked').parents('tr').addClass('selected');
+			$(this).parents('table.table').find('tbody').find(':input:checkbox:checked:not(:disabled)').parents('tr').addClass('selected');
 
 			if (!$(this).is(':checked')) {
 				$(this).parents('tr').removeClass('selected');
@@ -254,73 +256,102 @@ function btnModalForms($button) {
 		$(this).bind('click', function() {
 
 			var M = $('#' + modal).modal();
-			$('#' + modal).find('.modal-content').html('Por favor, aguarde! Estamos carregando seu formulário...');
+
+			var load = `<div class="preloader-wrapper small active" style="margin-right: 20px;">
+							<div class="spinner-layer spinner-green-only">
+								<div class="circle-clipper left">
+									<div class="circle"></div>
+								</div>
+								<div class="gap-patch">
+									<div class="circle"></div>
+								</div>
+								<div class="circle-clipper right">
+									<div class="circle"></div>
+								</div>
+							</div>
+						</div>
+						Carregando o formulário. Por favor, aguarde!`;
+
+			var texto = $('<div>', {
+				'style': 'display: flex; align-items: center; place-content: center; position: absolute; top: 50%; left: 0; bottom: 50%; right: 0; margin-top: -25px; margin-bottom: -25px; text-align: center;'
+			});
+
+			$('#' + modal).find('.modal-content').html($(texto).html(load));
 
 			$('#' + modal).modal({
 				'dismissible': typeof $(this).data('dismissible') !== 'undefined' && $(this).data('dismissible') != '' ? $(this).data('dismissible') : false,
 				'isMultiple': true,
-				'onOpenStart': () => {
+				'inDuration': 250,
+				'outDuration': 350,
+				'startingTop': "15%",
+				'endingTop': "15%",
+				'onOpenEnd': () => {
+
 					Http.get(link, {
 						'datatype': 'html',
 						'data': {},
 					}, (response) => {
+
 						$('#' + modal).find('form').html($(response).find('form').html());
-					});
-				},
-				'onOpenEnd': () => {
-					var select = $('#' + modal).find('form').find('select').formSelect();
-					App.aplicarMascaras();
 
-					select.each(function() {
+						checkAll($('#' + modal).find('form').find('table.table'));
 
-						var id = $(this).attr('id');
-						var link = typeof $(this).data('link') !== 'undefined' ? $(this).data('link') : false;
-						var target = typeof $(this).data('target') !== 'undefined' ? $(this).data('target') : false;
+						var select = $('#' + modal).find('form').find('select').formSelect();
 
-						if (link) {
+						select.each(function() {
 
-							$('#' + id).change(function() {
+							var id = $(this).attr('id');
+							var link = typeof $(this).data('link') !== 'undefined' ? $(this).data('link') : false;
+							var target = typeof $(this).data('target') !== 'undefined' ? $(this).data('target') : false;
 
-								Http.get(link, {
-									'datatype': 'json',
-									'data': {
-										[$(this).attr('name')]: $(this).val()
-									}
-								}, (response) => {
+							if (link) {
 
-									if (target) {
+								$('#' + id).change(function() {
 
-										$('#' + target).attr('disabled', false);
-										$('#' + target).find('option:not(:disabled)').remove()
+									Http.get(link, {
+										'datatype': 'json',
+										'data': {
+											[$(this).attr('name')]: $(this).val()
+										}
+									}, (response) => {
 
-										var options = [];
-										if (response.length > 0) {
-											for (var i of response) {
-												var option = $('<option/>', {
-													'value': i.id,
-													'text': i.titulo
-												});
-												options.push(option);
+										if (target) {
+
+											$('#' + target).attr('disabled', false);
+											$('#' + target).find('option:not(:disabled)').remove()
+
+											var options = [];
+											if (response.length > 0) {
+												for (var i of response) {
+													var option = $('<option/>', {
+														'value': i.id,
+														'text': i.titulo
+													});
+													options.push(option);
+												}
+												$('#' + target).append(options)
+											} else {
+												$('#' + target).html($('<option/>', {
+													'value': '',
+													'selected': true,
+													'disabled': true,
+													'text': $('#' + target).find('option:disabled').text()
+												}));
 											}
-											$('#' + target).append(options)
-										} else {
-											$('#' + target).html($('<option/>', {
-												'value': '',
-												'selected': true,
-												'disabled': true,
-												'text': $('#' + target).find('option:disabled').text()
-											}));
+
+											$('#' + target).formSelect();
+
 										}
 
-										$('#' + target).formSelect();
+									})
 
-									}
+								});
 
-								})
+							}
 
-							});
+						});
 
-						}
+						App.aplicarMascaras();
 
 					});
 
@@ -466,6 +497,7 @@ function DataTable(refresh) {
 				}
 
 			},
+
 			success: (response) => {
 
 				var parser = new DOMParser();
@@ -511,7 +543,7 @@ function DataTable(refresh) {
 					});
 				});
 
-				checkAll();
+				checkAll(table);
 				resizeBody();
 				buttonActions(table.find(':button[data-link]:not([data-target])'));
 				btnModalForms(table.find('[data-target]'));

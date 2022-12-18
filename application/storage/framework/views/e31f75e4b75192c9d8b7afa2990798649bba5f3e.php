@@ -21,7 +21,11 @@
 				</label>
 			</td>
 			<td>
-				<?php echo e($row->nome_fantasia); ?>
+				<?php echo e($row->razao_social); ?>
+
+			</td>
+			<td>
+				<?php echo e($row->titulo); ?>
 
 			</td>
 			<td>

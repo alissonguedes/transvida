@@ -40,7 +40,7 @@ namespace App\Http\Controllers\Clinica{
 
 			$dados['row']           = $this->agendamento_model->getAgendamentoById($request->id);
 			$dados['departamentos'] = $this->departamento_model->getDepartamentos();
-			return view('clinica.agendamentos.form', $dados);
+			return response(view('clinica.agendamentos.form', $dados), 200);
 
 		}
 

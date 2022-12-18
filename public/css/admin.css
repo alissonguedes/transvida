@@ -34,29 +34,6 @@
 	margin-left: 0;
 }
 
-.text-logo {
-	margin-left: 50px;
-}
-
-.text-logo h5,
-.text-logo h2 {
-	font-family: 'Montserrat' !important;
-	margin: 0;
-	line-height: 1;
-	color: inherit;
-}
-
-.text-logo h2 {
-	font-size: 72px;
-}
-
-.text-logo h5 {
-	position: relative;
-	top: 25px;
-	left: 75px;
-	font-size: 31px;
-}
-
 #client-logo {
 	place-content: center;
 	align-items: center;
@@ -131,33 +108,14 @@
 	color: inherit !important;
 }
 
-.brand-sidebar .logo-wrapper {
-	font-size: 3rem;
-	line-height: 50px !important;
-	white-space: nowrap;
-	margin-left: 10px;
-	top: 5px;
-}
-
 .navbar .header-search-wrapper input {
 	height: inherit;
 	padding: 3px 8px 8px 52px;
 }
 
-.logo-wrapper .text-logo h5 {
-	font-size: 34%;
-	position: relative;
-	top: -20px;
-	left: 91px;
-	display: inline;
-}
-
-.logo-wrapper .text-logo h2 {
-	font-size: 80%;
-	display: inline;
-	top: 0px;
-	position: relative;
-}
+/* <span class="material-icons">
+cloud
+</span> */
 
 .card-content.fixed-height {
 	height: calc(100vh - 120px);
@@ -360,6 +318,9 @@
 	font-size: 16px;
 }
  */
+.card .card-content {
+	padding: 20px;
+}
 
 .pacientes .card-content .foto {
 	width: 60px;
@@ -387,13 +348,15 @@
 }
 
 .pacientes .card-content p a {
-	display: flex;
-	align-items: start;
-	text-align: justify;
+	display: block;
 	color: inherit;
 	margin: 0;
 	margin-bottom: 4px;
 	position: relative;
+	white-space: nowrap;
+	overflow: hidden;
+	position: relative;
+	text-overflow: ellipsis;
 }
 
 .pacientes .card-content p a i {

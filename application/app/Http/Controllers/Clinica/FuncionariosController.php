@@ -122,7 +122,7 @@ namespace App\Http\Controllers\Clinica{
 			$data['clean_form']  = true;
 			$data['close_modal'] = true;
 			$data['url']         = url()->route('clinica.funcionarios.index');
-			$data['message']     = 'Funcoe cadastrada com sucesso!';
+			$data['message']     = 'Registro atualizado com sucesso!';
 
 			return response()->json($data);
 

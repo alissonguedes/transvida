@@ -7,6 +7,13 @@
 		<?php endif; ?>
 
 		<div class="modal-content">
+
+			<div class="row">
+				<div class="col s12 mb-3">
+					<h5>Cadastro do funcionário</h5>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col s12">
 					<div class="input-field">
@@ -15,6 +22,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col s12 m6 l6">
 					<div class="input-field">
@@ -29,6 +37,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col s12">
 					<div class="input-field">
@@ -45,15 +54,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<?php
-					$crm = isset($row) && isset($medico) ? $medico->crm : null;
-					$especialidade = isset($row) && isset($medico) ? $medico->id_especialidade : null;
-				?>
 
 				<div class="col s12 m6">
 					<div class="input-field">
-						<label for="crm" class="<?php echo e(isset($row) && $crm ? 'active' : null); ?>">CRM</label>
-						<input type="text" name="crm" id="crm" value="<?php echo e($crm ?? null); ?>">
+						<label for="crm" class="<?php echo e(isset($row) && $row->crm ? 'active' : null); ?>">CRM</label>
+						<input type="text" name="crm" id="crm" value="<?php echo e($row->crm ?? null); ?>">
 					</div>
 				</div>
 
@@ -63,14 +68,15 @@
 						<select name="especialidade" id="especialidade">
 							<option value="" disabled selected>Informe a especialidade</option>
 							<?php if(isset($especialidades)): ?>
-								<?php $__currentLoopData = $especialidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $espec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<option value="<?php echo e($espec->id); ?>" <?php echo e(isset($row) && isset($especialidade) && $espec->id==$especialidade ? 'selected=selected' : null); ?>><?php echo e($espec->especialidade); ?></option>
+								<?php $__currentLoopData = $especialidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $especialidade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($especialidade->id); ?>" <?php echo e(isset($row) && isset($row->especialidade) && $especialidade->id==$row->especialidade ? 'selected=selected' : null); ?>><?php echo e($especialidade->especialidade); ?></option>
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							<?php endif; ?>
 						</select>
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col s12">
 					<div class="input-field">
@@ -79,7 +85,7 @@
 							<option value="" disabled selected>Informe a clínica de atuação</option>
 							<?php if(isset($clinicas)): ?>
 								<?php $__currentLoopData = $clinicas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $clinica): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<option value="<?php echo e($clinica->id); ?>" <?php echo e(isset($row) && $clinica->id==$row->id_clinica ? 'selected=selected' : null); ?>><?php echo e($clinica->nome_fantasia); ?></option>
+									<option value="<?php echo e($clinica->id); ?>" <?php echo e(isset($row) && $clinica->id==$row->id_clinica ? 'selected=selected' : null); ?>><?php echo e($clinica->titulo); ?></option>
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							<?php endif; ?>
 						</select>
@@ -108,10 +114,10 @@
 					<label for="status" class="active blue-text text-accent-1">Funcionário ativo</label>
 					<div class="switch mt-3" id="status">
 						<label>
-							Off
+							Não
 							<input type="checkbox" name="status" id="status" value="1" <?php echo e(!isset($row) || ($row && $row->status == '1') ? 'checked=checked' : null); ?>>
 							<span class="lever"></span>
-							On
+							Sim
 						</label>
 					</div>
 				</div>

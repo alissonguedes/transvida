@@ -35,6 +35,7 @@ class EmpresaModel extends AppModel
 
 		$get = $this->select(
 			'id',
+			'titulo',
 			'nome_fantasia',
 			'razao_social',
 			'cnpj',
@@ -104,7 +105,7 @@ class EmpresaModel extends AppModel
 
 	public function getClinicas($data = null)
 	{
-		$get = $this->select('id', 'nome_fantasia', 'cnpj')
+		$get = $this->select('id', 'titulo', 'cnpj')
 			->from('tb_empresa')
 			->where('status', '1');
 
@@ -128,10 +129,21 @@ class EmpresaModel extends AppModel
 
 	}
 
+	public function getEmpresasByDepartamentos($id_departamento)
+	{
+
+		return $this->select('E.id', 'E.titulo', 'E.cnpj', 'E.status', 'DE.id AS id_empresa_departamento', 'DE.id_departamento', 'DE.id_empresa')
+			->from('tb_empresa AS E')
+			->join('tb_departamento_empresa AS DE', 'DE.id_empresa', 'E.id', 'left')
+			->where('DE.id_departamento', $id_departamento)
+			->get();
+
+	}
+
 	public function getEmpresasComDepartamento()
 	{
 
-		return $this->select('tb_empresa.id', 'tb_empresa.nome_fantasia')
+		return $this->select('tb_empresa.id', 'tb_empresa.nome_fantasia', 'tb_empresa.titulo')
 			->distinct(true)
 			->from('tb_empresa')
 			->join('tb_departamento_empresa', 'tb_departamento_empresa.id_empresa', 'tb_empresa.id', 'right')
@@ -172,8 +184,9 @@ class EmpresaModel extends AppModel
 	public function cadastraEmpresa($post)
 	{
 
-		$id                  = $post->id;
-		$nome_fantasia       = $post->nome_fantasia;
+		$id = $post->id;
+		// $nome_fantasia       = $post->nome_fantasia;
+		$titulo              = $post->titulo;
 		$razao_social        = $post->razao_social;
 		$cnpj                = $post->cnpj;
 		$inscricao_estadual  = $post->inscricao_estadual;
@@ -213,7 +226,8 @@ class EmpresaModel extends AppModel
 		$status              = $post->status ?? '0';
 
 		$data = [
-			'nome_fantasia'       => $nome_fantasia,
+			'titulo'              => $titulo,
+			// 'nome_fantasia'       => $nome_fantasia,
 			'razao_social'        => $razao_social,
 			'cnpj'                => $cnpj,
 			'inscricao_estadual'  => $inscricao_estadual,
@@ -289,8 +303,9 @@ class EmpresaModel extends AppModel
 	public function editaEmpresa(Request $post, $id_empresa)
 	{
 
-		$id_empresa          = $post->id;
-		$nome_fantasia       = $post->nome_fantasia;
+		$id_empresa = $post->id;
+		// 'nome_fantasia'       => $nome_fantasia,
+		$titulo              = $post->titulo;
 		$razao_social        = $post->razao_social;
 		$cnpj                = $post->cnpj;
 		$inscricao_estadual  = $post->inscricao_estadual;
@@ -330,7 +345,8 @@ class EmpresaModel extends AppModel
 		$status              = $post->status ?? '0';
 
 		$data = [
-			'nome_fantasia'       => $nome_fantasia,
+			'titulo'              => $titulo,
+			// 'nome_fantasia'       => $nome_fantasia,
 			'razao_social'        => $razao_social,
 			'cnpj'                => $cnpj,
 			'inscricao_estadual'  => $inscricao_estadual,

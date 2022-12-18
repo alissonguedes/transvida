@@ -30,7 +30,8 @@
 										<span></span>
 									</label>
 								</th>
-								<th class="center-align" width="20%">nome</th>
+								<th class="center-align" width="20%">Razão Social</th>
+								<th class="center-align" width="20%">Descrição</th>
 								<th class="center-align" width="20%">cnpj</th>
 								<th class="center-align" width="15%">cidade</th>
 								<th class="center-align">estado</th>

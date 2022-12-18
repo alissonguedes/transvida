@@ -10,6 +10,7 @@
 <script src="<?php echo e(asset('assets/plugins/fullcalendar/moment.min.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/plugins/fullcalendar/fullcalendar.js')); ?>"></script>
 
+<script src="<?php echo e(asset('assets/plugins/fullcalendar/interaction.min.js')); ?>"></script>
 
 <script src="<?php echo e(asset('assets/plugins/isotope/js/isotope.min.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/plugins/tinymce/tinymce.min.js')); ?>"></script>

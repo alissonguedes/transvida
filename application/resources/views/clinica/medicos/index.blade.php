@@ -3,7 +3,7 @@
 @section('title', 'Medicos')
 
 @section('search')
-<div class="input-field search bordered z-depth-1">
+<div class="input-field search bordered border-round z-depth-1">
 	<label for="">Pesquisar medicos</label>
 	<input type="search" id="search-on-page" class="dataTable_search">
 </div>
@@ -11,12 +11,10 @@
 
 @section('btn-add-title','Adicionar medico')
 @section('btn-add')
-<button class="modal-trigger btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light" data-link="{{ route('clinica.medicos.add') }}" data-target="modal_medico" data-tooltip="@yield('btn-add-title')" data-href="@yield('btn-add-route')">
+<button class="btn btn-floating waves-effect waves-light z-depth-3" disabled="disabled">
 	<i class="material-icons bolder">add</i>
 </button>
 @endsection
-
-{{-- @section('btn-delete-route', route('clinica.medicos.delete')) --}}
 
 @section('container')
 

@@ -4,7 +4,6 @@
 <link rel="stylesheet" media="screen" href="<?php echo e(asset('assets/plugins/font-awesome/6.2.0/css/all.css')); ?>">
 
 <link rel="stylesheet" media="screen" href="<?php echo e(asset('assets/plugins/fullcalendar/main.css')); ?>">
-
 <link rel="stylesheet" media="screen" href="<?php echo e(asset('assets/plugins/fullcalendar/daygrid.min.css')); ?>">
 <link rel="stylesheet" media="screen" href="<?php echo e(asset('assets/plugins/fullcalendar/timegrid.min.css')); ?>">
 

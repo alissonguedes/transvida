@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Clinica{
 	use App\Models\ConvenioModel;
 	use App\Models\DepartamentoModel;
 	use App\Models\EmpresaModel;
+	use App\Models\EspecialidadeModel;
 	use App\Models\EstadoCivilModel;
 	use Illuminate\Http\Request;
 	use Illuminate\Validation\Rule;
@@ -15,10 +16,11 @@ namespace App\Http\Controllers\Clinica{
 		public function __construct()
 		{
 
-			$this->convenio_model     = new ConvenioModel();
-			$this->empresa_model      = new EmpresaModel();
-			$this->departamento_model = new DepartamentoModel();
-			$this->estadoCivil_model  = new EstadoCivilModel();
+			$this->convenio_model      = new ConvenioModel();
+			$this->empresa_model       = new EmpresaModel();
+			$this->departamento_model  = new DepartamentoModel();
+			$this->estadoCivil_model   = new EstadoCivilModel();
+			$this->especialidade_model = new EspecialidadeModel();
 
 		}
 
@@ -53,14 +55,34 @@ namespace App\Http\Controllers\Clinica{
 
 			foreach ($dados as $clinica) {
 				$clinicas[] = [
-					'label' => $clinica->id . ' - ' . $clinica->nome_fantasia,
+					'label' => $clinica->id . ' - ' . $clinica->titulo,
 					'name'  => 'clinica',
 					'value' => $clinica->id,
 					'icon'  => null,
 				];
 			}
 
-			return response($clinicas, 200);
+			return response()->json($clinicas);
+
+		}
+
+		public function get_especialidades(Request $request)
+		{
+
+			$especialidades = [];
+
+			$dados = $this->especialidade_model->getEspecialidades();
+
+			foreach ($dados as $especialidade) {
+				$especialidades[] = [
+					'label' => $especialidade->id . ' - ' . $especialidade->especialidade,
+					'name'  => 'especialidade',
+					'value' => $especialidade->id,
+					'icon'  => null,
+				];
+			}
+
+			return response()->json($especialidade);
 
 		}
 
@@ -76,7 +98,8 @@ namespace App\Http\Controllers\Clinica{
 		{
 
 			return $request->validate([
-				'nome_fantasia'      => 'required',
+				'titulo'             => 'required',
+				// 'nome_fantasia'      => 'required',
 				'razao_social'       => 'required',
 				'cnpj'               => [
 					'required',
