@@ -49,6 +49,15 @@ nav .brand-logo,
 
 /** Clinic Cloud **/
 
+/*.text-logo {
+	margin-left: 50px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	font-size: 6rem;
+	max-width: 50%;
+}*/
+
 .text-logo {
 	margin-left: 50px;
 	position: relative;
@@ -62,9 +71,9 @@ nav .brand-logo,
 	content: '\e2bd';
 	font-family: 'Material Icons Outlined';
 	position: relative;
-	/* font-size: 120%; */
+	font-size: 150%;
 	margin-right: -15%;
-	bottom: 0px;
+	bottom: 11px;
 }
 
 .text-logo.white-text::before {
@@ -112,6 +121,7 @@ nav .brand-logo,
 
 .logo-wrapper .text-logo::before {
 	margin-right: -30%;
+	bottom: 4px;
 }
 
 .logo-wrapper .text-logo h5 {
@@ -119,6 +129,6 @@ nav .brand-logo,
 	position: relative;
 	margin-top: -30%;
 	top: 0;
-	left: 76%;
+	left: 70%;
 	display: inline;
 }

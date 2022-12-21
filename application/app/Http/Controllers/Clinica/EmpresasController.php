@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Clinica{
 	use App\Models\EmpresaModel;
 	use App\Models\EspecialidadeModel;
 	use App\Models\EstadoCivilModel;
+	use App\Models\MedicoModel;
 	use Illuminate\Http\Request;
 	use Illuminate\Validation\Rule;
 
@@ -21,6 +22,7 @@ namespace App\Http\Controllers\Clinica{
 			$this->departamento_model  = new DepartamentoModel();
 			$this->estadoCivil_model   = new EstadoCivilModel();
 			$this->especialidade_model = new EspecialidadeModel();
+			$this->medico_model        = new MedicoModel();
 
 		}
 
@@ -46,7 +48,7 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
-		public function get_unidades(Request $request)
+		public function get_unidades(Request $request, $especialidade = null)
 		{
 
 			$clinicas = [];
@@ -70,8 +72,7 @@ namespace App\Http\Controllers\Clinica{
 		{
 
 			$especialidades = [];
-
-			$dados = $this->especialidade_model->getEspecialidades();
+			$dados          = $this->especialidade_model->getEspecialidades();
 
 			foreach ($dados as $especialidade) {
 				$especialidades[] = [
@@ -82,7 +83,27 @@ namespace App\Http\Controllers\Clinica{
 				];
 			}
 
-			return response()->json($especialidade);
+			return response()->json($especialidades);
+
+		}
+
+		public function get_medicos(Request $request)
+		{
+
+			$medicos = [];
+
+			$dados = $this->medico_model->getMedicos();
+
+			foreach ($dados as $medico) {
+				$medicos[] = [
+					'label' => $medico->id . ' - ' . $medico->nome,
+					'name'  => 'medico',
+					'value' => $medico->id,
+					'icon'  => null,
+				];
+			}
+
+			return response()->json($medicos);
 
 		}
 

@@ -22,8 +22,9 @@
 					<div class="row mt-2">
 						<div class="col s12">
 							<div class="input-field">
-								<label for="especialidade">Local</label>
-								<input type="text" name="especialidade" class="autocomplete" data-url="{{ route('clinica.clinicas.get_especialidades') }}" value="{{ isset($row) && $row->especialidade ? $row->especialidade : null; }}" autocomplete="random-string">
+								<label for="especialidade">Especialidade</label>
+								<input type="text" id="especialidade" class="autocomplete" data-url="{{ route('clinica.clinicas.get_especialidades') }}" value="{{ isset($row) && $row->especialidade ? $row->especialidade : null; }}" autocomplete="random-string">
+								<input type="hidden" name="especialidade" value="">
 							</div>
 						</div>
 					</div>
@@ -31,7 +32,7 @@
 						<div class="col s12">
 							<div class="input-field">
 								<label for="localidade">Local</label>
-								<input type="text" name="localidade" class="autocomplete" data-url="{{ route('clinica.clinicas.get_unidades') }}" value="{{ isset($row) && $row->clinica ? $row->clinica : null; }}" autocomplete="random-string">
+								<input type="text" name="localidade" class="" data-url="{{ route('clinica.clinicas.get_unidades') }}" value="{{ isset($row) && $row->clinica ? $row->clinica : null; }}" autocomplete="random-string">
 							</div>
 						</div>
 					</div>

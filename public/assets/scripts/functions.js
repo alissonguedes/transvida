@@ -1520,14 +1520,6 @@ function getData(autocomplete, url, query = null, limit = 10) {
 
 function autocomplete() {
 
-	// 	var input = typeof form !== undefined ? $(form).find('input.autocomplete') : $('body').find('form').find('input.autocomplete');
-
-	// if (input.length === 0) return;
-
-	// // Create element Autocomplete
-	// input.each(function() {
-
-
 	// Create element Autocomplete
 	$('body').find('input.autocomplete').each(function() {
 
@@ -1538,7 +1530,7 @@ function autocomplete() {
 
 		if (autocomplete.length === 0) return;
 
-		autocomplete.autocomplete({
+		var complete = autocomplete.autocomplete({
 			minLength: 0,
 			limit: limit,
 			onAutocomplete: (name, value) => {
@@ -1562,9 +1554,8 @@ function autocomplete() {
 			if (key === 8 || key === 46) {
 				console.log(url);
 				getData(autocomplete, url);
-			} else {}
+			}
 
-			// console.log($(this).val())
 			getData(autocomplete, url, autocomplete.val());
 
 
@@ -1578,9 +1569,43 @@ function autocomplete() {
 				if (hidden.length)
 					hidden.val('');
 				getData(autocomplete, url);
-			} else {}
+			}
 
-			// getData($(this), url, $(this).val());
+
+		});
+
+	});
+
+	// Ação para obter Empresas que possuem a especialidade selecionada.
+	$('input[id="especialidade"]').on('change', function() {
+
+		var especialidade = $(this).val().split(' - ').splice(0, 1).toString();
+		var $input_destino = $('input[name="localidade"]');
+		var url_empresas = $input_destino.data('url');
+
+		Http.get(url_empresas, {
+			'datatype': 'json',
+			'data': {
+				'especialidade': especialidade
+			}
+		}, (response) => {
+
+			var data = {};
+
+			Object.keys(response).forEach((i) => {
+				var item = response[i];
+				data[item.label] = {
+					'label': item.label,
+					'icon': item.icon,
+					'value': item.value,
+					'name': item.name
+				};
+			});
+
+			var comp = $('input[name="localidade"]').autocomplete();
+			var instance = M.Autocomplete.getInstance(comp);
+			instance.updateData(data);
+			instance.open();
 
 		});
 
