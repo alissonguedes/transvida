@@ -16,7 +16,7 @@
 
 					<div class="row">
 						<div class="col s12">
-							<div class="card-title">Agendamento</div>
+							<div class="card-title">Agendament</div>
 						</div>
 					</div>
 

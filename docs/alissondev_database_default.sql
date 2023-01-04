@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 29/12/2022 às 07:25
+-- Tempo de geração: 04/01/2023 às 15:24
 -- Versão do servidor: 10.6.11-MariaDB-0ubuntu0.22.04.1
 -- Versão do PHP: 8.1.2-1ubuntu2.8
 
@@ -110,6 +110,7 @@ CREATE TABLE `tb_acl_menu_item` (
   `id_menu` int(10) UNSIGNED NOT NULL,
   `id_item` int(10) UNSIGNED NOT NULL COMMENT 'Referencia a tabela (tb_acl_modulo_controller ou tb_acl_modulo_post) para a qual aponta o menu',
   `id_parent` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Campo para hierarquia do menu',
+  `id_route` int(11) NOT NULL DEFAULT 0,
   `descricao` varchar(50) DEFAULT NULL,
   `item_type` varchar(50) DEFAULT NULL COMMENT 'É o nome da tabela referenciada. Seria a tb_acl_modulo_controller (controller) ou tb_acl_modulo_post (post)',
   `link` varchar(255) DEFAULT NULL,
@@ -128,33 +129,33 @@ CREATE TABLE `tb_acl_menu_item` (
 -- Despejando dados para a tabela `tb_acl_menu_item`
 --
 
-INSERT INTO `tb_acl_menu_item` (`id`, `id_menu`, `id_item`, `id_parent`, `descricao`, `item_type`, `link`, `icon`, `target`, `ordem`, `permissao`, `created_at`, `updated_at`, `divider`, `editavel`, `status`) VALUES
-(1, 1, 3, 0, 'Página inicial da área Administrativa', 'Menu Principal', NULL, 'dashboard', NULL, 1, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
-(2, 1, 4, 0, 'Página de menus da área Administrativa', NULL, NULL, 'list', NULL, 3, 0001, '2022-08-21 02:14:55', NULL, 0, '1', '1'),
-(3, 1, 4, 2, 'Página de menus da área Administrativa', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
-(4, 1, 12, 0, 'Página inicial do módulo ClinicCloud', 'ClinicCloud', NULL, 'cloud', '_blank', 1, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
-(5, 2, 12, 0, 'Página inicial do módulo ClinicCloud', 'Menu Principal', NULL, 'dashboard', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(6, 2, 27, 0, 'Agendamentos', NULL, NULL, 'calendar_month', NULL, 4, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(7, 2, 27, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(8, 2, 12, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(9, 2, 12, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(10, 2, 12, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(11, 2, 12, 6, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(12, 2, 12, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'vaccines', NULL, 5, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(13, 2, 12, 12, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'biotech', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(14, 2, 12, 12, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'monitor_heart', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(15, 2, 12, 12, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(16, 2, 12, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'medical_services', NULL, 6, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(17, 2, 12, 16, 'Página inicial do módulo ClinicCloud', NULL, 'Atendimentos', 'fa-clipboard-user', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(18, 2, 19, 0, 'Página de pacientes', NULL, NULL, 'group', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(19, 2, 21, 22, 'Página de médicos', NULL, NULL, NULL, NULL, 5, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(20, 2, 22, 25, 'Página de especialidades', NULL, NULL, 'favorite_border', NULL, 3, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(21, 2, 12, 0, 'Gerenciamento', 'Sistema', NULL, 'construction', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(22, 2, 12, 21, 'Cadastros', NULL, NULL, 'manage_accounts', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(23, 2, 23, 22, 'Empresas', NULL, NULL, 'local_convenience_store', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(24, 2, 25, 25, 'Departamentos', NULL, NULL, 'account_tree', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(25, 2, 12, 21, 'Tabelas', NULL, NULL, 'view_column', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
-(26, 2, 26, 22, 'Funcionários', NULL, NULL, 'supervisor_account', NULL, 4, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1');
+INSERT INTO `tb_acl_menu_item` (`id`, `id_menu`, `id_item`, `id_parent`, `id_route`, `descricao`, `item_type`, `link`, `icon`, `target`, `ordem`, `permissao`, `created_at`, `updated_at`, `divider`, `editavel`, `status`) VALUES
+(1, 1, 3, 0, 0, 'Página inicial da área Administrativa', 'Menu Principal', NULL, 'dashboard', NULL, 1, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
+(2, 1, 4, 0, 0, 'Página de menus da área Administrativa', NULL, NULL, 'list', NULL, 3, 0001, '2022-08-21 02:14:55', NULL, 0, '1', '1'),
+(3, 1, 4, 2, 0, 'Página de menus da área Administrativa', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
+(4, 1, 12, 0, 0, 'Página inicial do módulo ClinicCloud', 'ClinicCloud', NULL, 'cloud', '_blank', 1, 0001, '2022-08-21 02:14:27', NULL, 0, '1', '1'),
+(5, 2, 12, 0, 0, 'Página inicial do módulo ClinicCloud', 'Menu Principal', NULL, 'dashboard', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(6, 2, 27, 0, 0, 'Agendamentos', NULL, NULL, 'calendar_month', NULL, 4, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(7, 2, 27, 6, 104, 'Agendamentos >> Consultas', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '0'),
+(8, 2, 27, 6, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '0'),
+(9, 2, 27, 6, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '0'),
+(10, 2, 27, 6, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '0'),
+(11, 2, 27, 6, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '0'),
+(12, 2, 12, 0, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'vaccines', NULL, 5, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(13, 2, 12, 12, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'biotech', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(14, 2, 12, 12, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'monitor_heart', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(15, 2, 12, 12, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'radio_button_unchecked', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(16, 2, 12, 0, 0, 'Página inicial do módulo ClinicCloud', NULL, NULL, 'medical_services', NULL, 6, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(17, 2, 12, 16, 0, 'Página inicial do módulo ClinicCloud', NULL, 'Atendimentos', 'fa-clipboard-user', NULL, 0, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(18, 2, 19, 0, 0, 'Página de pacientes', NULL, NULL, 'group', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(19, 2, 21, 22, 0, 'Página de médicos', NULL, NULL, NULL, NULL, 5, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(20, 2, 22, 25, 0, 'Página de especialidades', NULL, NULL, 'favorite_border', NULL, 3, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(21, 2, 12, 0, 0, 'Gerenciamento', 'Sistema', NULL, 'construction', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(22, 2, 12, 21, 0, 'Cadastros', NULL, NULL, 'manage_accounts', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(23, 2, 23, 22, 0, 'Empresas', NULL, NULL, 'local_convenience_store', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(24, 2, 25, 25, 0, 'Departamentos', NULL, NULL, 'account_tree', NULL, 2, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(25, 2, 12, 21, 0, 'Tabelas', NULL, NULL, 'view_column', NULL, 20, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1'),
+(26, 2, 26, 22, 0, 'Funcionários', NULL, NULL, 'supervisor_account', NULL, 4, 0001, '2022-11-08 17:07:03', NULL, 0, '1', '1');
 
 -- --------------------------------------------------------
 
@@ -296,7 +297,8 @@ INSERT INTO `tb_acl_modulo_controller` (`id`, `id_modulo`, `descricao`, `control
 (24, 1, 'Main Serviços', 'ServicesController', 'ServicesController', 1111, 'no', '1'),
 (25, 6, 'Departamentos', 'DepartamentosController', 'C_Departamentos', 1111, 'yes', '1'),
 (26, 6, 'Funcionários', 'FuncionariosController', 'C_Funcionarios', 1111, 'yes', '1'),
-(27, 6, 'Agendamentos', 'AgendamentosController', 'C_Agendamentos', 1111, 'yes', '1');
+(27, 6, 'Agendamentos', 'AgendamentosController', 'C_Agendamentos', 1111, 'yes', '1'),
+(28, 6, 'Atendimentos', 'AtendimentosController', 'C_Atendimentos', 1111, 'yes', '1');
 
 -- --------------------------------------------------------
 
@@ -475,14 +477,14 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (97, 27, 96, 'any', '/', 'index', 'clinica.agendamentos.index', NULL, 1111, 'inherit', '1'),
 (98, 27, 96, 'get', '/new', 'form', 'clinica.agendamentos.add', NULL, 1111, 'inherit', '1'),
 (99, 27, 96, 'post', '/', 'create', 'clinica.agendamentos.post', NULL, 1111, 'inherit', '1'),
-(100, 27, 96, 'get', '/{id}', 'form', 'clinica.agendamentos.edit', NULL, 1111, 'inherit', '1'),
+(100, 27, 96, 'get', '/id/{id}', 'form', 'clinica.agendamentos.edit', NULL, 1111, 'inherit', '1'),
 (101, 27, 96, 'patch', '/{id}', 'patch', 'clinica.agendamentos.patch', NULL, 1111, 'inherit', '1'),
 (102, 27, 96, 'delete', '/', 'delete', 'clinica.agendamentos.delete', NULL, 1111, 'inherit', '1'),
 (103, 27, 96, 'put', '/', 'edit', 'clinica.agendamentos.put', NULL, 1111, 'inherit', '1'),
-(104, 27, 96, 'any', '/consultas', 'getConsultas', 'clinica.agendamentos.consultas.index', NULL, 1111, 'inherit', '1'),
+(104, 27, 96, 'get', '/consultas', 'get_eventos', 'clinica.agendamentos.consultas', NULL, 1111, 'inherit', '1'),
 (105, 19, 40, 'any', '/{id}/agendamento', 'agendar', 'clinica.pacientes.{id}.agendamento', NULL, 1111, 'inherit', '1'),
-(106, 23, 72, 'get', '/clinicas/unidades', 'get_unidades', 'clinica.clinicas.get_unidades', NULL, 1111, 'inherit', '1'),
-(107, 19, 40, 'get', '/autocomplete', 'autocomplete', 'clinica.pacientes.autocomplete', NULL, 1111, 'inherit', '1'),
+(106, 23, 72, 'get', '/json/autocomplete', 'autocomplete', 'clinica.clinicas.autocomplete', NULL, 1111, 'inherit', '1'),
+(107, 19, 40, 'get', '/json/autocomplete', 'autocomplete', 'clinica.pacientes.autocomplete', NULL, 1111, 'inherit', '1'),
 (108, 21, 0, 'any', '/medicos', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
 (109, 21, 108, 'any', '/', 'index', 'clinica.medicos.index', NULL, 1111, 'inherit', '1'),
 (110, 21, 108, 'any', '/cadastro', 'form', 'clinica.medicos.add', NULL, 1111, 'inherit', '1'),
@@ -491,11 +493,15 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `id_controller`, `id_parent`, `type`, 
 (113, 21, 108, 'patch', '/{id}', 'patch', 'clinica.medicos.patch', NULL, 1111, 'inherit', '1'),
 (114, 21, 108, 'delete', '/', 'delete', 'clinica.medicos.delete', NULL, 1111, 'inherit', '1'),
 (115, 21, 108, 'put', '/', 'edit', 'clinica.medicos.put', NULL, 1111, 'inherit', '1'),
-(116, 23, 72, 'get', '/clinicas/especialidades', 'get_especialidades', 'clinica.clinicas.get_especialidades', NULL, 1111, 'inherit', '1'),
-(117, 23, 72, 'get', '/clinicas/medicos', 'get_medicos', 'clinica.clinicas.get_medicos', NULL, 1111, 'inherit', '1'),
+(116, 22, 64, 'get', '/json/autocomplete', 'autocomplete', 'clinica.especialidades.autocomplete', NULL, 1111, 'inherit', '1'),
+(117, 21, 108, 'get', '/json/autocomplete', 'autocomplete', 'clinica.medicos.autocomplete', NULL, 1111, 'inherit', '1'),
 (118, 7, 0, 'get', '/api/js', 'include_js_app', 'main.api.include_js', NULL, 1111, 'no', '1'),
 (120, 16, 0, 'get', '/api/js', 'include_js_app', 'clinica.api.include_js', NULL, 1111, 'no', '1'),
-(121, 19, 40, 'any', '/{id}/prontuario', 'prontuarios', 'clinica.pacientes.{id}.prontuarios', NULL, 1111, 'inherit', '1');
+(121, 19, 40, 'any', '/{id}/prontuario', 'prontuarios', 'clinica.pacientes.{id}.prontuarios', NULL, 1111, 'inherit', '1'),
+(122, 28, 0, 'get', '/atendimentos/{tipos}/json/autocomplete', 'autocomplete', 'clinica.atendimentos.autocomplete', NULL, 1111, 'inherit', '1'),
+(123, 28, 0, 'get', '/atendimentos/{tipo}/json/autocomplete', 'autocomplete', 'clinica.atendimentos.autocomplete', NULL, 1111, 'inherit', '1'),
+(124, 27, 96, 'get', '/eventos', 'get_eventos', 'clinica.agendamentos.get_eventos', NULL, 1111, 'inherit', '1'),
+(125, 19, 40, 'get', '/{id}/dados', 'get', 'clinica.pacientes.get', NULL, 1111, 'inherit', '1');
 
 -- --------------------------------------------------------
 
@@ -692,7 +698,36 @@ INSERT INTO `tb_acl_usuario_session` (`id`, `id_usuario`, `id_modulo`, `token`, 
 (100, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 04:39:13', '2022-12-29 05:47:13'),
 (101, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 02:47:25', '2022-12-29 05:47:36'),
 (102, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 02:49:57', '2022-12-29 05:50:08'),
-(103, 1, 6, 'a619b241ae4f5749ae2d224bf1aa507463ad33340c995', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 09:27:00', NULL);
+(103, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 21:36:17', '2022-12-29 21:37:29'),
+(104, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 21:41:09', '2022-12-29 21:41:38'),
+(105, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 21:47:31', '2022-12-29 21:47:45'),
+(106, 1, 1, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 18:48:09', '2022-12-29 21:49:24'),
+(107, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 18:51:18', '2022-12-29 21:51:26'),
+(108, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 18:53:40', '2022-12-29 21:53:49'),
+(109, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 18:56:36', '2022-12-29 21:56:44'),
+(110, 1, 4, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 18:57:08', '2022-12-29 21:57:23'),
+(111, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 18:57:49', '2022-12-29 21:57:56'),
+(112, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:00:21', '2022-12-29 22:07:45'),
+(113, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:08:02', '2022-12-29 22:08:08'),
+(114, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:08:14', '2022-12-29 22:09:11'),
+(115, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:09:15', '2022-12-29 22:14:17'),
+(116, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:16:04', '2022-12-29 22:16:13'),
+(117, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:16:38', '2022-12-29 22:18:32'),
+(118, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 22:36:35', '2022-12-29 22:36:47'),
+(119, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:36:57', '2022-12-29 22:37:11'),
+(120, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:37:22', '2022-12-29 22:37:57'),
+(121, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:38:14', '2022-12-29 22:38:28'),
+(122, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:38:40', '2022-12-29 22:38:55'),
+(123, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:39:39', '2022-12-29 22:39:54'),
+(124, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:40:10', '2022-12-29 22:43:43'),
+(125, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:44:52', '2022-12-29 22:45:00'),
+(126, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 19:45:03', '2022-12-29 22:45:09'),
+(127, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 22:46:37', '2022-12-29 23:04:20'),
+(128, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2022-12-29 20:04:24', '2022-12-29 23:21:36'),
+(129, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2023-01-03 18:10:13', '2023-01-04 01:23:15'),
+(130, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2023-01-03 22:23:20', '2023-01-04 01:24:31'),
+(131, 1, 6, NULL, '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2023-01-03 22:24:36', '2023-01-04 09:57:24'),
+(132, 1, 6, '8c1ac05541d4e2c6999b6ee9da7d377963b59c32cd784', '::1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36', '2023-01-04 18:33:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -753,8 +788,8 @@ CREATE TABLE `tb_atendimento` (
   `id_categoria` int(11) UNSIGNED NOT NULL COMMENT 'Consulta, exame, procedimento, cirurgia etc.',
   `data` date NOT NULL DEFAULT '0000-00-00',
   `hora_agendada` time NOT NULL,
-  `hora_inicial` time NOT NULL DEFAULT '00:00:00',
-  `hora_final` time NOT NULL DEFAULT '00:00:00',
+  `hora_inicial` time DEFAULT '00:00:00',
+  `hora_final` time DEFAULT '00:00:00',
   `recorrencia` enum('on','off') NOT NULL DEFAULT 'off',
   `recorrencia_periodo` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `recorrencia_limite` date DEFAULT NULL,
@@ -767,6 +802,23 @@ CREATE TABLE `tb_atendimento` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci COMMENT='Tabela de cadastro de agendamentos de eventos médicos';
+
+--
+-- Despejando dados para a tabela `tb_atendimento`
+--
+
+INSERT INTO `tb_atendimento` (`id`, `titulo`, `descricao`, `observacao`, `id_parent`, `id_tipo`, `id_medico`, `id_paciente`, `id_categoria`, `data`, `hora_agendada`, `hora_inicial`, `hora_final`, `recorrencia`, `recorrencia_periodo`, `recorrencia_limite`, `cor`, `criador`, `lembrete`, `tempo_lembrete`, `periodo_lembrete`, `created_at`, `updated_at`, `status`) VALUES
+(5, NULL, NULL, NULL, NULL, 1, 30, 31, 1, '2023-01-12', '10:00:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-03 08:24:07', NULL, '0'),
+(6, NULL, NULL, NULL, NULL, 2, 30, 37, 1, '2023-01-18', '09:00:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-03 16:07:15', NULL, '0'),
+(7, NULL, NULL, NULL, NULL, 2, 30, 26, 2, '2023-11-01', '13:00:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-03 16:08:28', NULL, '0'),
+(8, NULL, NULL, NULL, NULL, 1, 30, 26, 2, '2023-01-15', '08:00:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-03 16:14:49', NULL, '0'),
+(9, NULL, NULL, NULL, NULL, 2, 30, 31, 3, '2023-01-20', '08:30:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-04 00:05:42', NULL, '0'),
+(12, NULL, NULL, NULL, NULL, 1, 21, 31, 3, '2023-01-11', '12:00:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-04 05:06:08', NULL, '0'),
+(13, NULL, NULL, NULL, NULL, 1, 33, 31, 1, '2023-01-30', '09:00:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-04 05:15:29', NULL, '0'),
+(14, NULL, NULL, NULL, NULL, 1, 18, 26, 2, '2023-01-05', '07:30:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-04 05:32:37', NULL, '0'),
+(15, NULL, NULL, NULL, NULL, 1, 18, 18, 1, '2023-01-05', '07:30:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-04 05:33:17', NULL, '0'),
+(16, NULL, NULL, NULL, NULL, 2, 32, 38, 1, '2023-01-05', '10:00:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-04 05:34:47', NULL, '0'),
+(17, NULL, NULL, NULL, NULL, 2, 33, 18, 1, '2023-01-06', '15:00:00', NULL, NULL, 'off', 0, NULL, NULL, 1, 'off', 0, 0, '2023-01-04 06:03:37', NULL, '0');
 
 -- --------------------------------------------------------
 
@@ -794,6 +846,8 @@ CREATE TABLE `tb_atendimento_tipo` (
   `id` int(11) UNSIGNED NOT NULL,
   `tipo` varchar(100) NOT NULL,
   `descricao` varchar(1000) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci COMMENT='Tabela de cadastro para tipos de atendimentos';
 
@@ -801,9 +855,9 @@ CREATE TABLE `tb_atendimento_tipo` (
 -- Despejando dados para a tabela `tb_atendimento_tipo`
 --
 
-INSERT INTO `tb_atendimento_tipo` (`id`, `tipo`, `descricao`, `status`) VALUES
-(1, 'Primeira consulta', 'Quando o paciente visita pela primeira vez a clínica e solicita um atendimento.', '1'),
-(2, 'Retorno', 'O paciente já foi atendido uma vez, e agora precisa remarcar um novo exame', '1');
+INSERT INTO `tb_atendimento_tipo` (`id`, `tipo`, `descricao`, `created_at`, `updated_at`, `status`) VALUES
+(1, 'Primeira consulta', 'Quando o paciente visita pela primeira vez a clínica e solicita um atendimento.', '2023-01-03 06:19:44', NULL, '1'),
+(2, 'Retorno', 'O paciente já foi atendido uma vez, e agora precisa remarcar um novo exame', '2023-01-03 06:19:44', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -1189,8 +1243,8 @@ CREATE TABLE `tb_empresa` (
 --
 
 INSERT INTO `tb_empresa` (`id`, `titulo`, `nome_fantasia`, `razao_social`, `cnpj`, `inscricao_estadual`, `inscricao_municipal`, `cep`, `logradouro`, `numero`, `bairro`, `complemento`, `cidade`, `uf`, `pais`, `quem_somos`, `quem_somos_imagem`, `distribuidor_imagem`, `contato_imagem`, `telefone`, `celular`, `email`, `facebook`, `instagram`, `youtube`, `linkedin`, `github`, `gmaps`, `aliquota_imposto`, `tributacao`, `certificado`, `senha_certificado`, `ambiente`, `sequence_nfe`, `sequence_nfce`, `serie_nfe`, `serie_nfce`, `tokencsc`, `csc`, `matriz`, `created_at`, `updated_at`, `status`) VALUES
-(12, 'Sede', NULL, 'Medicus24h', '06.054.321/0001-07', '123', '1123', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', '100', 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, 'assets/clinica/img/empresas/0d2129db422147a40316a52c91771d0bd8e66ac4.png', 'assets/clinica/img/empresas/0d2129db422147a40316a52c91771d0bd8e66ac4.png', 'assets/clinica/img/empresas/0d2129db422147a40316a52c91771d0bd8e66ac4.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-11-29 04:06:04', '2022-12-16 00:09:28', '1'),
-(13, 'Unidade Bessa', NULL, 'Medicus24h', '12.393.828/1230-12', '19138', '2831', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', NULL, 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-12-03 10:27:49', '2022-12-15 20:35:39', '1'),
+(12, 'Sede', NULL, 'Medicus24h', '06.054.321/0001-07', '123', '1123', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', '100', 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, 'assets/clinica/img/empresas/0d2129db422147a40316a52c91771d0bd8e66ac4.png', 'assets/clinica/img/empresas/0d2129db422147a40316a52c91771d0bd8e66ac4.png', 'assets/clinica/img/empresas/0d2129db422147a40316a52c91771d0bd8e66ac4.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-11-29 04:06:04', '2023-01-04 21:17:15', '0'),
+(13, 'Unidade Bessa', NULL, 'Medicus24h', '12.393.828/1230-12', '19138', '2831', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', NULL, 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-12-03 10:27:49', '2023-01-04 19:21:50', '1'),
 (14, 'Unidade Manaíra', NULL, 'Medicus24h', '23.434.343/4343-32', '9192', '1921', '58432-581', 'Rua Corretor José Carlos Fonseca de Oliveira', NULL, 'Malvinas', NULL, 'Campina Grande', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-12-05 05:43:22', '2022-12-21 06:49:37', '1'),
 (15, 'Unidade Valentina', NULL, 'Medicus24h', '42.345.612/3445-32', NULL, NULL, '58076-100', 'Rua Ex-Combatente Assis Luís', '100', 'João Paulo II', NULL, 'João Pessoa', 'PB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.000', 'SIMPLES NACIONAL', NULL, NULL, '0', 0, 0, 00, 00, NULL, NULL, '', '2022-12-15 17:43:20', '2022-12-15 20:44:07', '1');
 
@@ -1235,7 +1289,9 @@ INSERT INTO `tb_especialidade` (`id`, `especialidade`, `descricao`, `created_at`
 (20, 'Cirurgia geral', NULL, '2022-11-16 07:03:34', NULL, '1'),
 (21, 'Cirurgia plástica', NULL, '2022-11-16 07:03:41', NULL, '1'),
 (22, 'Ortopedia', NULL, '2022-11-16 07:03:55', NULL, '1'),
-(23, 'Anestesiologia', 'Médico responsável por aplicação de anestesias.', '2022-11-16 07:04:01', '2022-11-27 06:44:04', '1');
+(23, 'Anestesiologia', 'Médico responsável por aplicação de anestesias.', '2022-11-16 07:04:01', '2022-11-27 06:44:04', '1'),
+(33, '5', NULL, '2023-01-04 07:06:58', NULL, '1'),
+(34, '546546', NULL, '2023-01-04 07:07:15', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -1314,6 +1370,8 @@ INSERT INTO `tb_funcao` (`id`, `codigo`, `funcao`, `descricao`, `created_at`, `u
 
 CREATE TABLE `tb_funcionario` (
   `id` int(10) UNSIGNED NOT NULL,
+  `id_empresa` int(10) UNSIGNED NOT NULL,
+  `id_departamento` int(10) UNSIGNED NOT NULL,
   `id_empresa_departamento` int(11) UNSIGNED NOT NULL,
   `id_funcao` int(11) UNSIGNED NOT NULL,
   `nome` varchar(100) NOT NULL,
@@ -1328,12 +1386,12 @@ CREATE TABLE `tb_funcionario` (
 -- Despejando dados para a tabela `tb_funcionario`
 --
 
-INSERT INTO `tb_funcionario` (`id`, `id_empresa_departamento`, `id_funcao`, `nome`, `cpf`, `rg`, `created_at`, `updated_at`, `status`) VALUES
-(20, 99, 1, 'Tito', '393.838.283-23', '338383', '2022-11-29 04:08:22', '2022-12-15 05:56:43', '1'),
-(21, 105, 2, 'Efésios', '065.468.694-70', '312341', '2022-12-06 18:15:44', '2022-12-15 23:02:16', '1'),
-(22, 100, 2, 'Filipenses', '938.382.838-28', '918141', '2022-12-06 18:18:03', '2022-12-15 19:00:37', '1'),
-(25, 100, 2, 'João', '888.888.888-88', '87877', '2022-12-06 18:38:14', '2022-12-21 05:26:55', '1'),
-(26, 109, 2, 'Alisson Guedes Pereira', '069.422.924-51', '3177241', '2022-12-10 14:58:12', '2022-12-16 19:34:50', '1');
+INSERT INTO `tb_funcionario` (`id`, `id_empresa`, `id_departamento`, `id_empresa_departamento`, `id_funcao`, `nome`, `cpf`, `rg`, `created_at`, `updated_at`, `status`) VALUES
+(20, 12, 8, 99, 1, 'Tito', '393.838.283-23', '338383', '2022-11-29 04:08:22', '2022-12-15 05:56:43', '1'),
+(21, 14, 9, 105, 2, 'Efésios', '065.468.694-70', '312341', '2022-12-06 18:15:44', '2022-12-15 23:02:16', '1'),
+(22, 13, 10, 100, 2, 'Filipenses', '938.382.838-28', '918141', '2022-12-06 18:18:03', '2022-12-15 19:00:37', '1'),
+(25, 13, 10, 100, 2, 'João', '888.888.888-88', '87877', '2022-12-06 18:38:14', '2022-12-21 05:26:55', '1'),
+(26, 15, 8, 109, 2, 'Alisson Guedes Pereira', '069.422.924-51', '3177241', '2022-12-10 14:58:12', '2022-12-16 19:34:50', '1');
 
 -- --------------------------------------------------------
 
@@ -1506,6 +1564,7 @@ CREATE TABLE `tb_medico_agenda_horario` (
 CREATE TABLE `tb_medico_clinica` (
   `id` int(11) UNSIGNED NOT NULL,
   `id_medico` int(11) UNSIGNED NOT NULL,
+  `id_empresa` int(10) UNSIGNED NOT NULL,
   `id_empresa_departamento` int(11) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1516,18 +1575,18 @@ CREATE TABLE `tb_medico_clinica` (
 -- Despejando dados para a tabela `tb_medico_clinica`
 --
 
-INSERT INTO `tb_medico_clinica` (`id`, `id_medico`, `id_empresa_departamento`, `created_at`, `updated_at`, `status`) VALUES
-(18, 21, 98, '2022-12-16 16:28:37', NULL, '1'),
-(19, 21, 106, '2022-12-16 16:28:37', NULL, '1'),
-(20, 21, 108, '2022-12-16 16:28:37', NULL, '1'),
-(21, 22, 107, '2022-12-16 16:28:43', NULL, '1'),
-(27, 23, 109, '2022-12-16 16:35:01', NULL, '1'),
-(30, 21, 105, '2022-12-21 02:25:27', NULL, '1'),
-(31, 22, 100, '2022-12-21 02:26:10', NULL, '1'),
-(32, 24, 100, '2022-12-21 02:27:09', NULL, '1'),
-(33, 22, 110, '2022-12-21 03:49:53', NULL, '1'),
-(34, 23, 99, '2022-12-21 03:56:03', NULL, '1'),
-(35, 23, 104, '2022-12-21 03:56:03', NULL, '1');
+INSERT INTO `tb_medico_clinica` (`id`, `id_medico`, `id_empresa`, `id_empresa_departamento`, `created_at`, `updated_at`, `status`) VALUES
+(18, 21, 12, 98, '2022-12-16 16:28:37', NULL, '1'),
+(19, 21, 13, 106, '2022-12-16 16:28:37', NULL, '1'),
+(20, 21, 15, 108, '2022-12-16 16:28:37', NULL, '1'),
+(21, 22, 15, 107, '2022-12-16 16:28:43', NULL, '1'),
+(27, 23, 15, 109, '2022-12-16 16:35:01', NULL, '1'),
+(30, 21, 14, 105, '2022-12-21 02:25:27', NULL, '1'),
+(31, 22, 13, 100, '2022-12-21 02:26:10', NULL, '1'),
+(32, 24, 13, 100, '2022-12-21 02:27:09', NULL, '1'),
+(33, 22, 14, 110, '2022-12-21 03:49:53', NULL, '1'),
+(34, 23, 12, 99, '2022-12-21 03:56:03', NULL, '1'),
+(35, 23, 14, 104, '2022-12-21 03:56:03', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -1626,18 +1685,18 @@ INSERT INTO `tb_paciente` (`id`, `nome`, `imagem`, `codigo`, `id_convenio`, `mat
 (19, 'Alisson Guedes Pereira', NULL, 'P-598909', 4, NULL, NULL, 2, 2, 2, 'M', '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4800', '(83) 9 8811.2444', '2022-11-12 18:22:00', '2022-12-29 10:47:59', 'off', 'off', 'off', '0', '1'),
 (20, 'Alisson Guedes Pereira', NULL, 'P-233594', 2, NULL, NULL, 3, 1, 2, 'M', '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4801', '(83) 9 8811.2444', '2022-11-12 18:23:18', '2022-11-13 06:24:16', 'off', 'off', 'off', '0', '1'),
 (21, 'Alisson Guedes Pereira', NULL, 'P-921710', 1, NULL, NULL, 3, 1, 2, NULL, '1987-01-18', '069.422.924-51', '12341234', '1234123412', 'Terezinha de Fátima Guedes Pereira', 'Alexandre Pereira Clementino', NULL, 'Teste', 'Rua Ex-Combatente Assis Luis', '100', 'AP 401 F', '58076-100', 'João Pessoa', 'Geisel', 'PB', 'Brasil', 'alissonguedes87@gmail.com', '(83) 3339.4802', '(83) 9 8811.2444', '2022-11-12 18:24:23', '2022-11-13 06:15:19', 'off', 'off', 'off', '0', '1'),
-(26, 'alisson', NULL, 'P-924140', 1, '1234', NULL, 3, 2, 3, 'M', NULL, '123.412.341-23', '1234123', '1234123421', 'teste', 'teste', NULL, 'teste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'alissonguedes87@gmail.com', '(83) 9881.1124', '(12) 3 4123.4123', '2022-11-13 05:52:45', '2022-12-29 11:35:04', 'off', 'off', 'off', '0', '1'),
+(26, 'alisson', NULL, 'P-924140', 1, '1234', NULL, 3, 2, 3, 'M', NULL, '123.412.341-23', '1234123', '1234123421', 'teste', 'teste', NULL, 'teste', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'alissonguedes87@gmail.com', '(83) 9881.1124', '(12) 3 4123.4123', '2022-11-13 05:52:45', '2022-12-31 02:46:57', 'off', 'off', 'off', '0', '1'),
 (27, 'teste1234', NULL, 'P-803633', 1, '1234', '2022-11-22', 3, 1, 1, 'M', '2022-11-13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 05:55:35', NULL, 'off', 'off', 'off', '0', '0'),
 (28, 'Chris', NULL, 'P-312079', 1, '1234', '2022-11-20', 3, 1, 1, 'F', '2022-11-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 05:56:21', '2022-11-14 10:01:45', 'off', 'off', 'off', '0', '1'),
 (29, 'teste', NULL, 'P-984646', 1, NULL, NULL, 1, 1, 1, NULL, '2022-11-09', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:03:39', '2022-12-29 11:34:20', 'off', 'off', 'off', '0', '1'),
 (30, 'Teste 1', NULL, 'P-733972', 1, NULL, NULL, 1, 1, 1, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:04:34', '2022-11-14 10:02:46', 'off', 'off', 'off', '0', '1'),
-(31, 'Alane', 'assets/clinica/img/pacientes/0f21269a0d97473fc20baca1b1611859297e94e1.png', 'P-225483', 1, NULL, NULL, 1, 1, 1, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:05:47', '2022-12-29 11:34:31', 'off', 'off', 'off', '0', '1'),
+(31, 'Alane', 'assets/clinica/img/pacientes/0f21269a0d97473fc20baca1b1611859297e94e1.png', 'P-225483', 1, NULL, NULL, 1, 1, 1, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:05:47', '2022-12-29 23:17:26', 'off', 'off', 'off', '0', '1'),
 (32, 'teste', 'assets/clinica/img/pacientes/0f21269a0d97473fc20baca1b1611859297e94e1.png', 'P-937843', 1, NULL, NULL, 1, 1, 1, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:20:54', '2022-11-14 09:37:16', 'off', 'off', 'off', '0', '1'),
 (33, 'Benjamin', 'assets/clinica/img/pacientes/53f80ff7e7f9cec85406d4605912c3f94367be9b.jpg', 'P-991190', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 06:23:40', '2022-11-18 06:08:26', 'off', 'off', 'off', '0', '0'),
 (34, 'teste', NULL, 'P-779749', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 21:22:28', NULL, 'off', 'off', 'off', '0', '1'),
 (35, 'Novo cliente', NULL, 'P-421395', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-13 22:41:52', NULL, 'off', 'off', 'off', '0', '1'),
 (36, 'Teste 2', NULL, 'P-910774', 1, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 03:58:55', '2022-11-14 09:04:03', 'off', 'off', 'off', '0', '1'),
-(37, 'Aline', NULL, 'P-946492', 1, NULL, NULL, 1, 1, 1, 'F', NULL, NULL, '123456789', NULL, NULL, NULL, NULL, NULL, 'Rua Corretor José Carlos Fonseca de Oliveira', '123', NULL, '58432-581', 'Campina Grande', 'Malvinas', 'PB', NULL, NULL, NULL, NULL, '2022-11-14 05:54:37', '2022-12-29 11:42:54', 'off', 'off', 'off', '0', '1'),
+(37, 'Aline', NULL, 'P-946492', 1, NULL, NULL, 1, 1, 1, 'F', NULL, NULL, '123456789', NULL, NULL, NULL, NULL, NULL, 'Rua Corretor José Carlos Fonseca de Oliveira', '123', NULL, '58432-581', 'Campina Grande', 'Malvinas', 'PB', NULL, NULL, NULL, NULL, '2022-11-14 05:54:37', '2022-12-29 23:20:28', 'off', 'off', 'off', '0', '1'),
 (38, 'Maria da Penha', NULL, 'P-733005', 1, NULL, NULL, 1, 2, 1, 'F', '1969-11-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-11-14 23:29:07', '2022-11-15 02:29:25', 'off', 'off', 'off', '0', '1'),
 (39, 'Antônio Pereira da Costa', 'assets/clinica/img/pacientes/ca5cd22af6ef13b27da8d7efef3382003b90acf4.png', 'P-181855', 1, NULL, NULL, 1, 2, 2, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-20 16:22:36', '2022-12-21 21:55:10', 'off', 'off', 'off', '0', '1'),
 (40, 'teste', NULL, 'P-516317', 1, NULL, NULL, 1, 1, 1, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-26 14:51:44', '2022-12-26 17:52:12', 'off', 'off', 'off', '0', '1');
@@ -2190,7 +2249,9 @@ ALTER TABLE `tb_funcionario`
   ADD UNIQUE KEY `cpf` (`cpf`),
   ADD UNIQUE KEY `rg` (`rg`),
   ADD KEY `fk_tb_funcionario_id_empresa_departamento` (`id_empresa_departamento`),
-  ADD KEY `fk_tb_funcionario_id_funcao` (`id_funcao`);
+  ADD KEY `fk_tb_funcionario_id_funcao` (`id_funcao`),
+  ADD KEY `fk_tb_funcionario_tb_departamento1_idx` (`id_departamento`),
+  ADD KEY `fk_tb_funcionario_tb_empresa1_idx` (`id_empresa`);
 
 --
 -- Índices de tabela `tb_galeria`
@@ -2264,7 +2325,8 @@ ALTER TABLE `tb_medico_agenda_horario`
 ALTER TABLE `tb_medico_clinica`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_medico_clinica` (`id_medico`,`id_empresa_departamento`),
-  ADD KEY `fk_tb_medico_clinica_id_empresa_departamento` (`id_empresa_departamento`);
+  ADD KEY `fk_tb_medico_clinica_id_empresa_departamento` (`id_empresa_departamento`),
+  ADD KEY `fk_tb_medico_clinica_tb_empresa1_idx` (`id_empresa`);
 
 --
 -- Índices de tabela `tb_midia`
@@ -2438,13 +2500,13 @@ ALTER TABLE `tb_acl_modulo`
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_controller`
 --
 ALTER TABLE `tb_acl_modulo_controller`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_modulo_routes`
 --
 ALTER TABLE `tb_acl_modulo_routes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acl_usuario`
@@ -2462,7 +2524,7 @@ ALTER TABLE `tb_acl_usuario_imagem`
 -- AUTO_INCREMENT de tabela `tb_acl_usuario_session`
 --
 ALTER TABLE `tb_acl_usuario_session`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT de tabela `tb_acomodacao`
@@ -2480,7 +2542,7 @@ ALTER TABLE `tb_agenda`
 -- AUTO_INCREMENT de tabela `tb_atendimento`
 --
 ALTER TABLE `tb_atendimento`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de tabela `tb_atendimento_notas`
@@ -2558,7 +2620,7 @@ ALTER TABLE `tb_empresa`
 -- AUTO_INCREMENT de tabela `tb_especialidade`
 --
 ALTER TABLE `tb_especialidade`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de tabela `tb_estado_civil`
@@ -2846,7 +2908,9 @@ ALTER TABLE `tb_distribuidor_telefone`
 --
 ALTER TABLE `tb_funcionario`
   ADD CONSTRAINT `fk_tb_funcionario_id_empresa_departamento` FOREIGN KEY (`id_empresa_departamento`) REFERENCES `tb_departamento_empresa` (`id`),
-  ADD CONSTRAINT `fk_tb_funcionario_id_funcao` FOREIGN KEY (`id_funcao`) REFERENCES `tb_funcao` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_tb_funcionario_id_funcao` FOREIGN KEY (`id_funcao`) REFERENCES `tb_funcao` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_funcionario_tb_departamento1` FOREIGN KEY (`id_departamento`) REFERENCES `tb_departamento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_funcionario_tb_empresa1` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Restrições para tabelas `tb_galeria_descricao`
@@ -2900,7 +2964,8 @@ ALTER TABLE `tb_medico_agenda_horario`
 --
 ALTER TABLE `tb_medico_clinica`
   ADD CONSTRAINT `fk_tb_medico_clinica_id_empresa_departamento` FOREIGN KEY (`id_empresa_departamento`) REFERENCES `tb_departamento_empresa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_tb_medico_clinica_id_medico` FOREIGN KEY (`id_medico`) REFERENCES `tb_medico` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_tb_medico_clinica_id_medico` FOREIGN KEY (`id_medico`) REFERENCES `tb_medico` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tb_medico_clinica_tb_empresa1` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Restrições para tabelas `tb_midia_descricao`
