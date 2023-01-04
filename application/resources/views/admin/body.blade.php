@@ -12,8 +12,4 @@
 		@yield('main')
 	</div>
 
-	@section('scripts')
-	@include('authentication.scripts')
-	@endsection
-
 @endsection

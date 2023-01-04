@@ -22,7 +22,7 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
-		public function index(Request $request)
+		public function index(Request $request, $tipo = null)
 		{
 
 			// Pesquisar agendamentos
@@ -41,6 +41,33 @@ namespace App\Http\Controllers\Clinica{
 			$dados['row']           = $this->agendamento_model->getAgendamentoById($request->id);
 			$dados['departamentos'] = $this->departamento_model->getDepartamentos();
 			return response(view('clinica.agendamentos.form', $dados), 200);
+
+		}
+
+		public function get_eventos(Request $request, $tipo = null)
+		{
+
+			if (!$request->ajax) {
+				return response(view('clinica.agendamentos.index'), 200);
+			}
+
+			$eventos = [];
+
+			$dados = $this->agendamento_model->getEventos($request);
+
+			if ($dados) {
+				foreach ($dados as $row) {
+					$eventos[] = [
+						'title' => $row->paciente,
+						'start' => $row->data . 'T' . $row->hora_agendada,
+						'end'   => $row->data . 'T' . $row->hora_agendada,
+						// 'backgroundColor' => '#ff0000',
+						// 'color'           => '#00ff00',
+					];
+				}
+			}
+
+			return response()->json($eventos);
 
 		}
 
@@ -92,7 +119,7 @@ namespace App\Http\Controllers\Clinica{
 		{
 
 			// $this->validateForm($request);
-			// $id = $this->agendamento_model->cadastraAgendamento($request);
+			$id = $this->agendamento_model->cadastraAgendamento($request);
 
 			$status  = 'success';
 			$message = 'Agendamento cadastrada realizado com sucesso!';

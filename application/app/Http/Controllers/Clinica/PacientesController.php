@@ -45,6 +45,26 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
+		public function get(Request $request, $id)
+		{
+
+			$result = $this->paciente_model->getPacienteById($id);
+
+			$paciente['mae']             = $result->mae;
+			$paciente['pai']             = $result->pai;
+			$paciente['data_nascimento'] = $result->data_nascimento;
+			$paciente['cpf']             = $result->cpf;
+			$paciente['telefone']        = $result->telefone;
+			$paciente['convenio']        = $result->convenio;
+			$paciente['matricula']       = $result->matricula_convenio;
+			$paciente['validade']        = $result->validade_convenio;
+			$paciente['observacao']      = $result->notas;
+			$paciente['enviar_email']    = $result->enviar_email;
+
+			return $paciente;
+
+		}
+
 		public function autocomplete(Request $request)
 		{
 
@@ -53,11 +73,9 @@ namespace App\Http\Controllers\Clinica{
 			$dados = $this->paciente_model->getPacientes($request);
 
 			foreach ($dados as $clinica) {
-				$clinicas[] = [
-					'label' => $clinica->id . ' - ' . $clinica->nome,
-					'name'  => 'paciente',
-					'value' => $clinica->id,
-					'icon'  => null,
+				$clinicas['items'][] = [
+					'id'   => $clinica->id,
+					'text' => $clinica->nome,
 				];
 			}
 
@@ -121,7 +139,25 @@ namespace App\Http\Controllers\Clinica{
 			$id = $request->id;
 			$this->paciente_model->editaPaciente($request, $id);
 
-			return response()->json(['message' => 'Dados atualizados com sucesso!']);
+			$status = 'success';
+			$url    = url()->route('clinica.pacientes.index');
+			$type   = 'send';
+
+			if (request()->ajax()) {
+
+				return response()->json([
+					'status'  => $status,
+					'message' => 'Dados atualizados com sucesso!',
+					'type'    => $type,
+					'url'     => $url,
+				]);
+			} else {
+				return redirect($url)
+					->with([
+						'status'  => 'success',
+						'message' => 'Dados atualizados com sucesso',
+					]);
+			}
 
 		}
 

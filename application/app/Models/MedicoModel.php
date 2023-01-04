@@ -17,6 +17,40 @@ class MedicoModel extends Model
 
 	private $path = 'assets/clinica/img/medicos/';
 
+	public function getMedicosEmpresa(Request $request)
+	{
+
+		$medico        = $request->get('query');
+		$clinica       = $request->get('clinica');
+		$especialidade = $request->get('especialidade');
+
+		$get = $this->select(
+			'M.id',
+			DB::raw('(SELECT nome FROM tb_funcionario WHERE id = M.id_funcionario) AS nome'),
+		);
+
+		$get->from('tb_medico AS M');
+
+		$get->join('tb_medico_clinica AS MC', 'MC.id_medico', 'M.id');
+
+		if ($especialidade) {
+			$get->where('M.id_especialidade', $especialidade);
+		}
+
+		if ($clinica) {
+			$get->where('MC.id_empresa', $clinica);
+		}
+
+		if ($medico) {
+			$get->where('E.titulo', 'like', '%' . $medico . '%');
+		}
+
+		$get->groupBy('M.id');
+
+		return $get->get();
+
+	}
+
 	public function getMedicos($data = null)
 	{
 
@@ -94,22 +128,6 @@ class MedicoModel extends Model
 			->where('id', $id)
 			->first();
 
-	}
-
-	public function getEtnia()
-	{
-		return $this->select('id', 'descricao')
-			->from('tb_etnia')
-		// ->orderBy('descricao')
-			->get();
-	}
-
-	public function getAcomodacao()
-	{
-		return $this->select('id', 'descricao')
-			->from('tb_acomodacao')
-			->orderBy('descricao')
-			->get();
 	}
 
 	public function uploadImage(Request $image)

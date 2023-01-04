@@ -97,12 +97,10 @@ namespace App\Http\Controllers{
 
 			}
 
-			if (request()->header('Request-Type') && request()->header('Request-Type') === 'xmlhttprequest') {
-				return abort(401);
-			} else {
-				$current_url = url()->previous();
-				return redirect()->route('account.auth.login')->with('url', $current_url);
-			}
+			$current_url = url()->previous();
+			Session::put('curl', $current_url);
+
+			return redirect()->route('account.auth.login')->with('url', $current_url);
 
 		}
 

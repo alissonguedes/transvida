@@ -387,11 +387,19 @@
 								<i class="material-icons">save</i>
 							</button>
 						</div>
+
+						<?php echo csrf_field(); ?>
+
 					</div>
+
 				</div>
+
 			</form>
+
 		</div>
+
 	</div>
+
 </div>
 
 

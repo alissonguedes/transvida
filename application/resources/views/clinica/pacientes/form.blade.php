@@ -388,11 +388,19 @@
 								<i class="material-icons">save</i>
 							</button>
 						</div>
+
+						@csrf
+
 					</div>
+
 				</div>
+
 			</form>
+
 		</div>
+
 	</div>
+
 </div>
 
 

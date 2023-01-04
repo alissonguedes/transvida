@@ -48,7 +48,7 @@
 						</div>
 						
 						<div class="acoes flex flex-center mt-5">
-							<a class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Prontuário">
+							<a data-link="<?php echo e(route('clinica.pacientes.{id}.prontuarios',$paciente->id)); ?>" name="id" id="<?php echo e($paciente->id); ?>" data-target="prontuario" class="waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Prontuário">
 								<i class="material-icons-outlined">assignment_ind</i>
 							</a>
 							<a href="#" data-link="<?php echo e(route('clinica.pacientes.{id}.agendamento',$paciente->id)); ?>" name="id" id="<?php echo e($paciente->id); ?>" data-target="agendamento" class="form-sidenav-trigger waves-effect gradient-45deg-deep-orange-orange center-align icon-background circle white-text z-depth-3 mx-auto" data-tooltip="Agendar">

@@ -103,28 +103,42 @@ class EmpresaModel extends AppModel
 
 	}
 
-	public function getClinicas($data = null)
+	public function getClinicas($request = null)
 	{
-		$get = $this->select('E.id', 'E.titulo', 'E.cnpj')
+
+		$empresa       = $request->get('query');
+		$especialidade = $request->get('especialidade');
+		$get           = $this->select('E.id', 'E.titulo', 'E.cnpj')
 			->from('tb_empresa', 'E');
 
-		if ($data['especialidade']) {
-			$id_especialidade = explode(' - ', $data['especialidade']);
-			$id_especialidade = $id_especialidade[0];
-			$get->join('tb_departamento_empresa AS DE', 'DE.id_empresa', 'E.id');
-			$get->join('tb_medico_clinica AS MC', 'MC.id_empresa_departamento', 'DE.id');
-			$get->join('tb_medico AS M', 'M.id', 'MC.id_medico');
-			$get->where('M.id_especialidade', $id_especialidade);
+		$get->join('tb_departamento_empresa AS DE', 'DE.id_empresa', 'E.id');
+		$get->join('tb_medico_clinica AS MC', 'MC.id_empresa_departamento', 'DE.id');
+		$get->join('tb_medico AS M', 'M.id', 'MC.id_medico');
+
+		if ($especialidade) {
+			$get->where('M.id_especialidade', $especialidade);
+			// $get->where('E.titulo', 'like', $empresa . '%');
+			// if ($empresa) {
+			// 	$get->where(function ($get) use ($especialidade, $empresa) {
+			// 		$get->orWhere('M.id_especialidade', function ($query) use ($empresa) {
+			// 			$query->select('id')
+			// 				->from('tb_especialidade')
+			// 				->where('especialidade', 'like', $empresa . '%')
+			// 				->whereColumn('id', 'M.id_especialidade');
+			// 		});
+			// 	});
+			// }
+
 		}
 
-		if (isset($data['query'])) {
-			$get->where('E.nome_fantasia', 'like', $data['query'] . '%');
+		if ($empresa) {
+			$get->where('E.titulo', 'like', '%' . $empresa . '%');
 		}
 
 		$get->where('E.status', '1');
 
 		$get->groupBy('E.id');
-		$get = $get->limit($data->limit ?? 10)
+		$get = $get->limit($request->limit ?? 10)
 			->get();
 
 		return $get;

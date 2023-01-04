@@ -45,9 +45,8 @@ function core() {
 	btnModalForms($('body').find('button[data-link][data-target]'));
 	Materializecss();
 	editor();
-	App.aplicarMascaras();
 	preview_map();
-
+	Mascaras.aplicarMascaras();
 	fullcalendar_init();
 
 	$('.dd').nestable({
@@ -245,13 +244,16 @@ function core() {
 				}
 			});
 
-			App.aplicarMascaras();
+			Mascaras.aplicarMascaras();
 			autocomplete();
-			// $('.form-sidenav#' + target).find('input.autocomplete').each(
-			// 	delay(function() {
-			// 		autocomplete($(this))
-			// 	}, 500)
-			// );
+
+			requirejs([BASE_PATH + '/js/app.js'], () => {
+
+				var app = new App();
+				// app.select_specialidade();
+
+			});
+
 
 		});
 

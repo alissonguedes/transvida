@@ -72,6 +72,7 @@ return [
 
 	'links'   => [
 		storage_path('assets') => '../../public/assets',
+		storage_path('public') => '../../public',
 		// storage_path('framework')          => '../../public/tmp',
 		// storage_path('framework/cache')    => '../../public/tmp/cache',
 		// storage_path('framework/logs')     => '../../public/tmp/logs',

@@ -523,7 +523,7 @@ $(window).on('resize', function(e) {
 /**
  * Função para aplicar máscaras nos inputs do navegador.
  */
-var App = {
+var Mascaras = {
 	aplicarMascaras: function() {
 
 		var is_num = $('.is_num');
@@ -1576,12 +1576,19 @@ function autocomplete() {
 
 	});
 
+	// console.log($element)
 	// Ação para obter Empresas que possuem a especialidade selecionada.
 	$('input[id="especialidade"]').on('change', function() {
+		var comp;
+		var localidade;
+
+		localidade = $('input[name="localidade"]').autocomplete();
+		comp = M.Autocomplete.getInstance(localidade);
 
 		var especialidade = $(this).val().split(' - ').splice(0, 1).toString();
 		var $input_destino = $('input[name="localidade"]');
 		var url_empresas = $input_destino.data('url');
+		var data = {};
 
 		Http.get(url_empresas, {
 			'datatype': 'json',
@@ -1589,8 +1596,6 @@ function autocomplete() {
 				'especialidade': especialidade
 			}
 		}, (response) => {
-
-			var data = {};
 
 			Object.keys(response).forEach((i) => {
 				var item = response[i];
@@ -1602,10 +1607,8 @@ function autocomplete() {
 				};
 			});
 
-			var comp = $('input[name="localidade"]').autocomplete();
-			var instance = M.Autocomplete.getInstance(comp);
-			instance.updateData(data);
-			instance.open();
+			comp.updateData(data);
+			comp.open();
 
 		});
 

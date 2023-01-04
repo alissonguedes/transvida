@@ -13,47 +13,47 @@
 					<?php $__env->startSection('navbar-header'); ?>
 					<ul class="navbar-list right">
 						
-						<li class="hide-on-med-and-down">
-							<a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);">
-								<i class="material-icons">settings_overscan</i>
-							</a>
-						</li>
-						<li class="hide-on-large-only search-input-wrapper">
-							<a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);">
-								<i class="material-icons">search</i>
-							</a>
-						</li>
-						
-						<li>
-							<a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown">
-								<span class="avatar-status avatar-online">
-									<img src="<?php echo e(asset('assets/images/perfil/foto.jpg')); ?>" alt="avatar">
-									<i></i>
-								</span>
-							</a>
-							<ul class="dropdown-content" id="profile-dropdown" tabindex="0">
-								<li tabindex="0">
-									<a class="grey-text text-darken-1" href="user-profile-page.html">
-										<i class="material-icons">person_outline</i>
-										Profile
-									</a>
-								</li>
-								
-								<li tabindex="0">
-									<a href="<?php echo e(route('logout')); ?>" class="grey-text text-darken-1">
-										<i class="material-icons">keyboard_tab</i>
-										Logout
-									</a>
-								</li>
-							</ul>
-						</li>
-						
-					</ul>
-					<?php echo $__env->yieldSection(); ?>
+<li class="hide-on-med-and-down">
+	<a class="waves-effect waves-block waves-light toggle-fullscreen" href="javascript:void(0);">
+		<i class="material-icons">settings_overscan</i>
+	</a>
+</li>
+<li class="hide-on-large-only search-input-wrapper">
+	<a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);">
+		<i class="material-icons">search</i>
+	</a>
+</li>
 
-				</div>
-			</nav>
-		</div>
-	</header>
+<li>
+	<a href="javascript:void(0);" class="waves-effect waves-block waves-light dropdown-trigger" data-cover-trigger="true" data-align="right" data-target="profile-dropdown">
+		<span class="avatar-status avatar-online">
+			<img src="<?php echo e(asset('assets/images/perfil/foto.jpg')); ?>" alt="avatar">
+			<i></i>
+		</span>
+	</a>
+	<ul class="dropdown-content" id="profile-dropdown" tabindex="0">
+		<li tabindex="0">
+			<a class="grey-text text-darken-1" href="user-profile-page.html">
+				<i class="material-icons">person_outline</i>
+				Profile
+			</a>
+		</li>
+		
+		<li tabindex="0">
+			<a href="<?php echo e(route('logout')); ?>" class="grey-text text-darken-1">
+				<i class="material-icons">keyboard_tab</i>
+				Logout
+			</a>
+		</li>
+	</ul>
+</li>
+
+</ul>
+<?php echo $__env->yieldSection(); ?>
+
+</div>
+</nav>
+</div>
+</header>
 <?php endif; ?>
 <?php /**PATH /home/alissonp/www/transvida/application/resources/views/clinica/header.blade.php ENDPATH**/ ?>

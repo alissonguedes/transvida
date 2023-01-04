@@ -19,11 +19,16 @@
 	<i class="material-icons bolder">add</i>
 </a>
 <div class="container pt-1 scroller" style="overflow: auto; height: calc(100vh - 65px)">
-	<div id="app-calendar">
-		<div class="row">
-			<div class="col s12">
-				<div class="card">
-					<div id="calendar" class="card-content calendar">
+	<div class="row">
+		<div class="col s12">
+			<div class="card">
+				<div class="card-content">
+					<div class="card-title">
+						<button class="btn btn-small white modal-trigger waves-effect" data-target="modal-filter" style="padding: 10px 15px;line-height: 1;height: auto;">
+							<i class="material-icons-outlined black-text">filter_alt</i>
+						</button>
+					</div>
+					<div id="calendar" class="calendar">
 						<div style="display: flex; align-items: center;">
 							<div class="preloader-wrapper small active" style="margin-right: 20px;">
 								<div class="spinner-layer spinner-green-only">
@@ -52,6 +57,73 @@
 <div id="modal_add_event_calendar" class="modal">
 	<div class="modal-content">modal_add_event_calendar</div>
 	<div class="modal-footer"></div>
+</div>
+
+<div id="modal-filter" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<div class="row">
+			<div class="col s12">
+				<h5>Filtros</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12">
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="filtro" class="active">Tipo de atendimento</label>
+							<select name="filtro" id="filtro">
+								<option value="1">Consulta</option>
+								<option value="2">Exame</option>
+								<option value="3">Procedimento</option>
+								<option value="4">Cirurgia</option>
+								<option value="5">Laboratorial</option>
+								<option value="6">Imagem</option>
+								<option value="7">Outros</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="paciente" class="active">Paciente</label>
+							<input type="text" name="paciente" id="paciente">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="filtro" class="active">Médico</label>
+							<select name="filtro" id="filtro">
+								<option value="1">Consulta</option>
+								<option value="2">Exame</option>
+								<option value="3">Procedimento</option>
+								<option value="4">Cirurgia</option>
+								<option value="5">Laboratorial</option>
+								<option value="6">Imagem</option>
+								<option value="7">Outros</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="filtro" class="active">Clínica</label>
+							<select name="filtro" id="filtro">
+								
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn blue lighten-1 modal-close">Ok</button>
+	</div>
 </div>
 
 <?php echo $__env->make('clinica.agendamentos.form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

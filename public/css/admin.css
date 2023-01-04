@@ -5,16 +5,6 @@
 	left: 0;
 }
 
-.container>.progress {
-	position: absolute;
-	top: -8px;
-	left: 0;
-	right: 0;
-	display: none;
-	height: 4px;
-}
-
-
 #frm-login *:not(.material-icons) {
 	font-family: 'Montserrat' !important;
 }
@@ -420,7 +410,10 @@
 	margin: 0;
 	will-change: top, left, right, bottom;
 	overflow-x: hidden;
+	height: calc(100vh - 64px);
+	z-index: 997;
 }
+
 
 .form-sidenav.open {
 	transform: translateX(0%);

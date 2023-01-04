@@ -106,6 +106,9 @@ var Request = {
 
 			} else {
 
+				// var a = $('#slide-out li').find('a[href="' + BASE_URL + link.join('/') + '"]')
+				// console.log($(a).parents('#slide-out li').find('a:first-child').addClass('active').next('.collapsible-body').removeClass('active').find('a:not([href="' + BASE_URL + link.join('/') + '"])').removeClass('active'));
+
 				// $('#slide-out li').find('a[href="' + BASE_URL + link.join('/') + '"]')
 				// 	// .addClass('active')
 				// 	// .css('cursor', $default)

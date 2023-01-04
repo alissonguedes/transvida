@@ -4,13 +4,14 @@ var sidenavMain = $(".sidenav-main"),
 	breadcrumbsWrapper = $("#breadcrumbs-wrapper");
 
 function defaultMenuCollapse() {
-	$("body").hasClass("menu-collapse") && 993 < $(window).width() && (
-		sidenavMain.removeClass("nav-lock"),
-		// $(".nav-collapsible .navbar-toggler i").text("radio_button_unchecked"),
-		navCollapsible.removeClass("sideNav-lock"),
-		toogleMenuCollapse(),
-		navigationCollapse()
-	)
+	$("body").hasClass("menu-collapse") && 993 < $(window).width() &&
+		(
+			sidenavMain.removeClass("nav-lock"),
+			// $(".nav-collapsible .navbar-toggler i").text("radio_button_unchecked"),
+			navCollapsible.removeClass("sideNav-lock"),
+			toogleMenuCollapse(),
+			navigationCollapse()
+		)
 }
 
 function toogleMenuCollapse() {
@@ -35,7 +36,10 @@ function navigationCollapse() {
 
 	if (!$(".sidenav-main.nav-collapsible").hasClass("nav-lock")) {
 		var n = $(".collapsible .open").children().length;
-		$(".sidenav-main.nav-collapsible, .navbar .nav-collapsible").addClass("nav-collapsed").removeClass("nav-expanded"),
+		$(".sidenav-main.nav-collapsible, .navbar .nav-collapsible")
+			.addClass("nav-collapsed")
+			.removeClass("nav-expanded"),
+
 			$("#slide-out > li.open > a").parent().addClass("close").removeClass("open"),
 			setTimeout(function() {
 				if (1 < n) {
@@ -232,21 +236,29 @@ function Materializecss() {
 				$(".tooltipped").tooltip({
 					delay: 50
 				});
+
 			var a = document.querySelectorAll(".collapsible");
+
 			M.Collapsible.init(a);
+
 			var l = document.querySelector(".collapsible.expandable");
+
 			M.Collapsible.init(l, {
 				accordion: !1
 			});
+
 			if (breadcrumbsWrapper.attr("data-image")) {
 				var o = breadcrumbsWrapper.attr("data-image");
 				breadcrumbsWrapper.addClass("breadcrumbs-bg-image"),
 					breadcrumbsWrapper.css("background-image", "url(" + o + ")")
 			}
+
 			var t,
 				i = $("li.active .collapsible-sub .collapsible"),
 				s = document.querySelectorAll(".sidenav-main .collapsible");
-			if (M.Collapsible.init(s, {
+
+			if (
+				M.Collapsible.init(s, {
 					accordion: !0,
 					onOpenStart: function() {
 						$(".collapsible > li.open").removeClass("open"),
@@ -255,7 +267,8 @@ function Materializecss() {
 							}, 10)
 					}
 				}),
-				$("body").hasClass("menu-collapse")) {
+				$("body").hasClass("menu-collapse")
+			) {
 				var d = $(".sidenav-main .collapsible");
 				1 < $("#slide-out > li.active").children().length &&
 					$("#slide-out > li.active > a").parent().addClass("close"),
@@ -316,6 +329,7 @@ function Materializecss() {
 					});
 
 				}),
+
 				$(".sidenav-main.nav-collapsible, .navbar .brand-sidebar").mouseenter(function() {
 					$(".sidenav-main.nav-collapsible").hasClass("nav-lock") ||
 						($(".sidenav-main.nav-collapsible, .navbar .nav-collapsible")

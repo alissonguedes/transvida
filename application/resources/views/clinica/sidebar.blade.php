@@ -29,7 +29,7 @@
 		@php
 			echo getMenus('main-menu', 0, [
 			'id' => 'slide-out',
-			'class' => 'sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow scrollbar scrollbar-primary',
+			'class' => 'sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow scroller',
 			]);
 		@endphp
 

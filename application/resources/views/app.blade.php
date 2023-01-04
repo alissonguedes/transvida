@@ -22,11 +22,17 @@
 
 	<div id="page">
 
+		<div class="progress">
+			<div class="indeterminate blue accent-1"></div>
+		</div>
+
+		<div id="loading"></div>
+
 		@yield('body')
 
 		<script>
 			var BASE_URL = "{{ base_url() }}";
-			var BASE_PATH = "{{ implode('/', explode('/index.php', $_SERVER['SCRIPT_FILENAME'])) }}";
+			var BASE_PATH = "{{ asset('/') }}"; //"{{ implode('/', explode('/index.php', $_SERVER['SCRIPT_FILENAME'])) }}";
 			var SITE_URL = "{{ site_url() }}";
 		</script>
 

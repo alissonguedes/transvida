@@ -13,7 +13,7 @@
 	@endphp
 
 	@foreach($paginate as $ind => $row)
-		<tr class="{{ $row->status === '0' ? 'blocked' : null }}" style="position: relative;" id="{{ $row->id }}" data-disabled="false">
+		<tr class="{{ $row->status === '0' ? 'blocked' : null }}" style="position: relative;" id="{{ $row->id }}" data-disabled="false" data-href="{{ route('clinica.clinicas.edit', $row->id) }}">
 			<td width="1%" data-disabled="true">
 				<label>
 					<input type="checkbox" name="id[]" class="filled-in" value="{{ $row->id }}" data-status="{{ $row->status }}">

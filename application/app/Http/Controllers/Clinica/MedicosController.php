@@ -56,6 +56,27 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
+		/**
+		 * Função para listar itens do Select
+		 */
+		public function autocomplete(Request $request)
+		{
+
+			$medicos = [];
+
+			$dados = $this->medico_model->getMedicosEmpresa($request);
+
+			foreach ($dados as $medico) {
+				$medicos['items'][] = [
+					'id'   => $medico->id,
+					'text' => $medico->nome,
+				];
+			}
+
+			return response()->json($medicos);
+
+		}
+
 		public function formValidate(Request $request)
 		{
 			return $request->validate([

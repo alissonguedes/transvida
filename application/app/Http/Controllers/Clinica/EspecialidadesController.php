@@ -33,6 +33,28 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
+		/**
+		 * Função para listar itens do Select
+		 */
+		public function autocomplete(Request $request)
+		{
+
+			$especialidades = [];
+			$dados          = $this->especialidade_model->searchEspecialidades($request);
+
+			if (!empty($dados)) {
+				foreach ($dados as $especialidade) {
+					$especialidades['items'][] = [
+						'id'   => $especialidade->id,
+						'text' => $especialidade->especialidade,
+					];
+				}
+			}
+
+			return response()->json($especialidades);
+
+		}
+
 		public function form(Request $request, $id = null)
 		{
 

@@ -1,5 +1,6 @@
 <div class="row">
-	<div id="agendamento" class="form-sidenav card col s8 no-padding" data-dismissible="true" data-edge="right" data-backdrop="false" style="height: calc(100vh - 64px); overflow: hidden;">
+
+	<div id="agendamento" class="form-sidenav card col s8 no-padding" data-dismissible="true" data-edge="right" data-backdrop="false">
 
 		<form action="{{ route('clinica.agendamentos.post') }}" method="post" enctype="multipart/form-data" autocomplete="random-string" novalidate>
 
@@ -22,33 +23,40 @@
 					<div class="row mt-2">
 						<div class="col s12">
 							<div class="input-field">
-								<label for="especialidade">Especialidade</label>
-								<input type="text" id="especialidade" class="autocomplete" data-url="{{ route('clinica.clinicas.get_especialidades') }}" value="{{ isset($row) && $row->especialidade ? $row->especialidade : null; }}" autocomplete="random-string">
-								<input type="hidden" name="especialidade" value="">
+								<label for="medico" class="active">Especialidade</label>
+								<select name="especialidade" id="especialidade" data-url="{{ route('clinica.especialidades.autocomplete') }}" value="{{ isset($row) && $row->especialidade ? $row->especialidade : null; }}" data-placeholder="Informe a especialidade..."></select>
 							</div>
 						</div>
 					</div>
 					<div class="row mt-2">
 						<div class="col s12">
 							<div class="input-field">
-								<label for="localidade">Local</label>
-								<input type="text" name="localidade" class="" data-url="{{ route('clinica.clinicas.get_unidades') }}" value="{{ isset($row) && $row->clinica ? $row->clinica : null; }}" autocomplete="random-string">
+								<label for="clinica" class="active">Local</label>
+								<select name="clinica" id="clinica" data-url="{{ route('clinica.clinicas.autocomplete') }}" value="{{ isset($row) && $row->especialidade ? $row->especialidade : null; }}" data-placeholder="Informe a clínica..."></select>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col s12">
 							<div class="input-field">
-								<label for="medico">Médico</label>
-								<input type="text" name="medico" class="autocomplete" data-url="{{ route('clinica.clinicas.get_medicos') }}" value="{{ isset($row) && $row->medico ? $row->medico : null; }}" autocomplete="random-string">
+								<label for="medico" class="active">Médico</label>
+								<select name="medico" id="medico" data-url="{{ route('clinica.medicos.autocomplete') }}" value="{{ isset($row) && $row->medico ? $row->medico : null; }}" data-placeholder="Informe o médico..."></select>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col s12">
 							<div class="input-field">
-								<label for="local">Tipo de atendimento</label>
-								<input type="text" name="tipo" value="{{ isset($row) && $row->tipo ? $row->tipo : null; }}">
+								<label for="tipo" class="active">Tipo de atendimento</label>
+								<select name="tipo" id="tipo" data-url="{{ route('clinica.atendimentos.autocomplete', 'tipos') }}" value="{{ isset($row) && $row->tipo_atendimento ? $row->tipo_atendimento : null; }}" data-placeholder="Informe o tipo de atendimento..."></select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<div class="input-field">
+								<label for="categoria" class="active">Classificação</label>
+								<select name="categoria" id="categoria" data-url="{{ route('clinica.atendimentos.autocomplete', 'categorias') }}" value="{{ isset($row) && $row->categoria_atendimento ? $row->categoria_atendimento : null; }}" data-placeholder="Informe a classificação do atendimento..."></select>
 							</div>
 						</div>
 					</div>
@@ -155,7 +163,7 @@
 									<div class="row">
 										<div class="col s12">
 											<div class="input-field">
-												<label for="nome" class="grey-text text-accent-1 {{ isset($paciente) && !empty($paciente->nome) ? 'active' : null }}">Paciente</label>
+												<label for="nome_paciente" class="grey-text text-accent-1  active">Paciente</label>
 												@php
 													$class= null;
 													$data_url = null;
@@ -166,7 +174,12 @@
 													$readonly = null;
 													endif;
 												@endphp
-												<input type="text" name="nome" id="nome" class="{{ $class }} grey-text text-darken-4" {{ $data_url }} value="{{ isset($paciente) && $paciente->nome ? $paciente->nome : null; }}" {{ $readonly }} autocomplete="random-string">
+												@if(!isset($paciente))
+													<select name="nome_paciente" id="nome_paciente" data-placeholder="Informe o paciente" class="{{ $class }} grey-text text-darken-4" {{ $data_url }} value="{{ isset($paciente) && $paciente->nome ? $paciente->nome : null; }}" {{ $readonly }}></select>
+												@else
+													<input type="text" name="nome_paciente" id="nome_paciente" class="{{ $class }} grey-text text-darken-4" {{ $data_url }} value="{{ isset($paciente) && $paciente->nome ? $paciente->nome : null; }}" {{ $readonly }} autocomplete="random-string">
+												@endif
+												<input type="hidden" name="paciente" value="{{ isset($paciente) && $paciente->id ? $paciente->id : null }}">
 											</div>
 										</div>
 									</div>

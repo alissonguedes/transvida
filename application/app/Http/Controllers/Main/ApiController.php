@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 
 class ApiController extends Controller
@@ -144,6 +145,29 @@ class ApiController extends Controller
 		}
 
 		return $data;
+
+	}
+
+	public function include_js_app()
+	{
+
+		$includes = [];
+		$path     = storage_path('public/js/app');
+		$dir      = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+
+		foreach ($dir as $file) {
+
+			if ($file->isDir()) {
+				continue;
+			}
+
+			$public_path = explode(storage_path('public'), $file->getPath());
+
+			$includes[] = ['path' => asset($public_path[1] . '/' . $file->getFilename())];
+
+		}
+
+		return response()->json($includes);
 
 	}
 

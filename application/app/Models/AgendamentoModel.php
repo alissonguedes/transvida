@@ -6,6 +6,7 @@ use App\Models\FuncionarioModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class AgendamentoModel extends AppModel
 {
@@ -17,7 +18,7 @@ class AgendamentoModel extends AppModel
 	protected $table = 'tb_atendimento';
 	protected $order = [
 		null,
-		'nome_fantasia',
+		'titulo',
 		'cnpj',
 		'cidade',
 		'uf',
@@ -40,14 +41,14 @@ class AgendamentoModel extends AppModel
 			'id_parent',
 			'id_tipo',
 			'id_medico',
-			'id_paciente',
+			DB::raw('(SELECT nome FROM tb_paciente WHERE id = id_paciente) AS paciente'),
 			'id_categoria',
 			DB::raw('DATE_FORMAT(data, "%d/%m/%Y") AS data'),
 			'hora_agendada',
 			'hora_inicial',
 			'hora_final',
 			'recorrencia',
-			'periodo',
+			'periodo_lembrete',
 			'cor',
 			'criador',
 			'lembrete',
@@ -91,6 +92,54 @@ class AgendamentoModel extends AppModel
 
 	}
 
+	//$inicio, $fim, $tipo = null){
+	public function getEventos(Request $request)
+	{
+
+		$inicio   = $request->get('start');
+		$fim      = $request->get('end');
+		$timezone = $request->get('timezone');
+		$tipo     = $request->tipo ? $request->tipo : null;
+
+		$periodo = [
+			date('Y-m-d', strtotime($inicio)),
+			date('Y-m-d', strtotime($fim)),
+		];
+
+		$get = $this->select(
+			'id',
+			'titulo',
+			'descricao',
+			'id_parent',
+			'id_tipo',
+			'id_medico',
+			DB::raw('(SELECT nome FROM tb_paciente WHERE id = id_paciente) AS paciente'),
+			'id_categoria',
+			'data',
+			// DB::raw('DATE_FORMAT(data, "%d/%m/%Y") AS data'),
+			'hora_agendada',
+			'hora_inicial',
+			'hora_final',
+			'recorrencia',
+			'periodo_lembrete',
+			'cor',
+			'criador',
+			'lembrete',
+			'tempo_lembrete',
+			DB::raw('DATE_FORMAT(created_at, "%d/%m/%Y") AS data_cadastro'),
+			DB::raw('DATE_FORMAT(updated_at, "%d/%m/%Y") AS data_atualizacao'),
+			'status'
+		)
+			->whereBetween('data', $periodo);
+
+		if ($tipo) {
+			$get->where('id_categoria', $tipo);
+		}
+
+		return $get->get();
+
+	}
+
 	public function uploadImage(Request $image)
 	{
 		$imagem = null;
@@ -113,45 +162,59 @@ class AgendamentoModel extends AppModel
 	public function cadastraAgendamento($post)
 	{
 
-		$id             = $post->id;
-		$titulo         = $post->titulo;
-		$descricao      = $post->descricao;
-		$id_parent      = $post->parent;
-		$id_tipo        = $post->tipo;
-		$id_medico      = $post->medico;
-		$id_paciente    = $post->paciente;
-		$id_categoria   = $post->categoria;
-		$data           = $post->data;
-		$hora_agendada  = $post->hora_agendada;
-		$hora_inicial   = $post->hora_inicial;
-		$hora_final     = $post->hora_final;
-		$recorrencia    = $post->recorrencia;
-		$periodo        = $post->periodo;
-		$cor            = $post->cor;
-		$criador        = $post->criador;
+		$id         = $post->id;
+		$titulo     = $post->titulo;
+		$descricao  = $post->descricao;
+		$id_parent  = $post->parent;
+		$id_tipo    = $post->tipo;
+		$id_medico  = $post->medico;
+		$id_clinica = $post->clinica;
+
+		$id_medico_clinica = $this->select('id')
+			->from('tb_medico_clinica')
+			->where('id_medico', $id_medico)
+			->where('id_empresa', $id_clinica)
+			->first();
+
+		$id_medico = $id_medico_clinica->id;
+
+		$id_paciente         = $post->paciente;
+		$id_categoria        = $post->categoria;
+		$data                = date('Y-m-d', strtotime(str_replace('/', '-', $post->data)));
+		$hora_agendada       = $post->hora . ':00';
+		$hora_inicial        = null; //$post->hora_inicial;
+		$hora_final          = null; //$post->hora_final;
+		$recorrencia         = $post->recorrencia ?? 'off';
+		$recorrencia_periodo = $post->periodo ?? 0;
+		$recorrencia_limite  = null; //$post->periodo;
+		$cor                 = $post->cor;
+		//// !!! MODIFICAR AQUI !!! ////
+		$criador = $post->criador ?? Session::get('userdata')[Session::get('app_session')]['id'];
+
 		$lembrete       = $post->lembrete ?? 'off';
-		$tempo_lembrete = $post->tempo_lembrete;
+		$tempo_lembrete = $post->tempo_lembrete ?? 0;
 		$status         = $post->status ?? '0';
 
 		$data = [
-			'titulo'         => $titulo,
-			'descricao'      => $descricao,
-			'id_parent'      => $id_parent,
-			'id_tipo'        => $id_tipo,
-			'id_medico'      => $id_medico,
-			'id_paciente'    => $id_paciente,
-			'id_categoria'   => $id_categoria,
-			'data'           => $data,
-			'hora_agendada'  => $hora_agendada,
-			'hora_inicial'   => $hora_inicial,
-			'hora_final'     => $hora_final,
-			'recorrencia'    => $recorrencia,
-			'periodo'        => $periodo,
-			'cor'            => $cor,
-			'criador'        => $criador,
-			'lembrete'       => $lembrete,
-			'tempo_lembrete' => $tempo_lembrete,
-			'status'         => $status,
+			'titulo'              => $titulo,
+			'descricao'           => $descricao,
+			'id_parent'           => $id_parent,
+			'id_tipo'             => $id_tipo,
+			'id_medico'           => $id_medico,
+			'id_paciente'         => $id_paciente,
+			'id_categoria'        => $id_categoria,
+			'data'                => $data,
+			'hora_agendada'       => $hora_agendada,
+			'hora_inicial'        => $hora_inicial,
+			'hora_final'          => $hora_final,
+			'recorrencia'         => $recorrencia,
+			'recorrencia_periodo' => $recorrencia_periodo,
+			'recorrencia_limite'  => $recorrencia_limite,
+			'cor'                 => $cor,
+			'criador'             => $criador,
+			'lembrete'            => $lembrete,
+			'tempo_lembrete'      => $tempo_lembrete,
+			'status'              => $status,
 		];
 
 		$id_agendamento = $this->from('tb_atendimento')

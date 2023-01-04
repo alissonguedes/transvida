@@ -1549,13 +1549,6 @@ input[type="number"] {
 	background-image: initial !important;
 }
 
-button .preloader-wrapper.small {
-	width: 21px;
-	height: 21px;
-	top: 0px;
-	display: flex;
-}
-
 .circle-clipper {
 	position: relative;
 	display: inline-block;

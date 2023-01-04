@@ -67,12 +67,23 @@ class EspecialidadeModel extends Model
 	public function searchEspecialidades(Request $request)
 	{
 
+		$id    = $request->get('id');
 		$query = $request->get('query');
 
-		$this->where('nome', 'like', '%' . $query . '%');
+		$get = $this->select('id', 'especialidade');
 
-		return $this->getEspecialidades();
-		// ->where('nome', 'like', '%' . $query . '%');
+		if (!empty($query)) {
+			$get->where('especialidade', 'like', $query . '%');
+		}
+
+		if ($id) {
+			$get->orWhere('id', 'like', $id . '%');
+		}
+
+		$get->orderBy('especialidade', 'asc')
+			->limit($request->length ?? 10);
+
+		return $get->get();
 
 	}
 

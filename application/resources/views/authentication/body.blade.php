@@ -9,7 +9,3 @@
 	@yield('main')
 
 @endsection
-
-@section('scripts')
-@include('authentication.scripts')
-@endsection

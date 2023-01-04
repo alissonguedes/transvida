@@ -21,7 +21,7 @@
 		<div class="card">
 			<div class="card-content scroller">
 				<div class="card-body responsive-table">
-					<table class="table dataTable no-footer dataTable-fixed" data-link="<?php echo e(url('clinica/unidades/id')); ?>">
+					<table class="table dataTable no-footer dataTable-fixed" data-href="<?php echo e(route('clinica.clinicas.index')); ?>">
 						<thead>
 							<tr>
 								<th data-disabled="true" data-orderable="false">

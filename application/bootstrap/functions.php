@@ -358,14 +358,21 @@ if (!function_exists('getMenus')) {
 
 					$submenus = $menu_model->from('tb_acl_menu_item')
 						->where('id_parent', $item->id)
+						->where('status', '1')
 						->get();
 
 					$ul .= '<li>';
 
+					$id_route = $item->id_route > 0 ? $item->id_route : null;
+
 					$route = $menu_model->select('name')
 						->from('tb_acl_modulo_routes')
-						->where('id_controller', $item->id_item)
-						->first();
+						->where('id_controller', $item->id_item);
+
+					if (!is_null($id_route)) {
+						$route->where('id', $id_route);
+					}
+					$route = $route->first();
 
 					$target = 'target="' . $item->target . '"' ?? null;
 

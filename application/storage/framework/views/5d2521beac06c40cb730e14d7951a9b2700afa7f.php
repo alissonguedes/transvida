@@ -3,7 +3,7 @@
 <div class="topbar flex flex-center">
 	<div class="topbar-fixed topbar-color flex flex-auto z-depth-1">
 		<div class="flex flex-auto flex-center">
-			<div class="flex flex-auto flex-start flex-center" style="">
+			<div class="flex flex-auto flex-start flex-center">
 				<button class="dropdown-trigger btn white black-text z-depth-3 border-round" data-target="dropdown-actions">
 					<i class="material-icons checkbox">check_box</i>
 					<i class="material-icons">keyboard_arrow_down</i>
@@ -30,7 +30,7 @@
 				<div class="input-field search bordered border-round z-depth-1">
 					<?php $__env->startSection('search-label', 'Pesquisar...'); ?>
 					<label for=""><?php echo $__env->yieldContent('search-label'); ?></label>
-					<input type="search" id="search-on-page" data-search="<?php echo $__env->yieldContent('data-search'); ?>" >
+					<input type="search" id="search-on-page" data-search="<?php echo $__env->yieldContent('data-search'); ?>">
 				</div>
 				<?php echo $__env->yieldSection(); ?>
 			</div>
@@ -48,13 +48,38 @@
 	</div>
 </div>
 
+<style>
+	.alert {
+		margin-top: 5px;
+		padding: 15px;
+		border-radius: 5px;
+		text-align: center;
+	}
+
+	.alert.success {
+		color: var(--green-darken-2);
+		background-color: var(--green-lighten-1);
+		border: 1px solid var(--green-lighten-3);
+	}
+</style>
+
 <div class="container pt-1 scroller" style="height: calc(100vh - 145px); width: 100%;">
-	<div class="progress">
-		<div class="indeterminate blue lighten-1"></div>
-	</div>
+
+	<?php if(session('message')): ?>
+		<div class="row">
+			<div class="col s12">
+				<div class="alert <?php echo e(session('status') ?? 'success'); ?>">
+					<?php echo e(session('message')); ?>
+
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
+
 	<div id="results">
 		<?php echo $__env->yieldContent('container'); ?>
 	</div>
+
 </div>
 
 <?php echo $__env->yieldContent('form-sidenav'); ?>

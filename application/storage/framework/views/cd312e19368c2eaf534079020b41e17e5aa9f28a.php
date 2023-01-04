@@ -22,11 +22,17 @@
 
 	<div id="page">
 
+		<div class="progress">
+			<div class="indeterminate blue accent-1"></div>
+		</div>
+
+		<div id="loading"></div>
+
 		<?php echo $__env->yieldContent('body'); ?>
 
 		<script>
 			var BASE_URL = "<?php echo e(base_url()); ?>";
-			var BASE_PATH = "<?php echo e(implode('/', explode('/index.php', $_SERVER['SCRIPT_FILENAME']))); ?>";
+			var BASE_PATH = "<?php echo e(asset('/')); ?>"; //"<?php echo e(implode('/', explode('/index.php', $_SERVER['SCRIPT_FILENAME']))); ?>";
 			var SITE_URL = "<?php echo e(site_url()); ?>";
 		</script>
 

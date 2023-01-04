@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Clinica{
 
+	use App\Models\AtendimentoModel;
 	use App\Models\ConvenioModel;
 	use App\Models\DepartamentoModel;
 	use App\Models\EmpresaModel;
@@ -23,6 +24,7 @@ namespace App\Http\Controllers\Clinica{
 			$this->estadoCivil_model   = new EstadoCivilModel();
 			$this->especialidade_model = new EspecialidadeModel();
 			$this->medico_model        = new MedicoModel();
+			$this->atendimento_model   = new AtendimentoModel();
 
 		}
 
@@ -48,7 +50,7 @@ namespace App\Http\Controllers\Clinica{
 
 		}
 
-		public function get_unidades(Request $request, $especialidade = null)
+		public function autocomplete(Request $request, $especialidade = null)
 		{
 
 			$clinicas = [];
@@ -56,54 +58,15 @@ namespace App\Http\Controllers\Clinica{
 			$dados = $this->empresa_model->getClinicas($request);
 
 			foreach ($dados as $clinica) {
-				$clinicas[] = [
-					'label' => $clinica->id . ' - ' . $clinica->titulo,
-					'name'  => 'clinica',
-					'value' => $clinica->id,
-					'icon'  => null,
+				$clinicas['items'][] = [
+					'id'   => $clinica->id,
+					'text' => $clinica->titulo,
+					// 'name'  => 'clinica',
+					// 'icon'  => null,
 				];
 			}
 
 			return response()->json($clinicas);
-
-		}
-
-		public function get_especialidades(Request $request)
-		{
-
-			$especialidades = [];
-			$dados          = $this->especialidade_model->getEspecialidades();
-
-			foreach ($dados as $especialidade) {
-				$especialidades[] = [
-					'label' => $especialidade->id . ' - ' . $especialidade->especialidade,
-					'name'  => 'especialidade',
-					'value' => $especialidade->id,
-					'icon'  => null,
-				];
-			}
-
-			return response()->json($especialidades);
-
-		}
-
-		public function get_medicos(Request $request)
-		{
-
-			$medicos = [];
-
-			$dados = $this->medico_model->getMedicos();
-
-			foreach ($dados as $medico) {
-				$medicos[] = [
-					'label' => $medico->id . ' - ' . $medico->nome,
-					'name'  => 'medico',
-					'value' => $medico->id,
-					'icon'  => null,
-				];
-			}
-
-			return response()->json($medicos);
 
 		}
 
