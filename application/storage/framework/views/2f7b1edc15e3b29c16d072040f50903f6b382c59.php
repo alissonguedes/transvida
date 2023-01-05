@@ -1,11 +1,11 @@
 <?php $__env->startSection('title', 'Clínicas'); ?>
 
 <?php $__env->startSection('main'); ?>
-<form action="<?php echo e(route('clinica.clinicas.post')); ?>" method="post" enctype="multipart/form-data" autocomplete="random-string" novalidate>
 
-	<div class="container pt-1">
-		<div class="row">
-			<div class="col s12">
+<div class="container pt-1">
+	<div class="row">
+		<div class="col s12">
+			<form action="<?php echo e(route('clinica.clinicas.post')); ?>" method="post" enctype="multipart/form-data" autocomplete="random-string" novalidate>
 				<div class="card">
 					<div class="card-content no-padding">
 
@@ -339,9 +339,9 @@
 					<input type="hidden" name="id" value="<?php echo e($row->id); ?>">
 					<input type="hidden" name="_method" value="put">
 				<?php endif; ?>
-</form>
-</div>
-</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <?php $__env->stopSection(); ?>
