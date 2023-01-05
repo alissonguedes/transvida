@@ -1,8 +1,8 @@
 'use strict'
 
-class Scroller {
+var Scroller = {
 
-	constructor(scroller) {
+	constructor: (scroller) => {
 
 		var scroller = typeof scroller !== 'undefined' ? scroller : '.scroller';
 
@@ -22,10 +22,6 @@ class Scroller {
 
 		});
 
-	}
-
-	init() {
-		console.log('initialize scroller');
 	}
 
 }

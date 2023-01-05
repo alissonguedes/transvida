@@ -1,25 +1,19 @@
 'use strict';
 
-class Http {
+if (window.XMLHttpRequest) {
+	var xhr = new XMLHttpRequest();
+} else {
+	var xhr = ActiveXObject('Microsoft.XMLHTTP');
+}
 
-	constructor() {
-
-		let xhr;
-
-		if (window.XMLHttpRequest) {
-			this.xhr = new XMLHttpRequest();
-		} else {
-			this.xhr = ActiveXObject('Microsoft.XMLHTTP');
-		}
-
-	}
+var Http = {
 
 	/**
 	 * @param {String} url
 	 * @param {Object} params
 	 * @param  {Function} callback
 	 */
-	get(url, params, ...callback) {
+	get: (url, params, ...callback) => {
 
 		if (params && typeof params === 'object') {
 
@@ -59,30 +53,29 @@ class Http {
 
 		} else {
 
-			this.open('GET', url, ...callback);
+			Http.open('GET', url, ...callback);
 
 		}
 
-	}
+	},
 
-	post(url, params, ...callback) {
+	post: (url, params, ...callback) => {
 
-		this.open('POST', url);
+		Http.open('POST', url);
 
-	}
+	},
 
-	open(type, url, ...callback) {
+	open: (type, url, ...callback) => {
 
-		this.xhr.open(type, url);
-		this.xhr.setRequestHeader('Request-Type', 'xmlhttprequest');
-		this.send(url, callback);
+		xhr.open(type, url);
+		xhr.setRequestHeader('Request-Type', 'xmlhttprequest');
+		Http.send(url, callback);
 
-	}
+	},
 
-	send(url, ...callback) {
+	send: (url, ...callback) => {
 
 		var c = callback;
-		var xhr = this.xhr;
 
 		xhr.onprogress = function(e) {
 			// var progressBar = $('.progress').children();
@@ -100,11 +93,6 @@ class Http {
 			// var status = xhr.getResponseHeader('Location');
 			// if (status === 302)
 			// 	console.log(xhr.responseUrl);
-			if (xhr.status === 0 || xhr.status >= 200 && xhr.status < 400) {
-				return view(xhr);
-			} else {
-				alert('Ocorreu algum problema na requisição.');
-			}
 
 		}
 
@@ -118,6 +106,12 @@ class Http {
 
 			if (xhr.readyState === 4) {
 
+				if (xhr.status === 0 || xhr.status >= 200 && xhr.status < 400) {
+					view(xhr);
+				} else {
+					alert('Ocorreu algum problema na requisição.');
+				}
+
 				for (var i = 0; i < c.length; i++) {
 					for (var j = 0; j <= i; j++) {
 						if (typeof c[i][j] === 'function') {
@@ -126,11 +120,11 @@ class Http {
 					}
 				}
 
-				new App();
-				load_scripts();
-				progress('out');
-
 			}
+
+			constructor();
+			load_scripts();
+			progress('out');
 
 		}
 

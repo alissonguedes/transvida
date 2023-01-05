@@ -22,6 +22,11 @@ $(document).ready(function() {
 
 function Calendar(params, el) {
 
+	if ($('body').find('.calendar').length === 0) {
+		console.log('calendaŕio não existe');
+		return false;
+	}
+
 	var loading = `<div style="display: flex; align-items: center;">
 							<div class="preloader-wrapper small active" style="margin-right: 20px;">
 								<div class="spinner-layer spinner-green-only">
@@ -82,6 +87,7 @@ function Calendar(params, el) {
 			day: 'Dia',
 			list: 'Lista'
 		},
+		// plugins: [ 'dayGridWeek' ],
 		// initialDate: '2022-12-07',
 		// navLinks: true, // can click day/week names to navigate views
 		selectable: false,
@@ -222,6 +228,11 @@ function Calendar(params, el) {
 			method: 'get',
 			extraParams: p,
 		},
+		eventContent: (arg) => {
+			return {
+				html: arg.event.title
+			}
+		}
 	});
 
 	$('body').addClass('main-full').removeClass('active').find('.sidenav-main').find('.active').removeClass('active');

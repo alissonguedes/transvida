@@ -2,6 +2,9 @@
 
 @section('title', 'Clínicas')
 
+@section('search-label', 'Pesquisar Clínicas')
+@section('data-search', 'clinicas')
+
 @section('search')
 <div class="input-field search bordered border-round z-depth-1">
 	<label for="">Pesquisar clinicas</label>
@@ -9,12 +12,9 @@
 </div>
 @endsection
 
-@section('btn-add-title','Adicionar clinica')
-@section('btn-add')
-<button class="btn btn-floating gradient-45deg-deep-orange-orange waves-effect waves-light z-depth-3" data-href="{{ route('clinica.clinicas.add') }}" data-tooltip="@yield('btn-add-title')" data-position="left">
-	<i class="material-icons bolder">add</i>
-</button>
-@endsection
+@section('btn-add-title','Adicionar Clínicas')
+@section('btn-add-icon', 'person_add_alt_1')
+@section('btn-add-route', route('clinica.clinicas.add'))
 
 @section('container')
 
@@ -23,7 +23,7 @@
 		<div class="card">
 			<div class="card-content scroller">
 				<div class="card-body responsive-table">
-					<table class="table dataTable no-footer dataTable-fixed" data-href="{{ route('clinica.clinicas.index') }}">
+					<table class="table dataTable no-footer dataTable-fixed">
 						<thead>
 							<tr>
 								<th data-disabled="true" data-orderable="false">

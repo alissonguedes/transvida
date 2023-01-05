@@ -1,54 +1,37 @@
 'use strict';
 
-class Form {
+var Form = {
 
-	form;
-	status = false;
-
-	constructor() {
-
-		var self = this;
+	constructor: () => {
 
 		$('body').find('form').each(function() {
 
 			var autoinitialize = typeof $(this).data('autoinitialize') === 'undefined' || $(this).data('autoinitialize') === true;
 
-			if (autoinitialize)
-				self.addSubmit($(this));
+			if (autoinitialize) {
+				Form.addSubmit($(this));
+			}
 
 		});
 
-	}
+	},
 
-	addSubmit(form) {
+	addSubmit: (form) => {
 
 		if (typeof form === 'undefined') return false;
-
-		var self = this;
 
 		form.on('submit', function(e) {
 
 			e.preventDefault();
 
-			self.submit($(this));
+			Form.submit($(this));
 
 		});
 
-	}
+	},
 
-	setStatus(status) {
-		return this.status = status;
-	}
+	submit: (form, ...callback) => {
 
-	getStatus() {
-		return this.status;
-	}
-
-	submit(form, ...callback) {
-
-		var http = new Http();
-
-		var self = this;
 		var method = form.attr('method') || 'post';
 		var action = form.attr('action') || null;
 		var btn_submit = form.find(':submit');
@@ -87,10 +70,10 @@ class Form {
 				if (response.statusCode === 200 || response.status === 'success') {
 
 					if (response.message) {
-						this.showMessages(form, response.message, response.status);
+						Form.showMessages(form, response.message, response.status);
 					}
 
-					http.get(response.url, null, (response) => {
+					Http.get(response.url, null, (response) => {
 						progress('out')
 					});
 
@@ -102,26 +85,26 @@ class Form {
 
 				var errors = error.responseJSON;
 				progress('out');
-				this.clearErrors(form);
-				self.showErrors(form, errors, 'error');
+				Form.clearErrors(form);
+				Form.showErrors(form, errors, 'error');
 
-				alert(error.responseJSON);
+				// alert(error.responseJSON);
 
 				btn_submit.attr('disabled', false);
 
 			}
 		});
 
-	}
+	},
 
-	showMessages(form, info, status) {
+	showMessages: (form, info, status) => {
 
-		this.clearErrors(form);
+		Form.clearErrors(form);
 		message(info, status);
 
-	}
+	},
 
-	showErrors(form, info, status, title) {
+	showErrors: (form, info, status, title) => {
 
 		if (typeof info.errors !== 'undefined') {
 
@@ -146,9 +129,9 @@ class Form {
 
 		}
 
-	}
+	},
 
-	clearErrors(form) {
+	clearErrors: (form) => {
 
 		form.find('.input-field')
 			.removeClass('error')

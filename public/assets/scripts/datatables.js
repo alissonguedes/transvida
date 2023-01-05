@@ -356,7 +356,6 @@ function btnModalForms($button) {
 					});
 
 				}
-
 			})
 
 			M.modal('open');

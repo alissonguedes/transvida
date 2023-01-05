@@ -2,8 +2,6 @@
 
 var formSidenav = () => {
 
-	var http = new Http();
-
 	$('.form-sidenav-trigger').on('click', function() {
 
 		progress('in')
@@ -25,7 +23,7 @@ var formSidenav = () => {
 
 		modal.find('form').html('Carregando formulário');
 
-		http.get(link, {
+		Http.get(link, {
 			datatype: 'html',
 			data: params
 		}, (response) => {
@@ -117,7 +115,7 @@ var formSidenav = () => {
 			autocomplete($('#tipo'));
 			autocomplete($('#categoria'));
 
-			if (!$('input[name="paciente"]').val())
+			if (!$('input[name="paciente"]').val()) {
 				autocomplete($('#nome_paciente'), () => {
 					$('#nome_paciente').on('change', function() {
 						var id = $(this).val();
@@ -134,9 +132,10 @@ var formSidenav = () => {
 						})
 					});
 				});
+			}
 
-			new Request(modal);
-			new Scroller();
+			Request.constructor(modal);
+			Scroller.constructor();
 			progress('out');
 
 		});

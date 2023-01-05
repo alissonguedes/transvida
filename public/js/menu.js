@@ -1,13 +1,12 @@
 'use strict';
 
-class Menu {
+var sidenavMain = $('.sidenav-main');
+var navCollapsible = $('.navbar .nav-collapsible');
 
-	sidenavMain = $('.sidenav-main');
-	navCollapsible = $('.navbar .nav-collapsible');
+var Menu = {
 
-	constructor() {
+	constructor: (element) => {
 
-		var self = this;
 		let url = [];
 		let local = window.location.href.split(BASE_URL).splice(1);
 
@@ -63,33 +62,33 @@ class Menu {
 
 		}
 
-		this.menuCollapse();
+		Menu.menuCollapse();
 
-		this.init();
+		Menu.init();
 
-	}
+	},
 
-	menuCollapse() {
+	menuCollapse: () => {
 
 		$('body').hasClass('menu-collapse') && 993 < $(window).width() &&
 			(
-				this.sidenavMain.removeClass('nav-lock'),
-				this.navCollapsible.removeClass('sideNav-lock'),
-				this.toggleMenuCollapse(),
-				this.navigationCollapse()
+				sidenavMain.removeClass('nav-lock'),
+				navCollapsible.removeClass('sideNav-lock'),
+				Menu.toggleMenuCollapse(),
+				Menu.navigationCollapse()
 			)
 
-	}
+	},
 
-	toggleMenuCollapse() {
+	toggleMenuCollapse: () => {
 
-		this.sidenavMain.hasClass('nav-expanded') &&
-			!this.sidenavMain.hasClass('nav-lock') &&
-			this.sidenavMain.toggleClass('nav-expanded'),
+		sidenavMain.hasClass('nav-expanded') &&
+			!sidenavMain.hasClass('nav-lock') &&
+			sidenavMain.toggleClass('nav-expanded'),
 			$('.horizontal-layout, #main').toggleClass('main-full');
-	}
+	},
 
-	navigationCollapse() {
+	navigationCollapse: () => {
 
 		if (!$('.sidenav-main.nav-collapsible').hasClass('nav-lock')) {
 
@@ -113,11 +112,10 @@ class Menu {
 			}, 100);
 		}
 
-	}
+	},
 
-	init() {
+	init: () => {
 
-		var self = this;
 		var t;
 		var i = $('li.active .collapsible-sub .collapsible');
 		var s = document.querySelectorAll('.sidenav-main .collapsible');
@@ -125,7 +123,6 @@ class Menu {
 		var l = document.querySelector('.collapsible.expandeble');
 
 		M.Collapsible.init(a);
-
 
 		M.Collapsible.init(l, {
 			accordion: !1
@@ -169,7 +166,7 @@ class Menu {
 				}, 300),
 				$(".nav-collapsible .navbar-toggler").click(function() {
 					var value;
-					self.toogleMenuCollapse(),
+					Menu.toogleMenuCollapse(),
 
 						$(this).parents('.nav-collapsible').removeClass('nav-expanded nav-collapsed').hasClass('nav-lock') ?
 						(

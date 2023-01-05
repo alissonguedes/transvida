@@ -1,16 +1,10 @@
 'use strict';
 
-let forceFocusFn = function() {
+var forceFocusFn = function() {
 	var searchInput = document.querySelector('.select2-container--open .select2-search__field');
 	if (searchInput)
 		searchInput.focus(); // focus
 };
-
-$(document).on('select2:open', () => {
-	setTimeout(function() {
-		forceFocusFn();
-	}, 200)
-});
 
 function autocomplete(element, params) {
 
@@ -60,3 +54,9 @@ function autocomplete(element, params) {
 	});
 
 }
+
+$(document).on('select2:open', () => {
+	setTimeout(function() {
+		forceFocusFn();
+	}, 200)
+});

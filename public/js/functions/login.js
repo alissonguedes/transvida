@@ -3,14 +3,12 @@
 var login = () => {
 
 	let titulo = null;
-	var http = new Http();
 
 	$('#frm-login').on('submit', function(e) {
 
 		e.preventDefault();
 		$('.progress, #loading').hide();
 
-		var form = new Form();
 		var self = $(this);
 		var method = self.attr('method') || 'post';
 		var action = self.attr('action') || null;
@@ -35,7 +33,7 @@ var login = () => {
 				if (status === 201) {
 
 					if (response.message) {
-						form.showMessages(self, response.message, response.status);
+						Form.showMessages(self, response.message, response.status);
 					}
 
 					$('#boas-vindas')
@@ -76,10 +74,10 @@ var login = () => {
 				} else {
 
 					if (response.message) {
-						form.showMessages(self, response.message, response.status);
+						Form.showMessages(self, response.message, response.status);
 					}
 
-					http.get(response.url);
+					Http.get(response.url);
 
 				}
 
@@ -87,8 +85,8 @@ var login = () => {
 			error: (error) => {
 
 				var errors = error.responseJSON;
-				form.clearErrors(self);
-				form.showErrors(self, errors, 'error');
+				Form.clearErrors(self);
+				Form.showErrors(self, errors, 'error');
 
 				$('.progress, #loading').hide();
 				btn_submit.attr('disabled', false);

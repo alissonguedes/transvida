@@ -1,32 +1,41 @@
 'use strict';
 
-class Datatable {
+var table;
+var url;
+var datatable;
+var order = 1;
+var direction = 'asc';
 
-	table = $('table.dataTable');
-	url = this.table.data('url') ? this.table.data('url') : window.location.href;
-	datatable;
-	order = 1;
-	direction = 'asc';
+var Datatable = {
 
-	constructor(element) {
+	constructor: (element) => {
 
-		this.table = element ? element : this.table;
+		table = element ? element : $('table.dataTable');
+		url = table.data('url') ? table.data('url') : window.location.href;
 
-	}
-
-	reload() {
-		this.datatable = this.table.DataTable();
-		this.datatable.draw();
-		console.log('Datatable reloaded.');
-	}
-
-	create() {
-
-		if (!this.table || (typeof this.table.data('ajax') !== 'undefined' && !this.table.data('ajax'))) {
+		if (!table || (typeof table.data('ajax') !== 'undefined' && !table.data('ajax'))) {
 			return false;
 		}
 
-		this.datatable = this.table.DataTable({
+		Datatable.create();
+
+	},
+
+	reload: () => {
+		datatable = table.DataTable();
+		datatable.draw();
+		console.log('Datatable reloaded.');
+	},
+
+	create: () => {
+
+		// table =  element ? element : table;
+
+		if (typeof table.data('ajax') !== 'undefined' && !table.data('ajax')) {
+			return false;
+		}
+
+		datatable = table.DataTable({
 			retrieve: true,
 			serverSide: true,
 			processing: true,
@@ -35,7 +44,7 @@ class Datatable {
 			ajax: {
 				type: 'get',
 				dataType: 'html',
-				url: this.url,
+				url: url,
 				beforeSend: () => {
 
 				},
@@ -43,31 +52,39 @@ class Datatable {
 
 					var parser = new DOMParser();
 					var content = parser.parseFromString(response, 'text/html');
+					var tr;
 
-					this.table.find('tbody').html(response).find('#pagination, #info').remove();
-					this.table.find('tr').each(function() {
+					table.find('tbody').html(response).find('#pagination, #info').remove();
+					table.find('tr').each(function() {
+
+						tr = $(this);
+
 						if ($(this).data('disabled')) {
 							$(this).addClass('disabled').find('td').css({
 								'cursor': 'text !important'
-							})
+							});
 						}
+
+						// Adiciona eventos de click a botões de ação
+						Request.constructor(tr);
+
 					}).find('td').bind('click', function(e) {
 						e.preventDefault();
-						var tr = $(this).parent('tr');
+						tr = $(this).parent('tr');
 						if (!tr.data('disabled') && !$(this).data('disabled')) {
-							new Request(tr);
+							Request.constructor();
 						}
 					});
 
 					var pagination = $(content).find('#pagination').html();
 					var info = $(content).find('#info').html();
 
-					this.table.parents('.dataTables_wrapper').find('.dataTables_info').html(info);
-					this.table.parents('.dataTables_wrapper').find('.dataTables_paginate').html(pagination).find('[data-href]').each(function() {
-						new Request($(this));
+					table.parents('.dataTables_wrapper').find('.dataTables_info').html(info);
+					table.parents('.dataTables_wrapper').find('.dataTables_paginate').html(pagination).find('[data-href]').each(function() {
+						Request.constructor($(this));
 					});
 
-					this.table.parents('.dataTables_wrapper').find('.dataTables_processing').hide();
+					table.parents('.dataTables_wrapper').find('.dataTables_processing').hide();
 
 				}
 			},
@@ -83,36 +100,36 @@ class Datatable {
 				sLoadingRecords: 'Carregando...',
 				sProcessing: '<div class="progress"></div class="indeterminate"></div></div>',
 				sZeroRecords: '',
-				sSearch: this.table.data('label') || '',
-				sSearchPlaceholder: this.table.data('placeholder') || '',
+				sSearch: table.data('label') || '',
+				sSearchPlaceholder: table.data('placeholder') || '',
 				oPaginate: {
 					sNext: 'Próximo',
 					sPrevious: 'Anterior',
 					sFirst: 'Primeiro',
 					sLast: 'Último',
 				},
-				order: [this.order, this.direction],
+				order: [order, direction],
 				columnDefs: [{
 
 				}]
 			}
 		});
 
-		this.search();
+		Datatable.search();
 
-	}
+	},
 
-	search() {
+	search: () => {
 
 		var search = $('body').find('.dataTable_search');
 
 		if (search) {
 			search.bind('keyup paste', delay(function() {
-				this.datatable.search(this.value).draw();
+				datatable.search(this.value).draw();
 			}));
 
 			if (search.val()) {
-				this.datatable.search(search.value).draw();
+				datatable.search(search.value).draw();
 			}
 		}
 

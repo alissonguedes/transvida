@@ -16,6 +16,7 @@
 
 				<div class="card">
 					<div class="card-content fixed-height">
+
 						<div class="card-title mb-1">
 							Novo paciente
 						</div>

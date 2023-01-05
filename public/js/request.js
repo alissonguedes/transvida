@@ -1,41 +1,37 @@
 'use strict';
 
-class Request {
+var link = [
+	'a',
+	'[href]',
+	'[data-href]',
+	'.link'
+];
 
-	link = [
-		'a',
-		'[href]',
-		'[data-href]',
-		'.link'
-	];
+var Request = {
 
-	constructor(element) {
+	constructor: (element) => {
 
-		var element = typeof element !== 'undefined' ? element : $('body').find(this.link.toString());
+		var element = typeof element !== 'undefined' ? $(element).find(link.toString()) : $('body').find(link.toString());
 
-		this.createElement(element);
+		Request.createElement(element);
 
-	}
+	},
 
-	disableOnClick(el) {
+	disableOnClick: (el) => {
 
 		el.attr('disabled', true);
 
-	}
+	},
 
-	enableOnClick(el) {
+	enableOnClick: (el) => {
 
 		el.attr('disabled', false);
 
-	}
+	},
 
-	createElement(element) {
+	createElement: (element) => {
 
-
-		var http = new Http();
-
-		var self = this;
-		var links = this.link.toString(); // typeof el !== 'undefined' ? el : this.link.toString();
+		var links = link.toString(); // typeof el !== 'undefined' ? el : this.link.toString();
 		var element = typeof element !== 'undefined' ? $(element) : $(element).find(links);
 
 		element.on('click', function(e) {
@@ -45,18 +41,16 @@ class Request {
 			var href = $(this).data('href') || $(this).attr('href');
 
 			// self.disableOnClick($(this));
-			if (self.isLink(href)) {
-				http.get(href, null, (response) => {
-					// console.log(response);
-				});
+			if (Request.isLink(href)) {
+				Http.get(href);
 			}
 			// self.enableOnClick($(this));
 
 		});
 
-	}
+	},
 
-	isLink(href) {
+	isLink: (href) => {
 
 		if (typeof href === 'undefined' || href == '') return false;
 

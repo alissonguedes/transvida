@@ -7,7 +7,8 @@ namespace App\Http\Controllers\Clinica{
 	use App\Models\DepartamentoModel;
 	use App\Models\EstadoCivilModel;
 	use Illuminate\Http\Request;
-	use Illuminate\Validation\Rule;
+
+	// use Illuminate\Validation\Rule;
 
 	class AgendamentosController extends Controller
 	{
@@ -57,8 +58,27 @@ namespace App\Http\Controllers\Clinica{
 
 			if ($dados) {
 				foreach ($dados as $row) {
+					$medico = $this->agendamento_model->select('nome')
+						->from('tb_funcionario AS F')
+						->where('id', function ($query) use ($row) {
+							$query->select('id_funcionario')
+								->from('tb_medico AS M')
+								->whereColumn('M.id_funcionario', 'F.id')
+								->where('M.id', function ($query) use ($row) {
+									$query->select('id_medico')
+										->from('tb_medico_clinica')
+										->where('id', $row->id_medico);
+								});
+						})
+						->first();
+
+					$evento = '<b>' . date('H:i', strtotime($row->hora_agendada)) . '</b></p></td>';
+					$evento .= 'Paciente: ';
+					$evento .= $row->paciente . '<br>';
+					$evento .= 'Médico: ' . $medico->nome;
 					$eventos[] = [
-						'title' => $row->paciente,
+						'title' => $evento,
+						// 'title' => 'Paciente: ' . $row->paciente . "<br>" . 'alisson',
 						'start' => $row->data . 'T' . $row->hora_agendada,
 						'end'   => $row->data . 'T' . $row->hora_agendada,
 						// 'backgroundColor' => '#ff0000',
@@ -83,34 +103,30 @@ namespace App\Http\Controllers\Clinica{
 		{
 
 			return $request->validate([
-				'nome_fantasia'      => 'required',
-				'razao_social'       => 'required',
-				'cnpj'               => [
+				'especialidade' => 'required',
+				'clinica'       => 'required',
+				'medico'        => [
 					'required',
-					'regex:/[\d]{2}\.[\d]{3}\.[\d]{3}\/[\d]{4}\-[\d]{2}/i',
-					Rule::unique('tb_agendamento', 'cnpj')->ignore($request->post('id'), 'id'),
+					// 'regex:/[\d]{2}\.[\d]{3}\.[\d]{3}\/[\d]{4}\-[\d]{2}/i',
+					// Rule::unique('tb_agendamento', 'cnpj')->ignore($request->post('id'), 'id'),
 				],
-				'inscricao_estadual' => [
-					'nullable',
-					Rule::unique('tb_agendamento', 'inscricao_estadual')->ignore($request->post('id'), 'id'),
+				'tipo'          => [
+					'required',
+					// Rule::unique('tb_agendamento', 'inscricao_estadual')->ignore($request->post('id'), 'id'),
 				],
-				'email'              => [
-					'nullable',
-					'email',
+				'categoria'     => [
+					'required',
 					'required_if:receber_notificacoes,on',
 				],
-				'cep'                => [
+				'data'          => [
 					'required',
-					'regex:/[\d]{5}\-[\d]{3}/i',
+					'regex:/(([0-2][0-9])|([3][0-1]))\/(([0][0-9])|([1][0-2]))\/([20][0-9]{2})/i',
 				],
-				'logradouro'         => 'required',
-				'bairro'             => 'required',
-				'cidade'             => 'required',
-				'uf'                 => [
+				'hora'          => [
 					'required',
-					'min:2',
-					'max:2',
+					'regex:/(([0-1][0-9])|[2][0-3])\:([0-5][0-9])/i',
 				],
+				'nome_paciente' => 'required',
 			]);
 
 		}
@@ -118,7 +134,7 @@ namespace App\Http\Controllers\Clinica{
 		public function create(Request $request)
 		{
 
-			// $this->validateForm($request);
+			$this->validateForm($request);
 			$id = $this->agendamento_model->cadastraAgendamento($request);
 
 			$status  = 'success';

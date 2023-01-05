@@ -10,13 +10,14 @@
 			@endif
 
 			<div class="card-content no-padding white lighten-3">
+<a href="#">Teste</a>
 
 				<!-- BEGIN coluna 1 -->
 				<div class="col s5 scroller z-depth-2" data-hide-x="true">
 
 					<div class="row">
 						<div class="col s12">
-							<div class="card-title">Agendament</div>
+							<div class="card-title">Agendamento</div>
 						</div>
 					</div>
 
